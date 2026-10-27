@@ -1,0 +1,18 @@
+spec:
+  structures:
+  - sections
+  label: Building blocks deck
+  description: The dark deck of cards that slide across as the reader scrolls.
+  icon: layers
+blueprint:
+  anchor_id: infrastructure
+  title: Building Blocks Behind the Network
+  intro: ''
+  cards:
+  - name: New building block
+    tagline: One line about it.
+    details: ''
+    image: ''
+    image_tag: ''
+    coming_soon: false
+_inputs: {}

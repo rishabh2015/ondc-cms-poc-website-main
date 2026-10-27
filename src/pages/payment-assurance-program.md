@@ -1,0 +1,39 @@
+---
+title: Payment Assurance Program · ONDC Network
+description: A voluntary program under which Buyer Network Participants place a
+  refundable Payment Assurance Security Deposit and carry the Payment Assurance
+  Badge.
+permalink: /payment-assurance-program.html
+wrapper_tag: main
+wrapper_class: bk bk-hold-page
+wrapper_id: ''
+show_progress: true
+styles:
+  - fx
+  - scale
+  - type-boost
+  - beckn
+  - mobile
+scripts:
+  - /js/ondc/fx.js
+  - /js/ondc/beckn.js
+  - /js/ondc/scroll-progress.js
+sections:
+  - _template: page_hero
+    variant: holding
+    screen_label: Holding page
+    heading_id: soon-title
+    animation: intro
+    eyebrow: Payment Assurance Program
+    heading: Coming soon
+    heading_accent: ''
+    heading_suffix: ''
+    background_image: ''
+    status_label: Not live yet
+    paragraphs:
+      - text: A voluntary program under which Buyer Network Participants place a
+          refundable Payment Assurance Security Deposit and carry the Payment
+          Assurance Badge. It is not published on this page yet. When it is,
+          the Badge and Mandate Lists will be here too.
+    buttons: []
+---

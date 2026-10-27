@@ -1,0 +1,53 @@
+{%- comment -%}
+  "Band" is the wide call-to-action at the foot of the Resources sub-pages and
+  the legal pages. Third treatment of the same content model — heading, a line,
+  buttons — so it joins Plain and Panel as a variant rather than a component.
+{%- endcomment -%}
+{% if variant == "band" %}<section class="cta-section"{% if anchor_id %} id="{{ anchor_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Closing" }}"{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %}>
+    <div class="container">
+      <h2 class="cta-h2 reveal"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}{% if heading_accent %} {{ heading_accent }}{% endif %}{{ heading_suffix }}</h2>
+      {% if body %}<p class="cta-sub reveal d1">{{ body }}</p>{% endif %}
+      {%- comment -%}
+        The band sits on a dark blue gradient, so the PROMINENT button is the
+        white one. `.btn-primary` is itself a blue gradient and all but
+        disappears against the background — which is why ondc.org's own CTA
+        uses `.btn-light` here. "Solid" therefore maps to white and the
+        secondary to the translucent outline built for dark surfaces, so the
+        editor's choice still reads as "the main button".
+      {%- endcomment -%}
+      {% if buttons.size > 0 %}
+        <div class="cta-actions reveal d2">
+          {% for button in buttons %}<a
+                class="btn {% if button.style == "solid" %}btn-light{% else %}btn-ghost{% endif %}"
+                href="{{ button.url }}"{% if button.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ button.label }}</a>
+            {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% elsif variant == "role" %}<section class="bk-role-close"{% if anchor_id %} id="{{ anchor_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Closing" }}"{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %}>
+    <div class="bk-rv">
+      <h2 class="bk-h2"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+      {% if body %}
+        <p>{{ body }}</p>
+      {% endif %}
+      {% for button in buttons %}        <a
+            class="bk-btn {% if button.style == "solid" %}bk-btn-solid{% else %}bk-btn-ghost{% endif %}"
+            href="{{ button.url }}"{% if button.new_tab %} target="_blank"
+            rel="noopener"{% endif %}>{{ button.label }}</a>
+        {% endfor %}
+    </div>
+  </section>
+{% else %}<section class="bk-about-close" data-screen-label="{{ screen_label | default: "Closing" }}">
+    <h2 class="bk-h2 bk-rv">{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+    {% if buttons.size > 0 %}
+      <div class="bk-hero-actions bk-rv bk-rv-d1">
+        {% for button in buttons %}        <a
+              class="bk-btn {% if button.style == "solid" %}bk-btn-solid{% else %}bk-btn-ghost{% endif %}"
+              href="{{ button.url }}"{% if button.new_tab %} target="_blank"
+              rel="noopener"{% endif %}>{{ button.label }}</a>
+          {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+{% endif %}

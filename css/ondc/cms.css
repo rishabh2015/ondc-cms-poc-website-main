@@ -1,0 +1,256 @@
+/* =====================================================================
+   CMS layer for home.html — loads LAST, after the original ONDC CSS.
+   1. bridges so CloudCannon's editor wrappers don't change the look
+   2. image regions (the <img> lives inside an editable region)
+   3. EDITOR MODE (html.is-editing): every animation / pinned / hidden
+      state is neutralised so each region is visible and clickable.
+   ===================================================================== */
+
+/* 1 ── the rich-text editor wraps single-line text in <p>; make that invisible */
+[data-editable="source"] > p:only-child { display: contents; margin: 0; }
+
+/* 2 ── image regions */
+.cms-img { display: block; width: 100%; height: 100%; }
+.cms-img > p { display: contents; }
+.cms-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.dpi-media > .cms-img,
+.door-media > .cms-img,
+.news-thumb > .cms-img { position: absolute; inset: 0; z-index: 0; }
+.dpi-media::before, .door-media::after, .news-thumb::before, .news-thumb::after { pointer-events: none; }
+.dpi-media::before { z-index: 1; }
+.dpi-media-tag, .door-media-tag, .news-thumb-tag { z-index: 2; }
+
+/* the hero copy block is only for editors */
+.hero-source { display: none; }
+
+/* 3 ── EDITOR MODE ─────────────────────────────────────────────────── */
+html.is-editing .hero-source {
+  display: block; background: linear-gradient(135deg, #1A1A2E, #2D3748); color: #fff;
+  padding: 120px 0 56px;
+}
+html.is-editing .hero-source-note { font: 600 12px/1.5 Inter, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #8fdcff; margin: 0 0 14px; max-width: 820px; }
+html.is-editing .hero-source [data-key] { max-width: 820px; margin-bottom: 36px; font-size: 18px; line-height: 1.5; }
+html.is-editing .hero-source [data-key] p { margin: 0 0 14px; padding-left: 14px; border-left: 3px solid rgba(255,255,255,.25); }
+html.is-editing .hero-source [data-key] ul { padding-left: 22px; }
+html.is-editing .hero-source a { color: #8fdcff; text-decoration: underline; }
+
+html.is-editing .ondc-hero,
+html.is-editing .home-ambient,
+html.is-editing .intro-skip { display: none !important; }
+
+/* reveal states */
+html.is-editing .hv-rv,
+html.is-editing .news-card { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+/* carousel: show every slide, one under the other */
+html.is-editing .hero { min-height: 0; }
+html.is-editing .slide { display: flex !important; align-items: center; border-bottom: 6px solid #00AEEF; }
+html.is-editing .hero-arrow,
+html.is-editing .hero-pills { display: none !important; }
+
+/* building blocks: plain list, no pin / runway */
+html.is-editing .dpi { height: auto !important; }
+html.is-editing .dpi-stage { position: static !important; height: auto !important; overflow: visible !important; padding-top: 64px !important; }
+html.is-editing .dpi-deck { display: flex !important; flex-direction: column; gap: 20px; }
+html.is-editing .dpi-card { grid-area: auto !important; width: 100% !important; height: auto !important; max-height: none !important; transform: none !important; }
+html.is-editing .dpi-media { min-height: 260px; }
+html.is-editing .dpi-controls { display: none !important; }
+
+/* rails -> wrapping grids */
+html.is-editing .doors-track,
+html.is-editing .news-rail { flex-wrap: wrap; overflow: visible !important; }
+html.is-editing .door-card,
+html.is-editing .news-card { flex: 0 0 calc(50% - 12px) !important; height: auto !important; min-height: 420px; }
+html.is-editing .doors-arrow,
+html.is-editing .doors-progress { display: none !important; }
+
+html.is-editing #site-header { position: relative; }
+
+/* count-up: the real (editable) number hides while a copy outside the region counts */
+.metric.is-counting .metric-num:not(.metric-num-ghost) { visibility: hidden; }
+
+/* Sections added from the CMS: show them fully in the editor, no scroll reveal */
+html.is-editing .block-card { opacity: 1 !important; transform: none !important; }
+
+/* ── Page-archetype sections (About and later pages) ─────────────────── */
+/* .bk-rv starts at opacity 0 and only reveals on scroll. In the editor the
+   scroll engine never runs, so without this every section renders invisible. */
+html.is-editing .bk-rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+/* The timeline and board-of-directors canvases are decorative and never paint
+   in the editor; hide them so they cannot cover the editable content.
+
+   CAREFUL — these stages are half of a cancelling pair. A sticky stage is
+   100vh tall and the content that follows pulls itself back up over it with a
+   matching negative margin, so the pair nets to zero on the live page:
+
+       .bk-tl-stage     { height: 100vh }            <- hidden below
+       .bk-tl-content   { margin-top: -100vh }       <- must be zeroed too
+
+   Hide the stage on its own and the negative margin survives with nothing to
+   cancel it, dragging the whole first section a full viewport upward and
+   underneath the navbar. .bk-people-stage carries BOTH halves on itself, so it
+   needs no partner rule. Any future stage of this shape needs the same care. */
+html.is-editing .bk-tl-stage,
+html.is-editing .bk-people-stage { display: none !important; }
+html.is-editing .bk-tl-content   { margin-top: 0 !important; }
+
+/* The timeline pins itself over a tall scroll runway on the live site.
+   Flatten it so every year is visible and clickable in the editor. */
+html.is-editing .bk-tl { height: auto !important; min-height: 0 !important; }
+html.is-editing .bk-tl-content { position: static !important; height: auto !important; }
+
+/* The hero fills the viewport on the live site; let it size to its content. */
+html.is-editing .bk-hero-about { min-height: 0 !important; padding: 120px 0 64px !important; }
+
+/* The award lightbox is a dialog, closed until a card is clicked. */
+html.is-editing .bk-lightbox { display: none !important; }
+
+/* ── Role / directory pages (RFPs, Gateway, Buyer NP …) ──────────────── */
+/* beckn.js sets opacity:0 as an INLINE style on every [data-bk-intro] and then
+   animates it back. An inline style outranks a stylesheet, so this needs
+   !important — without it the whole hero is invisible if the animation does
+   not finish, which is exactly what beckn.css itself does under
+   prefers-reduced-motion. */
+html.is-editing [data-bk-intro] { animation: none !important; opacity: 1 !important; }
+
+/* beckn.js splits a [data-bk-scrub] paragraph into one span per word, each
+   starting grey and taking its real colour as the block scrolls past. The
+   editor never scrolls, so the whole paragraph would sit there pale and barely
+   readable. This is the same rule beckn.css itself applies under
+   prefers-reduced-motion. Used by the Careers lead paragraph and ~13 other
+   ondc.org pages, so any page carrying [data-bk-scrub] is covered by this. */
+html.is-editing .bk-scrub-w { color: inherit !important; }
+
+/* Tabbed panels: only the selected tab is visible on the live page, so the text
+   inside the other tabs could never be clicked to edit. Show them all while
+   editing — the tab buttons stop switching anything, which is the intended
+   trade: everything on the page is reachable. */
+html.is-editing .bk-rfp-panel[hidden] { display: block !important; }
+html.is-editing .bk-rfp-panel + .bk-rfp-panel { border-top: 1px dashed var(--bk-line, #e3e5e8); }
+
+/* ── Contact page ────────────────────────────────────────────────────── */
+/* The "other ways to send" panel is hidden until the visitor presses Submit,
+   so its wording could never be clicked to edit. Show it while editing — the
+   same trade as the RFP tabs above: everything on the page stays reachable. */
+html.is-editing .bk-contact-form .send-options[hidden] { display: block !important; }
+html.is-editing .bk-contact-form .send-options {
+  border-top: 1px dashed var(--bk-line, #e3e5e8);
+}
+
+/* The map is a Google iframe. Inside the editor frame it swallows scroll and
+   clicks meant for the panel around it, so the support column cannot be
+   selected. It has nothing editable inside it anyway — the address it points
+   at is a field on the section. */
+html.is-editing .bk-contact-map { pointer-events: none; }
+
+/* ── Complaints page ─────────────────────────────────────────────────── */
+/* The spine's blue line grows with the scroll position and each step's dot
+   turns blue as the line passes it (beckn.js). The editor never scrolls, so
+   the line would sit at zero height and every dot would stay grey. Paint the
+   finished state instead, so the section reads the way it will on the page. */
+html.is-editing .bk-spine-fill { height: 100% !important; }
+html.is-editing .bk-step-node {
+  background: var(--bk-blue, #2151f5) !important;
+  box-shadow: 0 0 0 6px rgba(33, 81, 245, .14) !important;
+}
+
+/* Only the first expandable section and the first FAQ answer are open on the
+   page; the rest are closed, so their text could never be clicked to edit.
+   Open them all while editing — the same trade as the RFP tabs. */
+html.is-editing .bk-seat:not([open]) > .bk-seat-jd { display: block !important; }
+
+/* Buyer App cards are <details> too, and paging hides all but the current
+   page. Show every card, opened, so each one is reachable. The cards are not
+   editable content — they come from the directory data file — but a hidden
+   card cannot be inspected, and the search and paging controls do nothing
+   useful in a frame that never scrolls. */
+html.is-editing .bk-ba-card[hidden] { display: block !important; }
+html.is-editing .bk-ba-card > .bk-ba-detail { display: block !important; }
+html.is-editing .bk-ba-pagination { display: none !important; }
+
+/* ── Network Participants ────────────────────────────────────────────── */
+/* The list switcher is a <details>, closed until it is clicked, and the names
+   inside it are this section's own copy (the "Lists in this directory" field).
+   Closed, they could never be clicked to edit. Open the menu in place while
+   editing — the same trade as the RFP tabs: the switcher stops switching
+   anything, and everything on the page is reachable. */
+html.is-editing .bk-np-listdrop > summary { display: none; }
+html.is-editing .bk-np-listdrop-menu {
+  position: static;
+  display: block;
+  min-width: 0;
+  box-shadow: none;
+  border: 1px dashed var(--bk-line, #e3e5e8);
+}
+html.is-editing .bk-np-listdrop-menu .np-tab { cursor: text; }
+
+/* The directory's rows are not editable content — they come from the Network
+   Participants data file, and are edited there — so paging is left working
+   rather than unhidden the way the Buyer App cards are. 494 rows unhidden in
+   an editor frame would cost more than it gives, and every piece of this
+   section that IS editable copy (the heading, the tab names, the search hint,
+   the column headings, the note under the table) is visible without paging.
+
+   What does need help is the first paint: the template ships rows past page
+   one with `hidden`, and the script only un-hides them once it has run. In
+   the editor Bookshop re-renders the section constantly, so there is a window
+   where the table is 20 rows with no controls bound. That is correct, not
+   broken — leave it be. */
+
+/* The category tree ships collapsed and the script hides whichever branches
+   the visible list has no rows for. Both are data, not copy, so neither is
+   forced open here; the panel stays the height it is on the page. */
+
+/* ── Resources ───────────────────────────────────────────────────────── */
+/* legal.css holds `.reveal` at opacity 0 until js/ondc/reveal.js adds `in` on
+   scroll. The editor frame never scrolls, so without this the intro, the
+   document list, the hub cards and the closing band all render INVISIBLE —
+   the same trap `.bk-rv` sets, and the same fix. (Two reveal systems is not
+   an accident: `.bk-rv`/beckn.js stages the ONDC-page sections, `.reveal`
+   stages the legal and resources pages, and the two stylesheets position
+   their elements differently.) */
+html.is-editing .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* The sidebar is a <details> that this build closes below 1000px, because a
+   tree that tall would push the documents a screen and a half down on a
+   phone. An editor frame is often narrower than that, and a closed sidebar
+   hides the area's own name — the one thing that says which page you are on.
+   Keep it open while editing. */
+html.is-editing .res-nav-details { display: block; }
+html.is-editing .res-nav-details > div { display: block !important; }
+
+/* Disclosures folds its five groups into <details> bars that open one at a
+   time. Closed, the editor shows five grey bars and nothing else, which reads
+   as a page that failed to load. Everything inside them comes from the
+   Resources library data file and is not click-to-edit anyway, so unfold them
+   all. The second rule is for Chrome's ::details-content, which the first one
+   alone no longer beats; browsers that do not know the selector drop that
+   rule and keep the first. */
+html.is-editing .res-sec.is-collapsible > .res-sec-body { display: block !important; }
+html.is-editing .res-sec.is-collapsible::details-content {
+  content-visibility: visible !important;
+  block-size: auto !important;
+}
+
+/* The search results box is empty until somebody types, and every row in it
+   is a copy of a document edited under "Resources library" — nothing here is
+   click-to-edit, and 500 rows unhidden would bury the page. Left alone
+   deliberately. */
+
+/* ── Shared chrome in the editor ─────────────────────────────────────── */
+/* The navbar is position:sticky at z-index 300/100 on the live site. Inside the
+   editor frame it then floats over the FIRST section and swallows that
+   section's hover controls, so the top section cannot be selected or edited.
+   Chrome is not editable on the page anyway (it is edited under
+   "Header & Footer"), so pin it in place and drop it behind the content. */
+html.is-editing .navbar { position: static !important; z-index: 0 !important; }
+html.is-editing .scroll-progress { display: none !important; }
+
+/* Give the first section room so its controls are never clipped by the frame. */
+html.is-editing #root > *:first-child,
+html.is-editing main.bk > *:first-child { scroll-margin-top: 0; }

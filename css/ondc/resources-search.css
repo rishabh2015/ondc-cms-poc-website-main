@@ -1,0 +1,69 @@
+/* =====================================================================
+   Resources — the rules pre-rendering needs, which resources.css cannot
+   carry.
+   =====================================================================
+   WHY THIS FILE EXISTS (the same reason as css/ondc/np-directory.css)
+
+   ondc.org BUILDS its search results and re-builds its document list with
+   innerHTML on every keystroke. This build cannot: Bookshop replaces a
+   section's DOM while an editor types, so a row the script created would
+   vanish on the next keystroke. Every row is therefore rendered up front
+   and the script only sets `hidden` on it.
+
+   That shifts the work onto the `hidden` attribute, which is only a
+   UA-stylesheet `display: none` — and ANY author rule setting `display`
+   on the same element outranks it. `.res-row` is `display: flex`, so
+   without the guard below a filtered-out document stays on screen with
+   `hidden` set and no visible effect. (This is ADDING_PAGES.md rule 9;
+   it cost a round of debugging on the participant directory first.)
+
+   resources.css already guards `.res-results[hidden]` — the one element
+   ondc.org itself hides. It has no guard for the singular row because
+   upstream never hides one.
+
+   These rules are NOT in resources.css because that file is a byte-copy
+   of the one on ondc.org: refresh it from upstream and anything added to
+   it is silently lost, taking the fix with it.
+
+   Load AFTER resources.css.
+   ===================================================================== */
+
+.res-row[hidden] {
+  display: none !important;
+}
+
+/* Relevance ordering without moving a node.
+   ---------------------------------------------------------------------
+   ondc.org sorts its results by rebuilding the list with title matches
+   first. Re-ordering the DOM is exactly what this build may not do, so
+   the results box becomes a flex column and the script sets `order` on
+   each row instead: 1 for a title match, 2 for one found only in the
+   blurb. The head keeps the default 0 and so stays on top. */
+.res-results {
+  display: flex;
+  flex-direction: column;
+}
+
+.res-results[hidden] {
+  display: none !important;
+}
+
+/* A folded group is a <details> the filter hides when nothing in it matches.
+   `hidden` is enough today — nothing sets `display` on `.res-sec` — but the
+   guard is written anyway, because the rule that caught this build twice is
+   that the NEXT author rule is the one that breaks it. */
+.res-sec[hidden] {
+  display: none !important;
+}
+
+/* The notice box is rich text, so CloudCannon wraps whatever an editor types
+   in a <p>. ondc.org writes the sentence straight into the div and has no
+   rule for a child paragraph, so the browser default of `margin: 1em 0` would
+   push the text out of the box's own padding. */
+.res-note > p {
+  margin: 0;
+}
+
+.res-note > p + p {
+  margin-top: .75em;
+}

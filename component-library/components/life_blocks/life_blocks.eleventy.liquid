@@ -1,0 +1,29 @@
+<section class="bk-panel"{% if anchor_id %} id="{{ anchor_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Life at ONDC" }}">
+  <div class="bk-life">
+    <div>
+      {% if eyebrow %}
+        <div class="bk-eyebrow bk-rv">{{ eyebrow }}</div>
+      {% endif %}
+      <h2 class="bk-h2 bk-rv">{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+      {% for block in blocks %}
+        {% assign d = forloop.index0 %}
+        {% if d > 2 %}
+          {% assign d = 2 %}
+        {% endif %}
+        <div class="bk-life-block bk-rv{% if d > 0 %} bk-rv-d{{ d }}{% endif %}">
+          <h3>{{ block.title }}</h3>
+          <p>{{ block.text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    {% if images.size > 0 %}
+      <div class="bk-life-media">
+        {% for image in images %}{% assign d = forloop.index0 %}{% if d > 2 %}{% assign d = 2 %}{% endif %}          <img
+            class="bk-fade-b bk-rv{% if d > 0 %} bk-rv-d{{ d }}{% endif %}"
+            src="{{ image.image }}"
+            alt="{{ image.alt }}">
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>

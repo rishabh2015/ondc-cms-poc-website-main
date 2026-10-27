@@ -1,0 +1,74 @@
+spec:
+  structures: [sections]
+  label: Knowledge base index
+  description: >-
+    The grid of cards on the Resources hub, one per area of the knowledge base.
+    The heading and the wording are edited here; the cards themselves come from
+    the Resources library data file — tick "Show on the hub" on a category and
+    its card appears.
+  icon: grid_view
+
+blueprint:
+  screen_label: Knowledge base index
+  anchor_id: ''
+  heading_id: library-index-title
+  heading: The ONDC
+  heading_accent: Knowledge Base
+  heading_suffix: .
+  intro: >-
+    Explore the network's governance, policy, technical, financial, marketing,
+    and learning resources from one index.
+  count_noun: resources
+  external_label: External
+  open_label: Open
+
+# WHERE THE CARDS COME FROM
+# src/_data/resources.json, every category with `hub: true`, edited in the CMS
+# under "Resources library". It is listed in cloudcannon.config.yml under
+# `data_config`, which is what lets CloudCannon edit it AND what makes it reach
+# Bookshop's live rendering, so the grid still draws while editing.
+#
+# The number on each card counts every document in that area INCLUDING its
+# sub-areas, worked out at build time. Delete a document and the figure drops
+# on the next publish.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: Lets menu and button links jump to this section.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading_id:
+    type: text
+    hidden: true
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted part of the heading
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+    comment: Usually just a full stop.
+  intro:
+    type: textarea
+    label: Line under the heading
+  count_noun:
+    type: text
+    label: Word after the number on a card
+    comment: 'Reads as: 127 resources.'
+  external_label:
+    type: text
+    label: Shown instead of a count on a card that leaves the site
+  open_label:
+    type: text
+    label: Text on the card's button

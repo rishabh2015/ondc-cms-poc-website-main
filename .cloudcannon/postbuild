@@ -1,0 +1,107 @@
+# #!/usr/bin/env bash
+# npm i
+# npx @bookshop/generate --editable-regions
+
+
+
+#!/usr/bin/env bash
+# CloudCannon postbuild hook.
+# =====================================================================
+# Runs ONLY after Eleventy has built successfully, before the output is
+# uploaded. That property is what makes build-info.json a freshness
+# signal: a failed build never reaches here, so the previously published
+# build-info.json stays in place and its timestamp goes stale.
+#
+# Order matters. Bookshop must run first — it adds the live-editing
+# layer the CloudCannon editor depends on. Everything after it only
+# READS _site and writes new files alongside, so the editor is never
+# touched.
+#
+# Behaviour is controlled by environment variables set in
+# CloudCannon under Site Settings -> Builds -> Configuration:
+#
+#   ONDC_SLACK_WEBHOOK          post build summary / breaches to Slack
+#   ONDC_FAIL_ON_BROKEN_LINKS   1 = broken internal links fail the build
+#   ONDC_FAIL_ON_BUDGET         1 = page-weight breach fails the build
+#   ONDC_MAX_HTML_KB            per-page HTML budget (default 900)
+#   ONDC_MAX_TOTAL_MB           total output budget (default 40)
+#   ONDC_MIN_PAGES              expected page floor  (default 30)
+#
+# Every variable is optional. With none set, the hook still produces
+# build-info.json, build-report.txt and link-report.json, and never
+# fails the build.
+#
+# NO `set -e` / `set -u` HERE ON PURPOSE. CloudCannon runs this with
+# `source`, not as a subprocess (see your build log: `$ source
+# .cloudcannon/postbuild`). Any shell option set here would leak into
+# CloudCannon's own build shell, and `set -u` in particular could abort
+# the steps that run after this hook. Every variable below is read with
+# a ${VAR:-default} guard instead, which is safe either way.
+#
+# `source` also means `exit 1` ends CloudCannon's build shell — which is
+# exactly what the optional gates below want: a failed build, and no
+# upload of broken output.
+# =====================================================================
+
+SITE_DIR="_site"
+SCRIPTS="scripts/monitoring"
+
+# --- 1. Bookshop: unchanged, and must stay first ---------------------
+npm i
+npx @bookshop/generate --editable-regions
+
+# --- 2. Build metrics and page-weight budgets ------------------------
+# NOTE the `|| EXIT=$?` form. CloudCannon's build shell runs with
+# errexit enabled, and this file is SOURCED into it, so a bare command
+# that exits non-zero kills the whole build on the spot — before the
+# gate logic further down ever runs. Putting the call on the left of
+# `||` makes it a tested command, which errexit ignores. Do not
+# "simplify" these back to a bare call followed by `EXIT=$?`.
+METRICS_EXIT=0
+if [ -f "$SCRIPTS/build-metrics.js" ]; then
+  node "$SCRIPTS/build-metrics.js" "$SITE_DIR" || METRICS_EXIT=$?
+else
+  echo "[postbuild] $SCRIPTS/build-metrics.js missing, skipping metrics"
+fi
+
+# --- 3. Internal link and asset integrity ----------------------------
+LINKS_EXIT=0
+if [ -f "$SCRIPTS/check-links.js" ]; then
+  node "$SCRIPTS/check-links.js" "$SITE_DIR" || LINKS_EXIT=$?
+else
+  echo "[postbuild] $SCRIPTS/check-links.js missing, skipping link check"
+fi
+
+# --- 4. Slack summary, if configured ---------------------------------
+if [ -n "${ONDC_SLACK_WEBHOOK:-}" ] && [ -f "$SITE_DIR/build-info.json" ]; then
+  PAGES=$(node -e "process.stdout.write(String(require('./$SITE_DIR/build-info.json').pages))" 2>/dev/null || echo '?')
+  SIZE=$(node -e "process.stdout.write(String(require('./$SITE_DIR/build-info.json').total_mb))" 2>/dev/null || echo '?')
+  BROKEN=$(node -e "process.stdout.write(String(require('./$SITE_DIR/link-report.json').broken.length))" 2>/dev/null || echo '?')
+  TEXT="ONDC site built — ${PAGES} pages, ${SIZE} MB, ${BROKEN} broken internal links"
+  curl -sS -m 15 -X POST -H 'Content-Type: application/json' \
+    -d "{\"text\":$(printf '%s' "$TEXT" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.stringify(s)))')}" \
+    "$ONDC_SLACK_WEBHOOK" >/dev/null || echo "[postbuild] Slack notify failed (non-fatal)"
+fi
+
+# --- 5. Enforce budgets, if asked ------------------------------------
+if [ "${ONDC_FAIL_ON_BUDGET:-0}" = "1" ] && [ "$METRICS_EXIT" -ne 0 ]; then
+  echo "[postbuild] FAILING BUILD: page-weight budget breached"
+  exit 1
+fi
+if [ "${ONDC_FAIL_ON_BROKEN_LINKS:-0}" = "1" ] && [ "$LINKS_EXIT" -ne 0 ]; then
+  echo "[postbuild] FAILING BUILD: broken internal links"
+  exit 1
+fi
+
+# --- 6. Build freshness ----------------------------------------------
+# There is no outbound ping here any more. Build-failure detection now
+# comes from build-info.json, which step 2 wrote above: the availability
+# workflow fetches it from the live site and fails if its timestamp is
+# older than ONDC_MAX_BUILD_AGE_HOURS.
+#
+# That works because a failed build never reaches this point, so the
+# previously published build-info.json stays in place and goes stale —
+# which is exactly the signal. Set ONDC_MAX_BUILD_AGE_HOURS to a little
+# more than your longest expected gap between publishes.
+
+echo "[postbuild] complete"

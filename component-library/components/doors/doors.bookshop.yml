@@ -1,0 +1,20 @@
+spec:
+  structures:
+  - sections
+  label: Doors — find your place
+  description: A swipeable row of large cards, each with a picture, a list and a button.
+  icon: meeting_room
+blueprint:
+  anchor_id: find-your-place
+  title: Find Your Place on the Network
+  intro: ''
+  cards:
+  - image: ''
+    tag: ''
+    heading: For…
+    lead: ''
+    bullets: []
+    cta_label: Learn more
+    cta_url: '#'
+    new_tab: false
+_inputs: {}

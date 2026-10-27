@@ -1,0 +1,74 @@
+<section
+  class="bk-rfp-ledger"{% if anchor_id %} id="{{ anchor_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Ledger" }}"{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %} data-rfp-auto="{% if auto_by_date == false %}off{% else %}on{% endif %}"
+  data-rfp-tz="{{ timezone_label | default: "IST" }}"
+  data-rfp-tally="{{ tally_id }}">
+  <div class="bk-rfp-ledger-head bk-rv">
+    {% if eyebrow %}
+      <div class="bk-eyebrow">{{ eyebrow }}</div>
+    {% endif %}
+    <h2 class="bk-h2"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+  </div>
+
+  <div class="bk-rfp-toolbar bk-rv bk-rv-d1">
+    <div class="bk-tabs" role="tablist" aria-label="{{ tabs_label | default: "Categories" }}">
+      {% for tab in tabs %}{% assign tkey = tab.tab_key | default: tab.tab_source %}          <button
+          type="button"
+          class="bk-tab"
+          role="tab"
+          id="rfp-tab-{{ tkey }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-controls="rfp-panel-{{ tkey }}">{{ tab.tab_label }}</button>
+      {% endfor %}        </div>
+    {% if show_search %}        <input
+        type="search"
+        class="bk-directory-input bk-rfp-search"
+        id="rfpSearch"
+        placeholder="{{ search_placeholder }}"
+        aria-label="{{ search_label | default: search_placeholder }}">
+    {% endif %}
+  </div>
+
+  {% for tab in tabs %}
+    {% assign tkey = tab.tab_key | default: tab.tab_source %}
+    <div
+      class="bk-rfp-panel"
+      id="rfp-panel-{{ tkey }}"
+      role="tabpanel"
+      aria-labelledby="rfp-tab-{{ tkey }}"{% unless forloop.first %} hidden{% endunless %}>
+      <div
+        class="bk-rfp-rows"
+        id="rfp-rows-{{ tkey }}"
+        data-rfp-rows="{{ tab.tab_source }}"
+        data-rfp-empty-heading="{{ tab.tab_empty_heading | default: "No records found" }}"
+        data-rfp-empty-body="{{ tab.tab_empty_body | default: "Nothing matches this filter right now." }}">
+        {% for t in tenders %}
+          {% assign ttab = t.rfp_tab | default: "open" %}
+          {% assign render = false %}
+          {% unless t.rfp_no or t.rfp_name %}
+            {% continue %}
+          {% endunless %}
+          {% if tab.tab_source == "empanelled" %}
+            {% if ttab == "empanelled" %}
+              {% assign render = true %}
+            {% endif %}
+          {% else %}
+            {% unless ttab == "empanelled" %}
+              {% assign render = true %}
+            {% endunless %}
+          {% endif %}
+          {% if render %}
+            <div
+              class="bk-rfp-row"
+              data-rfp-tab="{{ ttab }}"{% if t.rfp_deadline %} data-rfp-due="{{ t.rfp_deadline }}"{% endif %}>
+              <span class="bk-rfp-no">{{ t.rfp_no }}</span>
+              <span class="bk-rfp-name">{{ t.rfp_name }}</span>
+              {% if t.rfp_deadline %}{% assign dl = t.rfp_deadline | strip | split: " " %}            <span class="bk-rfp-due"><b>{{ dl[0] }}{% if dl[1] %}, {{ dl[1] }}{% if timezone_label %} {{ timezone_label }}{% endif %}{% endif %}</b><i>{{ due_label | default: "Last date to apply" }}</i></span>
+              {% else %}            <span class="bk-rfp-due"></span>
+              {% endif %}            <span class="bk-rfp-docs">{% for d in t.rfp_documents %}{% assign doc_href = d.doc_url %}{% if doc_href %}<a class="bk-ul" target="_blank" rel="noopener" href="{{ doc_href }}">{{ d.doc_type }}</a>{% endif %}{% endfor %}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</section>

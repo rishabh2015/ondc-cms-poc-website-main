@@ -1,0 +1,34 @@
+<section
+  class="bk-people"
+  id="{{ anchor_id | default: "board-of-directors" }}"
+  data-screen-label="{{ screen_label | default: "Board of directors" }}">
+  <div class="bk-people-stage" aria-hidden="true">
+    <canvas id="boardNetworkCanvas"></canvas>
+  </div>
+  <div class="bk-people-content">
+    <div class="bk-people-head bk-rv">
+      {% if eyebrow %}
+        <div class="bk-eyebrow">{{ eyebrow }}</div>
+      {% endif %}
+      <h2 class="bk-h2">{{ heading }}</h2>
+      {% if lead %}
+        <p class="bk-people-lead">{{ lead }}</p>
+      {% endif %}
+    </div>
+
+    <div class="bk-people-group bk-rv">
+      <div class="bk-people-grid">
+        {% for person in people %}
+          <div class="bk-person">
+            <img class="bk-person-photo" src="{{ person.photo }}" alt="{{ person.name }}">
+            <div class="bk-person-body">
+              <div class="bk-person-name">{{ person.name }}</div>
+              <div class="bk-person-role">{{ person.role }}</div>
+              <div class="bk-person-org">{{ person.org }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

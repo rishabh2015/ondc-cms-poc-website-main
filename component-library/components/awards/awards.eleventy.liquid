@@ -1,0 +1,86 @@
+<section
+  class="bk-panel bk-awards"
+  id="{{ anchor_id | default: "recognitions" }}"
+  data-screen-label="{{ screen_label | default: "Rewards and recognition" }}">
+  <div class="bk-awards-head bk-rv">
+    {% if eyebrow %}
+      <div class="bk-eyebrow">{{ eyebrow }}</div>
+    {% endif %}
+    <h2 class="bk-h2">{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>
+      {% endif %}</h2>
+    {% if lead %}
+      <p class="bk-awards-lead">{{ lead }}</p>
+    {% endif %}
+  </div>
+  {% if featured.title %}
+    <button
+      type="button"
+      class="bk-award-feature bk-rv bk-rv-d1"
+      data-img="{{ featured.image }}"
+      data-title="{{ featured.title }}"
+      data-name="{{ featured.name }}"
+      data-year="{{ featured.year }}"
+      data-desc="{{ featured.description }}">
+      <span class="bk-award-feature-media"><img src="{{ featured.image }}" alt="{{ featured.alt }}"></span>
+      <span class="bk-award-feature-body">
+        <span class="bk-eyebrow">{{ featured.eyebrow | default: "Featured recognition" }}</span>
+        <span class="bk-award-feature-title">{{ featured.title }}</span>
+        <span class="bk-award-feature-meta"><strong>{{ featured.name }}</strong> &middot; {{ featured.year }}<br>{{ featured.description }}</span>
+      </span>
+    </button>
+  {% endif %}
+  <div class="bk-chrono">
+    {% for group in years %}
+      <div class="bk-chrono-group bk-rv" style="--step:{{ forloop.index0 }}">
+        <div class="bk-chrono-yr">{{ group.year }}</div>
+        <div class="bk-chrono-rows">
+          {% for award in group.awards %}            <button
+              type="button"
+              class="bk-award"
+              data-img="{{ award.image }}"
+              data-title="{{ award.title }}"
+              data-name="{{ award.name }}"
+              data-year="{{ group.year }}"
+              data-desc="{{ award.description }}">
+              <span class="bk-award-media"><img src="{{ award.image }}" alt="{{ award.alt }}" loading="lazy"></span>
+              <span class="bk-award-body">
+                <span class="bk-award-title">{{ award.title }}</span>
+                <span class="bk-award-name">{{ award.name }}</span>
+              </span>
+              <span class="bk-ul bk-award-view">View</span>
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div
+    class="bk-lightbox"
+    id="awModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="awModalTitle"
+    aria-hidden="true">
+    <div class="bk-lightbox-backdrop" data-close>
+    </div>
+    <div class="bk-lightbox-panel">
+      <span class="bk-lightbox-swish" aria-hidden="true"></span>
+      <button type="button" class="bk-btn bk-btn-ghost bk-lightbox-close" data-close>Close</button>
+      <div class="bk-lightbox-media">
+        <img id="awModalImg" src="{{ featured.image }}" alt="">
+      </div>
+      <div class="bk-lightbox-body">
+        <div class="bk-lightbox-content">
+          <div class="bk-eyebrow">Recognition</div>
+          <div class="bk-lightbox-title" id="awModalTitle">
+          </div>
+          <p class="bk-lightbox-meta">
+            <strong id="awModalName"></strong> &middot; <span id="awModalYear"></span><br>
+            <span id="awModalDesc"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

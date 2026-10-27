@@ -1,0 +1,50 @@
+{%- assign home_url = site.home_url | default: "/" -%}
+{%- comment -%}
+  The home page is reachable at BOTH "/" and "/index.html" — the file is
+  index.html, and the host serves it for the bare path too. The menu's "Home"
+  and "Roles You Can Play" items are bare anchors (#site-top), which have to be
+  prefixed with the home address from every OTHER page and left bare on the
+  home page itself, or clicking them reloads instead of scrolling. So the test
+  is "is this the home page", not a string compare against one of its two
+  addresses: `page.url` is whichever one Eleventy wrote.
+{%- endcomment -%}
+{%- assign on_home = false -%}
+{%- if page.url == "/" or page.url == "/index.html" or page.url == home_url -%}
+  {%- assign on_home = true -%}
+{%- endif -%}
+{%- comment -%}
+  Which menu item is lit. A page is normally its own menu item, but a section
+  with sub-pages — Resources has eighteen — wants the parent item lit on every
+  one of them, the way ondc.org does it. Such a page sets `nav_active` in its
+  front matter to the menu address it belongs under.
+{%- endcomment -%}
+{%- assign active_url = nav_active | default: page.url -%}
+<div data-visible="true" id="site-header">
+  <nav class="navbar">
+    <div class="container">
+      <a class="nav-logo" href="{{ home_url }}#site-top"><img
+          alt="{{ site.logo_alt }}"
+          src="{{ site.logo }}"
+          style="height: 52px; width: auto; display: block;"/></a>
+      <div class="nav-links">
+        {% for item in site.nav %}{% if item.children %}{%- comment -%}A drop-down is "active" when the page we are on is one of its children — the same rule the plain links use one branch down, just applied to the whole group.{%- endcomment -%}{% assign drop_active = "" %}{% for child in item.children %}{% if child.url == active_url %}{% assign drop_active = " active" %}{% endif %}{% endfor %}<details class="nav-drop"><summary class="nav-link{{ drop_active }}">{{ item.label }}<svg
+                  aria-hidden="true"
+                  class="nav-drop-chev"
+                  fill="none"
+                  height="5"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.4"
+                  viewbox="0 0 8 5"
+                  width="8"><path d="M1 1l3 3 3-3"></path></svg></summary><div class="nav-drop-menu">{% for child in item.children %}<a href="{{ child.url }}"{% if child.url == active_url %} class="active"{% endif %}>{{ child.label }}</a>{% endfor %}</div></details>{% else %}{% assign first_char = item.url | slice: 0 %}{% if first_char == "#" and on_home == false %}{% assign href = home_url | append: item.url %}{% else %}{% assign href = item.url %}{% endif %}<a
+              class="nav-link{% if item.url == active_url %} active{% endif %}"
+              href="{{ href }}"{% if item.new_tab %} rel="noopener"
+              target="_blank"{% endif %}>{{ item.label }}</a>{% endif %}{% endfor %}
+      </div>
+      <div class="nav-right">
+        <button class="nav-cta" onclick="window.open('{{ site.cta_url }}', '_blank', 'noopener')">{{ site.cta_label }}</button>
+      </div>
+    </div>
+  </nav>
+</div>

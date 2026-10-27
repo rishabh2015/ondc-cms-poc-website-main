@@ -1,0 +1,19 @@
+spec:
+  structures: [sections]
+  label: People grid
+  description: A grid of people with photo, name, role and organisation.
+  icon: groups
+
+blueprint:
+  anchor_id: board-of-directors
+  screen_label: ''
+  eyebrow: ''
+  heading: Board of Directors
+  lead: ''
+  people:
+    - photo: ''
+      name: Full name
+      role: Role
+      org: Organisation
+
+_inputs: {}

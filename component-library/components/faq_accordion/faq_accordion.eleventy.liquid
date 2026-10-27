@@ -1,0 +1,21 @@
+<section class="bk-panel bk-inset"{% if anchor_id %} id="{{ anchor_id }}"{% endif %}{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %} data-screen-label="{{ screen_label | default: "FAQ" }}">
+  <div class="bk-nl-head bk-rv">
+    {% if eyebrow %}
+      <div class="bk-eyebrow">{{ eyebrow }}</div>
+    {% endif %}
+    <h2 class="bk-h2"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+  </div>
+  <div class="bk-seat-ledger">
+    {% for item in items %}
+      <details class="bk-seat" name="bk-faq"{% if forloop.first %} open{% endif %}>
+        <summary class="bk-seat-row">
+          <span class="bk-seat-node" aria-hidden="true"></span>
+          <span class="bk-seat-title">{{ item.question }}</span>
+        </summary>
+        <div class="bk-seat-jd">
+          <p>{{ item.answer }}</p>
+        </div>
+      </details>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,18 @@
+spec:
+  structures:
+  - sections
+  label: Story posters
+  description: Quote posters from people on the network, linked to their posts.
+  icon: format_quote
+blueprint:
+  anchor_id: stories
+  title: The Network in Action
+  intro: ''
+  items:
+  - poster: ''
+    name: ''
+    role: ''
+    quote: ''
+    badge: Seller Story
+    post_link: ''
+_inputs: {}

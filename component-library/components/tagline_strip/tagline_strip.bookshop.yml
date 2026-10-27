@@ -1,0 +1,61 @@
+spec:
+  structures:
+  - sections
+  label: Tagline strip
+  description: >-
+    A single large heading with one line underneath. Two layouts: the standard
+    strip, and the two-column band the network pages use mid-page.
+  icon: short_text
+blueprint:
+  variant: ''
+  screen_label: ''
+  anchor_id: ''
+  heading_id: ''
+  title: A short, bold statement
+  heading_accent: ''
+  heading_suffix: ''
+  subtitle: One supporting line.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  variant:
+    type: select
+    label: Layout
+    comment: >-
+      "Standard" is the full-width strip. "Network page" is the two-column band
+      on the Gateway page — heading on the left, sentence on the right.
+    options:
+      values:
+        - value: ''
+          label: Standard
+        - value: bk
+          label: Network page
+  screen_label:
+    type: text
+    label: Section name for screen readers
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: Lets menu links jump to this section. Leave empty for none.
+  heading_id:
+    type: text
+    hidden: true
+  title:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted part of the heading
+    comment: >-
+      Set in the lighter weight. Only drawn by the "Network page" layout.
+  heading_suffix:
+    type: text
+    label: Plain tail of the heading
+    comment: >-
+      Comes after the highlighted part. Include the leading space if one is
+      needed. Only drawn by the "Network page" layout.
+  subtitle:
+    type: text
+    label: Line underneath

@@ -1,0 +1,174 @@
+spec:
+  structures: [sections]
+  label: Escalation panel
+  description: >-
+    A dark call-out panel: a heading, a list of conditions, action buttons, and
+    a side column of key facts with a link to the full document. Used for
+    "Escalate to ONDC" on the Complaints page.
+  icon: priority_high
+
+blueprint:
+  screen_label: Escalate
+  anchor_id: ''
+  heading_id: ''
+  heading: A heading for this panel
+  heading_accent: ''
+  heading_suffix: ''
+  lead: ''
+  triggers: []
+  buttons: []
+  note: ''
+  aside_rows: []
+  doc_label: ''
+  doc_url: ''
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: >-
+      Lets menu and button links jump to this panel, for example "escalate".
+      Change it only if you know a link points here.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading_id:
+    type: text
+    label: Heading anchor
+    comment: Optional. Ties this panel to its heading for screen readers.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+  lead:
+    type: textarea
+    label: Line under the heading
+  triggers:
+    type: array
+    label: Conditions
+    comment: >-
+      The bulleted list of situations this panel applies to. Use + to add one
+      and drag to reorder.
+    options:
+      structures:
+        values:
+          - label: Condition
+            picker_preview:
+              text: Condition
+              subtext: Another situation in the list
+              icon: fiber_manual_record
+            preview:
+              text:
+                - key: text
+                - 'Empty condition'
+              icon:
+                - fiber_manual_record
+            value:
+              text: ''
+            _inputs:
+              text:
+                type: textarea
+                label: Condition
+  buttons:
+    type: array
+    label: Buttons
+    options:
+      structures:
+        values:
+          - label: Button
+            picker_preview:
+              text: Button
+              subtext: Another button
+              icon: smart_button
+            preview:
+              text:
+                - key: label
+                - 'Untitled button'
+              subtext:
+                - key: url
+              icon:
+                - smart_button
+            value:
+              label: ''
+              url: ''
+              style: solid
+              new_tab: true
+            _inputs:
+              label:
+                type: text
+                label: Button text
+              url:
+                type: url
+                label: Where it goes
+              style:
+                type: select
+                label: Style
+                options:
+                  values:
+                    - value: solid
+                      label: Filled
+                    - value: ghost
+                      label: Outlined
+              new_tab:
+                type: switch
+                label: Open in a new tab
+  note:
+    type: textarea
+    label: Small print under the buttons
+  aside_rows:
+    type: array
+    label: Key facts on the right
+    comment: >-
+      Each one is a short bold figure with a line explaining it, for example
+      "48 hours" and what it means.
+    options:
+      structures:
+        values:
+          - label: Key fact
+            picker_preview:
+              text: Key fact
+              subtext: A figure and what it means
+              icon: schedule
+            preview:
+              text:
+                - key: term
+                - 'Untitled fact'
+              subtext:
+                - key: desc
+              icon:
+                - schedule
+            value:
+              term: ''
+              desc: ''
+            _inputs:
+              term:
+                type: text
+                label: The figure
+                comment: Shown in bold, for example "48 hours".
+              desc:
+                type: textarea
+                label: What it means
+  doc_label:
+    type: text
+    label: Document link text
+  doc_url:
+    type: url
+    label: Document link
+    comment: >-
+      Usually a PDF already hosted on ONDC's S3 bucket. Leave empty to hide the
+      link.

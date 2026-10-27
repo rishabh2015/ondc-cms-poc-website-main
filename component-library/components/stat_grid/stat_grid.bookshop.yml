@@ -1,0 +1,182 @@
+spec:
+  structures: [sections]
+  label: Key numbers
+  description: >-
+    Big figures that count up as they come into view, in one or more labelled
+    rows, with an optional numbered legend underneath. Used for the complaint
+    figures and for "By the numbers" on the sector pages.
+  icon: leaderboard
+
+blueprint:
+  screen_label: Key numbers
+  anchor_id: ''
+  heading_id: ''
+  heading: A heading for this section
+  heading_accent: ''
+  heading_suffix: ''
+  as_of_note: ''
+  groups:
+    - label: ''
+      fit_to_content: false
+      tiles:
+        - value: '0'
+          label: What this number counts
+          count_up: true
+  legend: []
+
+# WHERE THESE NUMBERS COME FROM
+# ondc.org fetches the complaint figures from the complaints team's Google
+# Sheet at page load. This build does not: the numbers are fields here, so
+# updating them is an edit in the CMS and the page has no dependency on Google,
+# no sharing setting that can silently break it, and no blank section if the
+# fetch fails. It is the same decision already taken for the RFP ledger — see
+# ADDING_PAGES.md. The trade is that someone has to copy the figures across
+# when the sheet changes, instead of it happening by itself.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: Lets menu and button links jump to this section.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading_id:
+    type: text
+    label: Heading anchor
+    comment: Optional. Ties this section to its heading for screen readers.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+  as_of_note:
+    type: text
+    label: Small note beside the heading
+    comment: >-
+      Usually when the figures were last updated, for example "Last updated on
+      1 Oct 2026." Update it whenever you change the numbers below.
+  groups:
+    type: array
+    label: Rows of numbers
+    comment: >-
+      Each row is a set of tiles with its own small label above it. Two rows is
+      the usual number — they fade in one after another, and past the second
+      they all share the last delay.
+    options:
+      structures:
+        values:
+          - label: Row of numbers
+            picker_preview:
+              text: Row of numbers
+              subtext: Another labelled row of tiles
+              icon: view_module
+            preview:
+              text:
+                - key: label
+                - 'Unlabelled row'
+              icon:
+                - view_module
+            value:
+              label: ''
+              fit_to_content: false
+              tiles: []
+            _inputs:
+              label:
+                type: text
+                label: Small label above this row
+                comment: Optional.
+              fit_to_content:
+                type: switch
+                label: Size tiles to their content
+                comment: >-
+                  On, the tiles shrink to fit and sit together — right for a row
+                  of years. Off, they share the width equally.
+              tiles:
+                type: array
+                label: Numbers in this row
+                options:
+                  structures:
+                    values:
+                      - label: Number
+                        picker_preview:
+                          text: Number
+                          subtext: Another figure in this row
+                          icon: pin
+                        preview:
+                          text:
+                            - key: value
+                            - 'No value'
+                          subtext:
+                            - key: label
+                          icon:
+                            - pin
+                        value:
+                          value: ''
+                          label: ''
+                          count_up: true
+                        _inputs:
+                          value:
+                            type: text
+                            label: The figure
+                            comment: >-
+                              Type digits only for a figure that counts up — no
+                              commas. Turn the switch below off to show text
+                              exactly as typed.
+                          label:
+                            type: text
+                            label: What it counts
+                          count_up:
+                            type: switch
+                            label: Count up when it scrolls into view
+                            comment: >-
+                              Turn off for anything that is not a plain whole
+                              number, such as a year or a figure with a symbol
+                              in it.
+  legend:
+    type: array
+    label: Legend
+    comment: >-
+      Optional numbered notes under the tiles, explaining what each status
+      means.
+    options:
+      structures:
+        values:
+          - label: Legend note
+            picker_preview:
+              text: Legend note
+              subtext: A term and what it means
+              icon: label
+            preview:
+              text:
+                - key: term
+                - 'Untitled note'
+              subtext:
+                - key: desc
+              icon:
+                - label
+            value:
+              term: ''
+              desc: ''
+            _inputs:
+              term:
+                type: text
+                label: The term
+                comment: Shown in bold, with a full stop added automatically.
+              desc:
+                type: textarea
+                label: What it means

@@ -1,0 +1,22 @@
+<section class="metrics-bar" id="{{ anchor_id | default: "financial" }}">
+  <div class="container">
+    <div class="metrics-header hv-rv">
+      <h2 class="metrics-h2">{{ title }}</h2>
+    </div>
+    <div class="metrics-row">
+      {% for item in items %}
+        {% unless forloop.first %}
+          <div class="metric-sep">
+          </div>
+        {% endunless %}
+        <div class="metric hv-rv" style="transition-delay: {{ forloop.index0 | times: 90 }}ms;">
+          <span aria-hidden="true" class="metric-fill"></span>
+          <div class="metric-num">{{ item.value }}</div>
+          <div class="metric-label">{{ item.label | nl2br }}</div>
+        </div>
+      {% endfor %}
+    </div>
+    {% assign metric_count = items | size %}
+    <p class="metrics-tagline hv-rv" style="transition-delay: {{ metric_count | times: 90 }}ms;">{{ tagline }}</p>
+  </div>
+</section>

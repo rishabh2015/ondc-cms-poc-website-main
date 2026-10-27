@@ -1,0 +1,95 @@
+spec:
+  structures: [sections]
+  label: FAQ
+  description: >-
+    Questions the reader clicks to reveal the answer. Only one is open at a
+    time, and the first one starts open.
+  icon: quiz
+
+blueprint:
+  screen_label: FAQ
+  anchor_id: ''
+  heading_id: ''
+  eyebrow: FAQ
+  heading: Questions people
+  heading_accent: ask us most
+  heading_suffix: ''
+  items:
+    - question: A question
+      answer: The answer to it.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: Lets menu and button links jump to this section, for example "faq".
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading_id:
+    type: text
+    label: Heading anchor
+    comment: Optional. Ties this section to its heading for screen readers.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  eyebrow:
+    type: text
+    label: Small label above the heading
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+  items:
+    type: array
+    label: Questions
+    comment: >-
+      Use + to add one and drag to reorder. The first question in the list is
+      the one that starts open on the page.
+    options:
+      structures:
+        values:
+          - label: Question
+            picker_preview:
+              text: Question
+              subtext: Another question and its answer
+              icon: help_outline
+            preview:
+              text:
+                - key: question
+                - 'Untitled question'
+              subtext:
+                - key: answer
+              icon:
+                - help_outline
+            value:
+              question: ''
+              answer: ''
+            _inputs:
+              question:
+                type: text
+                label: Question
+              answer:
+                type: html
+                label: Answer
+                comment: >-
+                  Links are allowed — select some text and use the link button.
+                options:
+                  bold: true
+                  italic: true
+                  link: true
+                  undo: true
+                  redo: true
+                  remove_format: true

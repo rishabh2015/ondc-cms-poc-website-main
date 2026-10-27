@@ -1,0 +1,330 @@
+spec:
+  structures: [sections]
+  label: RFP / RFQ ledger
+  description: >-
+    The tender table. Add an open RFP, a closed one, or an empanelled agency —
+    each takes a number, a name, a deadline (date and time) and its documents,
+    each of which is a link you paste. Open and Closed sort themselves out as
+    each deadline passes.
+  icon: table_rows
+
+blueprint:
+  screen_label: The ledger
+  anchor_id: rfp-ledger
+  heading_id: ''
+  eyebrow: The ledger
+  heading: Every opportunity,
+  heading_accent: on the record
+  heading_suffix: '.'
+  tally_id: ''
+  auto_by_date: true
+  show_search: true
+  search_placeholder: Search by RFP name or number
+  search_label: ''
+  tabs_label: Categories
+  due_label: Last date to apply
+  timezone_label: IST
+  tabs:
+    - tab_key: open
+      tab_label: Open
+      tab_source: open
+      tab_empty_heading: No records found
+      tab_empty_body: Nothing matches this filter right now.
+    - tab_key: closed
+      tab_label: Closed
+      tab_source: closed
+      tab_empty_heading: No records found
+      tab_empty_body: Nothing matches this filter right now.
+    - tab_key: empanelled
+      tab_label: Empanelled agencies
+      tab_source: empanelled
+      tab_empty_heading: No empanelled agencies yet
+      tab_empty_body: This list is empty for now. Check back after the next empanelment cycle.
+  tenders: []
+
+# ─────────────────────────────────────────────────────────────────────────────
+# EVERYTHING the editor sees for this component is configured HERE, including
+# the fields inside the nested arrays, and the structures are written out in
+# full rather than referenced as `_structures.<name>`.
+#
+# That is not a style choice. Two other placements were tried and are silently
+# ignored for a Bookshop component's fields:
+#
+#   1. `_inputs` at the top level of cloudcannon.config.yml — only reaches page
+#      front matter and data files, not a component's fields.
+#   2. `_inputs` nested inside a `_structures.<name>` entry in
+#      cloudcannon.config.yml, reached by a `structures: _structures.<name>`
+#      string reference — the values arrive but their `_inputs` do not.
+#
+# The reason this placement works: @bookshop/generate copies a component's
+# `_inputs` verbatim into the `_cloudcannon/info.json` that CloudCannon reads
+# (see lib/structure-connector.js — `let { structures, ...fields } = structure`),
+# so an inline structure keeps its per-value `_inputs` all the way through.
+#
+# Symptoms of getting this wrong: auto-titled labels like "Rfp No", a file
+# upload that renders as a plain text box, a select that renders as text, and
+# unrelated same-named inputs from other components leaking in.
+# ─────────────────────────────────────────────────────────────────────────────
+_inputs:
+  tenders:
+    type: array
+    label: RFPs, RFQs and empanelled agencies
+    comment: >-
+      Everything the table lists. Use + to add one — you choose whether it is an
+      open RFP, a closed one, or an empanelled agency. Drag to reorder.
+    options:
+      structures:
+        values:
+          - label: Open RFP / RFQ
+            picker_preview:
+              text: Open RFP / RFQ
+              subtext: A tender you are inviting proposals for
+              icon: gavel
+            preview: &rfp_tender_preview
+              text:
+                - key: rfp_name
+                - 'Untitled tender'
+              subtext:
+                - key: rfp_no
+                - 'No reference number yet'
+              icon:
+                - gavel
+            value:
+              rfp_tab: open
+              rfp_no: ''
+              rfp_name: ''
+              rfp_deadline: ''
+              rfp_documents:
+                - doc_type: RFP document
+                  doc_url: ''
+            _inputs: &rfp_tender_inputs
+              rfp_tab:
+                type: select
+                label: Which tab it appears under
+                comment: >-
+                  With "Move tenders automatically" switched on (the normal
+                  case) the deadline decides Open vs Closed, and this is only
+                  the starting point. Empanelled agencies always stay in their
+                  own tab.
+                options:
+                  values:
+                    - value: open
+                      label: Open
+                    - value: closed
+                      label: Closed
+                    - value: empanelled
+                      label: Empanelled agencies
+              rfp_no:
+                type: text
+                label: RFP / RFQ number
+                comment: The reference exactly as it should appear, for example ONDC/RFP/2026/001.
+              rfp_name:
+                type: text
+                label: Name
+                comment: The title applicants will read.
+              rfp_deadline:
+                type: text
+                label: Deadline — last date and time to apply
+                comment: >-
+                  Day.Month.Year, then the time on a 24-hour clock — for
+                  example 30.11.2026 17:30, or 30.11.2026 23:59:59. Times are
+                  India Standard Time. The tender stays under Open until this
+                  exact moment. The time is optional; without one the deadline
+                  is the end of that day. Leave the whole field empty for an
+                  empanelled agency.
+                options:
+                  # Plain text on purpose. A `datetime` input was tried here and
+                  # silently blanked every stored value on save — including ones
+                  # that had been entered correctly — so real deadlines were
+                  # lost. Text cannot be reset by an input's own state, and this
+                  # is the format ONDC already writes. The pattern catches a
+                  # typo in the CMS rather than at render time.
+                  pattern: '^\s*$|^\d{2}\.\d{2}\.\d{4}(\s+\d{1,2}:\d{2}(:\d{2})?)?\s*$'
+                  pattern_message: >-
+                    Use Day.Month.Year, optionally followed by a time — for
+                    example 30.11.2026 or 30.11.2026 17:30
+              rfp_documents:
+                type: array
+                label: Documents
+                comment: >-
+                  The documents applicants download — the RFP itself, any
+                  corrigendum, annexures. Each one is a name plus a link. Use +
+                  to add one and drag to reorder.
+                options:
+                  structures:
+                    values:
+                      - label: Document
+                        picker_preview:
+                          text: Document
+                          subtext: A link to a document hosted elsewhere
+                          icon: link
+                        # What the collapsed row shows: the link wording, then
+                        # the file that is actually attached, so an editor can
+                        # see at a glance which entries still have none.
+                        preview:
+                          text:
+                            - key: doc_type
+                            - 'Untitled document'
+                          subtext:
+                            - key: doc_url
+                            - 'No link yet'
+                          icon:
+                            - link
+                        value:
+                          doc_type: RFP document
+                          doc_url: ''
+                        _inputs:
+                          doc_type:
+                            type: text
+                            label: What this document is
+                            comment: >-
+                              The wording shown as the download link, for
+                              example "RFP document" or "Corrigendum 1".
+                          doc_url:
+                            type: url
+                            label: Link to the document
+                            comment: >-
+                              Paste the full web address of the document, for
+                              example an ONDC S3 link ending in .pdf. Documents
+                              are not uploaded here — host the file wherever
+                              ONDC publishes its tender documents and link to
+                              it. A document with no link is skipped on the
+                              page.
+          - label: Closed RFP / RFQ
+            picker_preview:
+              text: Closed RFP / RFQ
+              subtext: A past tender, kept for the record
+              icon: folder
+            preview: *rfp_tender_preview
+            value:
+              rfp_tab: closed
+              rfp_no: ''
+              rfp_name: ''
+              rfp_deadline: ''
+              rfp_documents:
+                - doc_type: RFP document
+                  doc_url: ''
+            _inputs: *rfp_tender_inputs
+          - label: Empanelled agency
+            picker_preview:
+              text: Empanelled agency
+              subtext: An agency on the empanelled list
+              icon: verified
+            preview:
+              text:
+                - key: rfp_name
+                - 'Unnamed agency'
+              subtext:
+                - key: rfp_no
+                - 'Empanelled agency'
+              icon:
+                - verified
+            value:
+              rfp_tab: empanelled
+              rfp_no: ''
+              rfp_name: ''
+              rfp_deadline: ''
+              rfp_documents: []
+            _inputs: *rfp_tender_inputs
+
+  tabs:
+    type: array
+    label: Tabs
+    comment: >-
+      The three tabs above the table. The first one is open when the page
+      loads. You will rarely need to change these.
+    options:
+      structures:
+        values:
+          - label: Tab
+            picker_preview:
+              text: Tab
+              subtext: Another tab above the table
+              icon: tab
+            preview: &rfp_tab_preview
+              text:
+                - key: tab_label
+                - 'Untitled tab'
+              subtext:
+                - key: tab_source
+              icon:
+                - tab
+            value:
+              tab_key: open
+              tab_label: Open
+              tab_source: open
+              tab_empty_heading: No records found
+              tab_empty_body: Nothing matches this filter right now.
+            _inputs: &rfp_tab_inputs
+              tab_label:
+                type: text
+                label: Tab name
+              tab_empty_heading:
+                type: text
+                label: Heading when this tab is empty
+              tab_empty_body:
+                type: textarea
+                label: Message when this tab is empty
+              tab_key:
+                type: text
+                hidden: true
+              tab_source:
+                type: text
+                hidden: true
+
+  auto_by_date:
+    type: checkbox
+    label: Move tenders between Open and Closed automatically
+    comment: >-
+      Leave this on. A tender then sits under Open until its deadline passes
+      and appears under Closed straight after, with no rebuild needed. Turn it
+      off only if you want to decide each tender's tab by hand. Empanelled
+      agencies are never moved either way.
+  tally_id:
+    type: text
+    hidden: true
+  heading_id:
+    type: text
+    hidden: true
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: Lets menu links jump to this section. Change only if you know a link points here.
+  eyebrow:
+    type: text
+    label: Small label above the heading
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+    comment: Shown in the accent style at the end of the heading. Leave empty for a plain heading.
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+    comment: Usually just a full stop.
+  show_search:
+    type: checkbox
+    label: Show the search box
+  search_placeholder:
+    type: text
+    label: Search box placeholder
+  search_label:
+    type: text
+    label: Search box description for screen readers
+    comment: Optional. Falls back to the placeholder text.
+  tabs_label:
+    type: text
+    label: Name of the tab row for screen readers
+  due_label:
+    type: text
+    label: Wording under each deadline
+  timezone_label:
+    type: text
+    label: Timezone shown after each deadline
+    comment: Shown next to the time, for example IST. Clear it to show no timezone.

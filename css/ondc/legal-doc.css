@@ -1,0 +1,33 @@
+/* =====================================================================
+   Legal documents — the one rule beckn.css cannot carry.
+   =====================================================================
+   WHY THIS FILE EXISTS (the same reason as css/ondc/resources-search.css)
+
+   Two places hold rich text where ondc.org writes the sentence straight
+   into the element — the related-documents line under the title, and the
+   text of a numbered point. Whatever an editor types there arrives wrapped
+   in its own <p>, and upstream has no rule for a child paragraph, so a
+   browser-default `margin: 1em 0` would push the line away from the title
+   it belongs under and the point away from its own marker. (`.bk-clause-note`
+   needs nothing: beckn.css already spaces the paragraphs inside it.)
+
+   This rule is NOT in beckn.css because that file is a byte-copy of the
+   one on ondc.org: refresh it from upstream and anything added to it is
+   silently lost, taking the fix with it.
+
+   Load AFTER beckn.css.
+   ===================================================================== */
+
+/* One grey line, not a stack of paragraphs. */
+.bk-note > p {
+  margin: 0;
+}
+
+/* A point is one sentence beside its marker, not a stack of paragraphs. */
+.bk-barrier-t > p {
+  margin: 0;
+}
+
+.bk-barrier-t > p + p {
+  margin-top: .6em;
+}

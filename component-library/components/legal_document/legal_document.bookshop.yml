@@ -1,0 +1,391 @@
+spec:
+  structures: [sections]
+  label: Legal document
+  description: >-
+    A policy or agreement — the title block, the sticky index down the side,
+    and the numbered clauses. Clause numbers come from the order of the list,
+    so adding, deleting or dragging a clause renumbers the rest.
+  icon: gavel
+
+blueprint:
+  screen_label: Policy document
+  eyebrow: Legal
+  heading: Policy
+  heading_accent: name
+  sub: ''
+  read_alongside: ''
+  body_label: Policy document
+  show_index: true
+  index_aria: On this page
+  measure: ''
+  clauses:
+    - clause_anchor: section-one
+      index_label: First clause
+      clause_title: First clause
+      parts:
+        - part_kind: text
+          html: ''
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5. The field names also avoid the generic ones that
+# file already owns (`title`, `note`, `kind`), so nothing can inherit a label
+# written for something else.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+  eyebrow:
+    type: text
+    label: Small label above the title
+  heading:
+    type: text
+    label: Title
+    comment: The first half of the title, in bold.
+  heading_accent:
+    type: text
+    label: Title, second half
+    comment: >-
+      Set in the lighter weight — "Privacy **Policy**". Leave empty for a
+      title all in bold.
+  sub:
+    type: text
+    label: Line under the title
+  read_alongside:
+    type: html
+    label: Related-documents line
+    comment: >-
+      The grey line under the title, usually "Read alongside our Terms of Use
+      and Cookie Policy" with both named documents linked. Leave empty to drop
+      it.
+    options:
+      bold: true
+      italic: true
+      link: true
+      removeformat: true
+      undo: true
+      redo: true
+  body_label:
+    type: text
+    label: Name of the document body, for screen readers
+  show_index:
+    type: checkbox
+    label: Show the index down the left
+    comment: >-
+      The sticky list of clauses, which highlights the one you are reading.
+      Untick on a short document — it then sets its own narrower measure, the
+      way the cookie policy does.
+  index_aria:
+    type: text
+    label: Name of the index, for screen readers
+  measure:
+    type: text
+    label: Width of the text column
+    comment: >-
+      Only used when the index is off. A CSS grid width such as ".58fr" —
+      smaller is narrower. Leave empty for the standard width.
+    options:
+      pattern: '^(|[0-9.]+(fr|px|rem|ch)|minmax\(.+\))$'
+      pattern_message: A width such as .58fr, or empty for the standard one.
+  clauses:
+    type: array
+    label: Clauses
+    comment: >-
+      Each one is a numbered section of the document. The number is the
+      position in this list, so deleting or dragging a clause renumbers the
+      others on its own. Use + to add one, the item menu to duplicate or
+      delete, and drag to reorder.
+    options:
+      structures:
+        values:
+          - label: Clause
+            icon: gavel
+            preview:
+              text:
+                - key: clause_title
+              subtext:
+                - key: index_label
+              icon: gavel
+            value:
+              clause_anchor: ''
+              index_label: ''
+              clause_title: ''
+              unnumbered: false
+              parts: []
+            _inputs:
+              clause_anchor:
+                type: text
+                label: Link target
+                comment: >-
+                  What the index link and any link from another page points at
+                  — lower-case, no spaces, for example "user-consent". Changing
+                  it breaks links people have already shared.
+                options:
+                  pattern: '^[a-z][a-z0-9-]*$'
+                  pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+              index_label:
+                type: text
+                label: Short name, for the index
+                comment: >-
+                  The rail is narrow, so this is usually shorter than the
+                  heading. Leave empty to use the heading itself.
+              clause_title:
+                type: text
+                label: Heading
+              unnumbered:
+                type: checkbox
+                label: No number on this clause
+                comment: >-
+                  Tick on an opening preamble. It also stops the clause taking
+                  a number from the ones after it, so they still run 01, 02,
+                  03 — and the ledger a clause can print of the others agrees
+                  with them.
+              parts:
+                type: array
+                label: What the clause says
+                comment: >-
+                  Text, a sub-heading, or a boxed aside — in the order they
+                  should be read.
+                options:
+                  structures:
+                    values:
+                      - label: Text
+                        icon: notes
+                        preview:
+                          text:
+                            - key: html
+                          icon: notes
+                        value:
+                          part_kind: text
+                          html: ''
+                        _inputs:
+                          part_kind:
+                            # Which kind of part this is. The component switches
+                            # on it, so it is set by the structure and never by
+                            # hand — `hidden: true` beside a real type, because
+                            # CloudCannon has no `hidden` TYPE and rejects one.
+                            type: text
+                            hidden: true
+                          html:
+                            type: html
+                            label: Text
+                            comment: Paragraphs and lists.
+                            options:
+                              bold: true
+                              italic: true
+                              link: true
+                              bulletedlist: true
+                              numberedlist: true
+                              removeformat: true
+                              undo: true
+                              redo: true
+                      - label: Numbered points
+                        icon: format_list_numbered
+                        preview:
+                          text:
+                            - 'Numbered points'
+                          icon: format_list_numbered
+                        value:
+                          part_kind: barriers
+                          barriers: []
+                        _inputs:
+                          part_kind:
+                            # Which kind of part this is. The component switches
+                            # on it, so it is set by the structure and never by
+                            # hand — `hidden: true` beside a real type, because
+                            # CloudCannon has no `hidden` TYPE and rejects one.
+                            type: text
+                            hidden: true
+                          barriers:
+                            type: array
+                            label: The points
+                            comment: >-
+                              A ruled list where each point carries its own
+                              marker — "01", "02" or "a", "b" — and a sentence
+                              that usually opens with the term in bold.
+                            options:
+                              structures:
+                                values:
+                                  - label: Point
+                                    icon: label
+                                    preview:
+                                      text:
+                                        - key: marker
+                                      subtext:
+                                        - key: text_html
+                                      icon: label
+                                    value:
+                                      marker: ''
+                                      text_html: ''
+                                    _inputs:
+                                      marker:
+                                        type: text
+                                        label: Marker
+                                        comment: >-
+                                          Shown in blue at the left — typed out
+                                          rather than counted, because some of
+                                          these lists run 01, 02 and others a,
+                                          b.
+                                      text_html:
+                                        type: html
+                                        label: The point
+                                        options:
+                                          bold: true
+                                          italic: true
+                                          link: true
+                                          removeformat: true
+                                          undo: true
+                                          redo: true
+                      - label: Statutory paragraph
+                        icon: gavel
+                        preview:
+                          text:
+                            - key: caps_text
+                          icon: gavel
+                        value:
+                          part_kind: caps_p
+                          caps_text: ''
+                        _inputs:
+                          part_kind:
+                            # Which kind of part this is. The component switches
+                            # on it, so it is set by the structure and never by
+                            # hand — `hidden: true` beside a real type, because
+                            # CloudCannon has no `hidden` TYPE and rejects one.
+                            type: text
+                            hidden: true
+                          caps_text:
+                            type: textarea
+                            label: The paragraph
+                            comment: >-
+                              Set in the smaller all-capitals style the law
+                              requires for disclaimers. Type it in capitals —
+                              the style does not capitalise it for you.
+                      - label: Statutory list
+                        icon: gavel
+                        preview:
+                          text:
+                            - 'Statutory list'
+                          icon: gavel
+                        value:
+                          part_kind: caps_ul
+                          caps_items: []
+                        _inputs:
+                          part_kind:
+                            # Which kind of part this is. The component switches
+                            # on it, so it is set by the structure and never by
+                            # hand — `hidden: true` beside a real type, because
+                            # CloudCannon has no `hidden` TYPE and rejects one.
+                            type: text
+                            hidden: true
+                          caps_items:
+                            type: array
+                            label: The points
+                            comment: >-
+                              One point can itself hold a sub-list and a
+                              closing sentence, which is why each is rich text
+                              rather than a plain line.
+                            options:
+                              structures:
+                                values:
+                                  - label: Point
+                                    icon: gavel
+                                    preview:
+                                      text:
+                                        - key: html
+                                      icon: gavel
+                                    value:
+                                      html: ''
+                                    _inputs:
+                                      html:
+                                        type: html
+                                        label: The point
+                                        comment: >-
+                                          Type it in capitals — the style does
+                                          not capitalise it for you.
+                                        options:
+                                          bold: true
+                                          italic: true
+                                          link: true
+                                          bulletedlist: true
+                                          removeformat: true
+                                          undo: true
+                                          redo: true
+                      - label: Ledger of the other clauses
+                        icon: format_list_numbered
+                        preview:
+                          text:
+                            - 'Ledger of the other clauses'
+                          icon: format_list_numbered
+                        value:
+                          part_kind: clause_index
+                          nav_label: ''
+                        _inputs:
+                          part_kind:
+                            # Which kind of part this is. The component switches
+                            # on it, so it is set by the structure and never by
+                            # hand — `hidden: true` beside a real type, because
+                            # CloudCannon has no `hidden` TYPE and rejects one.
+                            type: text
+                            hidden: true
+                          nav_label:
+                            type: text
+                            label: Name of the ledger, for screen readers
+                            comment: >-
+                              A numbered list of every numbered clause in this
+                              document, built from the clauses themselves —
+                              add or delete one and this follows. Used by
+                              Terms of Use in place of a side index.
+                      - label: Sub-heading
+                        icon: title
+                        preview:
+                          text:
+                            - key: subheading
+                          icon: title
+                        value:
+                          part_kind: subheading
+                          subheading: ''
+                        _inputs:
+                          part_kind:
+                            # Which kind of part this is. The component switches
+                            # on it, so it is set by the structure and never by
+                            # hand — `hidden: true` beside a real type, because
+                            # CloudCannon has no `hidden` TYPE and rejects one.
+                            type: text
+                            hidden: true
+                          subheading:
+                            type: text
+                            label: Sub-heading
+                      - label: Boxed aside
+                        icon: sticky_note_2
+                        preview:
+                          text:
+                            - key: note_title
+                          icon: sticky_note_2
+                        value:
+                          part_kind: note
+                          note_title: ''
+                          note_html: ''
+                        _inputs:
+                          part_kind:
+                            # Which kind of part this is. The component switches
+                            # on it, so it is set by the structure and never by
+                            # hand — `hidden: true` beside a real type, because
+                            # CloudCannon has no `hidden` TYPE and rejects one.
+                            type: text
+                            hidden: true
+                          note_title:
+                            type: text
+                            label: Heading of the box
+                            comment: For example "*Note:". Leave empty for a box with no heading.
+                          note_html:
+                            type: html
+                            label: Text in the box
+                            options:
+                              bold: true
+                              italic: true
+                              link: true
+                              bulletedlist: true
+                              numberedlist: true
+                              removeformat: true
+                              undo: true
+                              redo: true

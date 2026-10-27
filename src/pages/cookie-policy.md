@@ -1,0 +1,209 @@
+---
+title: Cookie Policy, ONDC
+description: How and why cookies and similar technologies are used on the ONDC website.
+permalink: /cookie-policy.html
+wrapper_tag: main
+wrapper_class: bk
+wrapper_id: ''
+show_progress: true
+styles:
+  - fx
+  - scale
+  - type-boost
+  - beckn
+  - legal-doc
+  - mobile
+scripts:
+  - /js/ondc/fx.js
+  - /js/ondc/beckn.js
+  - /js/ondc/scroll-progress.js
+sections:
+  - _template: legal_document
+    screen_label: Policy document
+    eyebrow: Legal
+    heading: Cookie
+    heading_accent: Policy
+    sub: How and why cookies and similar technologies are used on the ONDC website.
+    read_alongside: Read alongside our <a href="/privacy-policy.html">Privacy
+      Policy</a> and <a href="/terms-and-conditions.html">Terms of Use</a>.
+    body_label: Cookie policy document
+    show_index: false
+    index_aria: On this page
+    measure: .58fr
+    clauses:
+      - clause_anchor: overview
+        index_label: Overview
+        clause_title: Overview
+        unnumbered: false
+        parts:
+          - part_kind: text
+            html: >-
+              <p>Open Network for Digital Commerce (“we”, “us”, “ONDC”)
+              understands that privacy is important to the data subject (“you”,
+              “your”, “user”) and we are committed to being transparent about
+              how we use your data. This Cookie Policy explains how and why
+              cookies and other similar technologies may be deployed on and
+              accessed from your device when you use or visit the ONDC
+              website.</p>
+
+              <p>This Cookie Policy should be read together with our <a
+              href="/privacy-policy.html">Privacy Policy</a> and <a
+              href="/terms-and-conditions.html">Terms of Use</a>. This policy
+              describes the information which may ONDC collect from you when you
+              access, or use its website www.ondc.org <b>(“Website“)</b>.</p>
+
+              <p>The Website may have links to third party websites and
+              services. This Policy does not apply to such third-party websites
+              and services.</p>
+      - clause_anchor: what-are-cookies
+        index_label: What are cookies and Other Tracking Technologies?
+        clause_title: What are cookies and Other Tracking Technologies?
+        unnumbered: false
+        parts:
+          - part_kind: text
+            html: <p>A cookie is a small text file that a website saves on your computer or
+              mobile device when you visit the site. It enables the website to
+              remember your actions and preferences (such as login, language,
+              font size and other display preferences) over a period of time, so
+              you don’t have to keep re-entering them whenever you come back to
+              the site or browse from one page to another. The other tracking
+              technologies work similarly to cookies and place small data files
+              on your devices or monitor your website activity to enable us to
+              collect information about how you use our website. This allows our
+              website to recognize your device from those of other users of the
+              website. The information provided below about cookies also applies
+              to these other tracking technologies.</p>
+      - clause_anchor: how-we-use
+        index_label: How do we use cookies and other tracking technologies?
+        clause_title: How do we use cookies and other tracking technologies?
+        unnumbered: false
+        parts:
+          - part_kind: text
+            html: >-
+              <p>We use cookies to collect and store information when you visit
+              our website. We use cookies for various purposes such as:</p>
+
+              <ul>
+
+              <li>To identify your location</li>
+
+              <li>To identify your browser and device.</li>
+
+              <li>For analytics and research,</li>
+
+              <li>Measure and analyse the audience for each page in order to
+              subsequently improve the ergonomics, browsing, or visibility of
+              content;</li>
+
+              <li>Measure the reliability of Website by analysing the number of
+              visits to its pages in real time, and that are adapted to users’
+              areas of interest;</li>
+
+              <li>Cookies may also be saved by social media tools if you use
+              these functionalities (e.g. Facebook, Google &amp; LinkedIn).</li>
+
+              </ul>
+      - clause_anchor: types
+        index_label: Types of cookies
+        clause_title: Types of cookies
+        unnumbered: false
+        parts:
+          - part_kind: text
+            html: <p>We use different types of cookies on the Website for different
+              purposes.</p>
+          - part_kind: barriers
+            barriers:
+              - marker: '01'
+                text_html: <b>First-party cookies.</b> These are the cookies that belong to us
+                  and which we place on your device. We use these cookies as
+                  they are absolutely necessary. If you choose to opt out of
+                  these cookies, then we may not be able to provide you these
+                  Services.
+              - marker: '02'
+                text_html: <b>Third-party cookies.</b> These cookies are set by someone other
+                  than us when you access or use the Website. We have no control
+                  over third-party cookies – you can turn them off, but not
+                  through us. We endeavour to identify these cookies before they
+                  are used so that you can decide whether you wish to accept
+                  them or not. If you wish to know the list of third party
+                  cookies we use, drop an email at <a
+                  href="mailto:privacy@ondc.org">privacy@ondc.org</a> and we
+                  will provide you with our key third-party providers.
+              - marker: '03'
+                text_html: <b>Persistent cookies.</b> We use persistent cookies to improve your
+                  experience of using the sites. This includes recording your
+                  acceptance of our Cookie Policy to remove the cookie message
+                  which first appears when you visit the site.
+              - marker: '04'
+                text_html: <b>Session cookies.</b> Session cookies are temporary and deleted
+                  from your machine when your web browser closes. We use session
+                  cookies to help us track internet usage as described above.
+                  You may refuse to accept browser cookies by activating the
+                  appropriate setting on your browser, though some parts of the
+                  Website may then be unavailable to you.
+          - part_kind: text
+            html: <p>The data collected by the website and/or through cookies that may be
+              placed on your computer will not be kept for longer than is
+              necessary to fulfil the purposes mentioned above. In any event,
+              such information will be kept in our database until we receive
+              explicit consent from you to remove all the stored cookies.</p>
+      - clause_anchor: categories
+        index_label: We categorize cookies as follows
+        clause_title: We categorize cookies as follows
+        unnumbered: false
+        parts:
+          - part_kind: barriers
+            barriers:
+              - marker: a
+                text_html: <b>Essential cookies.</b> These cookies are necessary for us to
+                  operate the website so you may access them as you have
+                  requested — for example, recognising that you have created an
+                  account and logged in, or securing our Sites. Some of the
+                  essential cookies we use include the Google Tag Manager.
+              - marker: b
+                text_html: <b>Analytical / performance cookies.</b> Used by us or third-party
+                  service providers to analyse how the Sites are used and how
+                  they are performing — what content is most frequently visited
+                  and from what locations our visitors come from. These include,
+                  for example, Google Analytics and New Relic cookies.
+              - marker: c
+                text_html: <b>Functionality cookies.</b> Let us operate the Sites in accordance
+                  with the choices you make — recognising your user name and
+                  remembering how you customized the Sites, for example by
+                  adjusting text size, fonts and language, and providing you
+                  with the same customizations on future visits.
+              - marker: d
+                text_html: <b>Targeting or advertising cookies.</b> Used to deliver content and
+                  advertising that is more relevant to you, limit how often you
+                  see an advertisement, and measure the effectiveness of
+                  advertising campaigns on the ONDC website. May be shared with
+                  other parties, including advertisers and our agencies.
+      - clause_anchor: personal-data
+        index_label: Do these cookies collect personal data/identify me?
+        clause_title: Do these cookies collect personal data/identify me?
+        unnumbered: false
+        parts:
+          - part_kind: text
+            html: <p>Most types of these cookies track consumers via their Device ID or IP
+              address therefore they may collect personal data.</p>
+      - clause_anchor: accepting
+        index_label: Accepting or Refusing Cookies
+        clause_title: Accepting or Refusing Cookies
+        unnumbered: false
+        parts:
+          - part_kind: text
+            html: <p>When you visit Website for the first time, a banner informs you of the
+              use of cookies and provides a direct link to this information
+              page. If you confirm your acceptance of cookies your consent is
+              considered as obtained. The cookie acceptance banner will no
+              longer display on your screen. The saving of a cookie on a device
+              is governed by user-defined settings of the browser the user
+              chooses to use. If you have accepted the saving of cookies through
+              your browser, they will be integrated into the pages and content
+              you have viewed and may be temporarily stored in a dedicated
+              location on your device. They will only be readable by their
+              issuer. You may still choose at any time to delete or disable all
+              or part of these cookies using your browser, with the exception of
+              the First Party Cookies which are necessary for the Website to
+              function.</p>
+---

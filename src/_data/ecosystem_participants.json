@@ -1,0 +1,781 @@
+{
+  "participants": [
+    {
+      "name": "Aarambh.tech",
+      "logo": "/images/np-logos/aarambh_logo.png",
+      "initials": "AT",
+      "roles": [
+        "Technology Service Provider (TSP)-RSF",
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Logistics",
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Manjunath",
+      "email": "manjunath@scaleknot.com",
+      "phone": "9611411087",
+      "website": "https://www.scaleknot.com"
+    },
+    {
+      "name": "Aarthik Labs Private limited",
+      "logo": "",
+      "initials": "AL",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller",
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Credit"
+      ],
+      "enabled_by": "",
+      "spoc": "Jeenu Vadera",
+      "email": "contact@aarthikbandhu.com",
+      "phone": "9023766481",
+      "website": "https://aarthikbandhu.com/"
+    },
+    {
+      "name": "Adloggs Technologies Private Limited",
+      "logo": "/images/np-logos/adloggs.png",
+      "initials": "AT",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Logistics"
+      ],
+      "enabled_by": "",
+      "spoc": "Vignesh",
+      "email": "vignesh@adloggs.com",
+      "phone": "9500303975",
+      "website": "https://adloggs.com"
+    },
+    {
+      "name": "Amnex",
+      "logo": "/images/np-logos/Amnex_logo.png",
+      "initials": "AM",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Cabs/Auto",
+        "Unreserved Ticket Booking"
+      ],
+      "enabled_by": "",
+      "spoc": "Abhishek",
+      "email": "abhishek11@amnex.com",
+      "phone": "7486037472",
+      "website": "https://amnex.com"
+    },
+    {
+      "name": "Anamar Technologies Private Limited",
+      "logo": "",
+      "initials": "AT",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Unreserved Ticket Booking"
+      ],
+      "enabled_by": "",
+      "spoc": "Pravesh",
+      "email": "contact@chartr.in",
+      "phone": "7503326767",
+      "website": "https://chartr.in"
+    },
+    {
+      "name": "Antworks Financial Buddy Technologies Private Limited",
+      "logo": "/images/np-logos/miicart.png",
+      "initials": "AT",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Insurance"
+      ],
+      "enabled_by": "",
+      "spoc": "Shantanu",
+      "email": "shantanu@antworksmoney.com",
+      "phone": "9717544770",
+      "website": "https://www.miicart.in"
+    },
+    {
+      "name": "Arachnomesh Technologies Pvt Ltd",
+      "logo": "/images/np-logos/sellers.png",
+      "initials": "AT",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Deepa",
+      "email": "mktgpvec5@gmail.com",
+      "phone": "8953838846",
+      "website": "https://sellers.channelier.com/"
+    },
+    {
+      "name": "Ayantram Private Limited",
+      "logo": "",
+      "initials": "AY",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Logistics"
+      ],
+      "enabled_by": "",
+      "spoc": "Amit",
+      "email": "amit.sharma@ayantram.com",
+      "phone": "9130057257",
+      "website": "https://www.ayantram.com/"
+    },
+    {
+      "name": "BancWise Technologies LLP",
+      "logo": "/images/np-logos/bwsindia.png",
+      "initials": "BT",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Credit",
+        "Investments"
+      ],
+      "enabled_by": "",
+      "spoc": "Sijo Paul E",
+      "email": "Sijopaul@bwsindia.com",
+      "phone": "9585551544",
+      "website": "https://bwsindia.com"
+    },
+    {
+      "name": "Bitla Software Private Limited",
+      "logo": "/images/np-logos/bitlasoft-logo.png",
+      "initials": "BS",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Reserved Ticket Booking"
+      ],
+      "enabled_by": "",
+      "spoc": "Siva Krishna",
+      "email": "sivakrishna.aytha@bitlasoft.com",
+      "phone": "8121114614",
+      "website": "https://Bitlasoft.com"
+    },
+    {
+      "name": "Bitxia Tech Private Limited",
+      "logo": "/images/np-logos/bitxia-logo.png",
+      "initials": "BT",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller",
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Vishal Sahu",
+      "email": "vishal.sahu@bitxiatech.com",
+      "phone": "7042218498",
+      "website": "https://bitxiatech.com/"
+    },
+    {
+      "name": "Chalo Mobility Private Limited",
+      "logo": "/images/np-logos/chalo.png",
+      "initials": "CM",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Unreserved Ticket Booking"
+      ],
+      "enabled_by": "",
+      "spoc": "Ashitosh Darbarwar",
+      "email": "ashitosh@chalo.com",
+      "phone": "9686603075",
+      "website": "https://chalo.com"
+    },
+    {
+      "name": "CliniQ360",
+      "logo": "/images/np-logos/cliniq360.png",
+      "initials": "CL",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Insurance",
+        "Credit"
+      ],
+      "enabled_by": "",
+      "spoc": "Aman",
+      "email": "aman.khandelwal2692@gmail.com",
+      "phone": "9823172692",
+      "website": "https://www.cliniq360.com"
+    },
+    {
+      "name": "Cyber Expert",
+      "logo": "/images/np-logos/cyberexpert.png",
+      "initials": "CE",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Logistics",
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Praveen",
+      "email": "praveen@cyberexpert.com",
+      "phone": "9650667708",
+      "website": "https://cyberexpert.com"
+    },
+    {
+      "name": "Cybrilla",
+      "logo": "/images/np-logos/cybrilla.png",
+      "initials": "CY",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Investments"
+      ],
+      "enabled_by": "",
+      "spoc": "Satish",
+      "email": "satish@cybrilla.com",
+      "phone": "9916599187",
+      "website": "https://cybrilla.com"
+    },
+    {
+      "name": "DIGIIT Business Services Pvt Ltd",
+      "logo": "/images/np-logos/digiit.png",
+      "initials": "DS",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail",
+        "Logistics"
+      ],
+      "enabled_by": "",
+      "spoc": "Karthikeyan Arumugham",
+      "email": "nk@digiit.biz",
+      "phone": "950097909",
+      "website": "https://digiit.biz"
+    },
+    {
+      "name": "Earnest Data Analytics Private Limited",
+      "logo": "/images/np-logos/earnestdata-analytics.png",
+      "initials": "EA",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Gift card"
+      ],
+      "enabled_by": "",
+      "spoc": "Ritij Agarwal",
+      "email": "ritij.agarwal@earnestdata-analytics.in",
+      "phone": "8445934047",
+      "website": "https://earnestdata-analytics.in"
+    },
+    {
+      "name": "Easy Pay Limited",
+      "logo": "/images/np-logos/easypay.png",
+      "initials": "EP",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller",
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Retail",
+        "Credit"
+      ],
+      "enabled_by": "",
+      "spoc": "Vijay",
+      "email": "vijay@easypay.in",
+      "phone": "9662323663",
+      "website": "https://easypay.in"
+    },
+    {
+      "name": "Elightwalk Technology Private Limited",
+      "logo": "/images/np-logos/elightwalk-logo.png",
+      "initials": "ET",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Investments"
+      ],
+      "enabled_by": "",
+      "spoc": "Jayram Prajapati",
+      "email": "hello@elightwalk.com",
+      "phone": "9408134523",
+      "website": "https://www.elightwalk.com"
+    },
+    {
+      "name": "ENS Enterprises Limited",
+      "logo": "/images/np-logos/ens.png",
+      "initials": "EE",
+      "roles": [
+        "Technology Service Provider (TSP)-RSF",
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Logistics",
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Avinash Kumar",
+      "email": "avinash.singh@ens.enterprises",
+      "phone": "8860775669",
+      "website": "https://www.ens.enterprises"
+    },
+    {
+      "name": "EzeeInfo Cloud Solutions Pvt Ltd",
+      "logo": "",
+      "initials": "ES",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Reserved Ticket Booking"
+      ],
+      "enabled_by": "",
+      "spoc": "Kathir",
+      "email": "kathir@ezeeinfosolutions.com",
+      "phone": "9600008293",
+      "website": "https://www.ezeeinfocloudsolutions.com/"
+    },
+    {
+      "name": "FinAGG Technologies",
+      "logo": "/images/np-logos/finagg.png",
+      "initials": "FT",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller",
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Credit"
+      ],
+      "enabled_by": "",
+      "spoc": "Shiv Kumar",
+      "email": "shiv.kumar@finagg.in",
+      "phone": "9210771786",
+      "website": "https://finagg.in/"
+    },
+    {
+      "name": "Finarkein Analytics",
+      "logo": "/images/np-logos/finarkein_logo.png",
+      "initials": "FA",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Insurance"
+      ],
+      "enabled_by": "",
+      "spoc": "Aakash",
+      "email": "business@finarkein.com",
+      "phone": "9325331995",
+      "website": "https://finarkein.com/"
+    },
+    {
+      "name": "Futuresoft India Pvt Ltd",
+      "logo": "/images/np-logos/futuresoftindia.png",
+      "initials": "FI",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Geeta Verma",
+      "email": "geetav@futuresoftindia.com",
+      "phone": "8368657365",
+      "website": "https://futuresoftindia.com"
+    },
+    {
+      "name": "Grossky Software Services",
+      "logo": "/images/np-logos/grossky.png",
+      "initials": "GS",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Anirudha Das",
+      "email": "anirudha.das@grossky.com",
+      "phone": "7873814933",
+      "website": "https://grossky.com"
+    },
+    {
+      "name": "Ignosi Systems private limited",
+      "logo": "/images/np-logos/ignosis.png",
+      "initials": "IS",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Credit"
+      ],
+      "enabled_by": "",
+      "spoc": "Nemish Zalavadiya",
+      "email": "it_admin@ignosis.ai",
+      "phone": "7874488161",
+      "website": "https://ignosis.ai"
+    },
+    {
+      "name": "Magicpin",
+      "logo": "/images/np-logos/magicpin.png",
+      "initials": "MA",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller",
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Logistics",
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Anuj Kumar",
+      "email": "anuj.kumar@magicpin.in",
+      "phone": "8588987835",
+      "website": "https://magicpin.in"
+    },
+    {
+      "name": "Marble Systems Private Limited",
+      "logo": "/images/np-logos/marblex.png",
+      "initials": "MS",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Bhuwan Yadav",
+      "email": "ben@thewitslab.com",
+      "phone": "9710010700",
+      "website": "https://marblex.in"
+    },
+    {
+      "name": "METACONSOL PRIVATE LIMITED",
+      "logo": "/images/np-logos/kalasathi_web_logo.png",
+      "initials": "ME",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Shripad",
+      "email": "kalasaathi@gmail.com",
+      "phone": "7896879686",
+      "website": "https://kalasathi.com"
+    },
+    {
+      "name": "Migo Mobility",
+      "logo": "",
+      "initials": "MM",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Reserved Ticket Booking"
+      ],
+      "enabled_by": "",
+      "spoc": "Sunil Kumar",
+      "email": "sunil@migomobility.in",
+      "phone": "9688896206",
+      "website": "https://www.migomobility.in"
+    },
+    {
+      "name": "Mindfinness Enterprises Private Limited",
+      "logo": "/images/np-logos/simplifin_logo.png",
+      "initials": "ME",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Investments"
+      ],
+      "enabled_by": "",
+      "spoc": "Basu",
+      "email": "basuagarwal5953@gmail.com",
+      "phone": "7768003706",
+      "website": "https://www.simplifin.ai"
+    },
+    {
+      "name": "Moving Tech Innovations Private Limited",
+      "logo": "/images/np-logos/nammayatri.png",
+      "initials": "MI",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Unreserved Ticket Booking",
+        "Cabs/Auto"
+      ],
+      "enabled_by": "",
+      "spoc": "Nikith",
+      "email": "nikith@nammayatri.in",
+      "phone": "9844266782",
+      "website": "https://nammayatri.in"
+    },
+    {
+      "name": "Network People Services Technologies Limited",
+      "logo": "",
+      "initials": "NT",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Investments"
+      ],
+      "enabled_by": "",
+      "spoc": "Sarthak",
+      "email": "sarthak.agrawal@npstx.com",
+      "phone": "9009577677",
+      "website": "https://www.npstx.com/"
+    },
+    {
+      "name": "Pidge Technologies Pvt Ltd",
+      "logo": "/images/np-logos/pidge.png",
+      "initials": "PT",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Logistics"
+      ],
+      "enabled_by": "",
+      "spoc": "Rushil",
+      "email": "rushil@pidge.in",
+      "phone": "7303522109",
+      "website": "https://www.pidge.in"
+    },
+    {
+      "name": "Pirimid Technologies Ltd",
+      "logo": "/images/np-logos/pirimid-fintech-logo.png",
+      "initials": "PT",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Unreserved Ticket Booking"
+      ],
+      "enabled_by": "",
+      "spoc": "Dhanraj Acharya",
+      "email": "dhanraj@pirimidtech.com",
+      "phone": "9099846437",
+      "website": "https://pirimidtech.com/"
+    },
+    {
+      "name": "PLATIGA TECHNOLOGY PRIVATE LIMITED",
+      "logo": "/images/np-logos/plotch.png",
+      "initials": "PT",
+      "roles": [
+        "Technology Service Provider (TSP)-RSF",
+        "Technology Service Provider (TSP)-IGM",
+        "Technology Service Provider (TSP)-Seller",
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Manoj",
+      "email": "manoj@plotch.ai",
+      "phone": "9920175041",
+      "website": "https://plotch.ai"
+    },
+    {
+      "name": "PROROUTING TECHNOLOGY PRIVATE LIMITED",
+      "logo": "/images/np-logos/prorouting.png",
+      "initials": "PT",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Logistics"
+      ],
+      "enabled_by": "",
+      "spoc": "Abey Zachariah",
+      "email": "abey@prorouting.in",
+      "phone": "9845442325",
+      "website": "https://prorouting.in"
+    },
+    {
+      "name": "Protean eGov Technologies Ltd.",
+      "logo": "/images/np-logos/proteantech.png",
+      "initials": "PT",
+      "roles": [
+        "Technology Service Provider (TSP)-RSF",
+        "Technology Service Provider (TSP)-Seller",
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Logistics",
+        "Credit",
+        "Retail",
+        "Cabs/Auto",
+        "eB2B"
+      ],
+      "enabled_by": "",
+      "spoc": "Akash",
+      "email": "akashg@proteantech.in",
+      "phone": "9481352266",
+      "website": "https://proteantech.in/"
+    },
+    {
+      "name": "SellerSetu Private Limited",
+      "logo": "/images/np-logos/sellersetu.png",
+      "initials": "SE",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Pranav Mehta",
+      "email": "official@sellersetu.in",
+      "phone": "7710009804",
+      "website": "https://sellersetu.in"
+    },
+    {
+      "name": "SEQUELSTRING AI PRIVATE LIMITED",
+      "logo": "/images/np-logos/sequelstring.png",
+      "initials": "SA",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Reserved Ticket Booking",
+        "Unreserved Ticket Booking"
+      ],
+      "enabled_by": "",
+      "spoc": "Amit Sharma",
+      "email": "amit.sharma@sequelstring.com",
+      "phone": "9130057257",
+      "website": "https://sequelstring.com"
+    },
+    {
+      "name": "Shayr Omnichannel Private Limited",
+      "logo": "/images/np-logos/adya.png",
+      "initials": "SO",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer",
+        "Technology Service Provider (TSP)-RSF",
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Credit",
+        "Logistics",
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Praveen",
+      "email": "praveen.cyberexpert@adya.ai",
+      "phone": "9650667708",
+      "website": "https://adya.ai/"
+    },
+    {
+      "name": "Shopalyst",
+      "logo": "/images/np-logos/shopalyst.png",
+      "initials": "SH",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Arun Aryasomayajula",
+      "email": "arun.aryasomayajula@shopalyst.com",
+      "phone": "9940496182",
+      "website": "https://shopalyst.com"
+    },
+    {
+      "name": "Squadcube Solutions Pvt Ltd",
+      "logo": "/images/np-logos/squadcube.png",
+      "initials": "SS",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Retail"
+      ],
+      "enabled_by": "",
+      "spoc": "Sarvesh Kumar",
+      "email": "sarvesh@squadcube.com",
+      "phone": "9585777537",
+      "website": "https://squadcube.io"
+    },
+    {
+      "name": "Symbo SouthAsia Enterprises Private Limited",
+      "logo": "",
+      "initials": "SE",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller"
+      ],
+      "categories": [
+        "Insurance"
+      ],
+      "enabled_by": "",
+      "spoc": "Symbo SouthAsia",
+      "email": "ondc@symboinsurance.com",
+      "phone": "7506256661",
+      "website": "https://www.symboinsurance.com"
+    },
+    {
+      "name": "Trust Fintech Limited",
+      "logo": "/images/np-logos/softtrust.png",
+      "initials": "TF",
+      "roles": [
+        "Technology Service Provider (TSP)-Seller",
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Credit"
+      ],
+      "enabled_by": "",
+      "spoc": "Mandar Deo",
+      "email": "mdeo@softtrust.com",
+      "phone": "7028312027",
+      "website": "https://www.softtrust.com"
+    },
+    {
+      "name": "Wemotive Technologies Pvt Ltd",
+      "logo": "/images/np-logos/wemotiveforge.png",
+      "initials": "WT",
+      "roles": [
+        "Technology Service Provider (TSP)-Buyer"
+      ],
+      "categories": [
+        "Logistics"
+      ],
+      "enabled_by": "",
+      "spoc": "Abhinandan Satpute",
+      "email": "abhinandan@wemotiveforge.com",
+      "phone": "8796105046",
+      "website": "https://wemotiveforge.com"
+    }
+  ]
+}

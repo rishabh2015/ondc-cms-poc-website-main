@@ -1,0 +1,49 @@
+spec:
+  structures: [sections]
+  label: Closing call to action
+  description: >-
+    A short closing heading with buttons, at the end of a page above the footer.
+    Two layouts: "Plain" is the wide band used on the About page, "Panel" is the
+    white rounded card used on the role pages — Panel can also carry a paragraph.
+  icon: flag
+
+blueprint:
+  screen_label: ''
+  variant: ''
+  anchor_id: ''
+  heading_id: ''
+  heading: A closing line for this page
+  heading_accent: ''
+  heading_suffix: ''
+  body: ''
+  buttons:
+    - label: Get started
+      url: 'https://portal.ondc.org/'
+      style: solid
+      new_tab: true
+
+_inputs:
+  variant:
+    type: select
+    label: Layout
+    comment: >-
+      "Plain" is the wide band at the foot of the About page. "Panel" is the
+      white rounded card on the role pages — it can also carry a paragraph.
+      "Band" is the full-width call to action at the foot of the Resources and
+      legal pages.
+    options:
+      values:
+        - value: ''
+          label: Plain
+        - value: role
+          label: Panel
+        - value: band
+          label: Band
+
+  heading_id:
+    type: text
+    hidden: true
+  body:
+    type: textarea
+    label: Paragraph
+    comment: Only shown by the "Panel" layout. Leave empty for just a heading and buttons.

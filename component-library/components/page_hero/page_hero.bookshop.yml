@@ -1,0 +1,129 @@
+spec:
+  structures: [sections]
+  label: Page hero
+  description: >-
+    The large opening banner — background photo, heading, intro paragraphs and
+    buttons. Used at the top of About, Careers and most other inner pages.
+  icon: wallpaper
+
+blueprint:
+  variant: ''
+  screen_label: ''
+  heading_id: ''
+  animation: reveal
+  eyebrow: ''
+  heading: A heading for this page
+  heading_accent: ''
+  heading_suffix: ''
+  background_image: ''
+  status_label: ''
+  paragraphs:
+    - text: One or two sentences introducing the page.
+  buttons: []
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  variant:
+    type: select
+    label: Layout
+    comment: >-
+      "Full banner" is the tall hero with a background photo, used on About and
+      Careers. "Compact" is the short banner at the top of each Resources
+      sub-page — a small tag, a heading and one line, no photo. "Not live yet"
+      is the holding page: the heading runs a slow blue wave through its
+      letters and a status line sits under it.
+    options:
+      values:
+        - value: ''
+          label: Full banner
+        - value: compact
+          label: Compact
+        - value: holding
+          label: Not live yet
+
+  animation:
+    type: select
+    label: How the hero appears
+    comment: >-
+      "Fade in on scroll" is the About page's behaviour. "Entrance" plays once
+      as the page loads and is what Careers uses. Purely visual — the words are
+      the same either way.
+    options:
+      values:
+        - value: reveal
+          label: Fade in on scroll
+        - value: intro
+          label: Entrance on load
+  status_label:
+    type: text
+    label: Status line
+    comment: >-
+      Only used by the "Not live yet" layout — the short line under the
+      heading, beside the hairline and its dot. For example "Not live yet".
+      Leave empty for no status line.
+  heading_id:
+    type: text
+    label: Heading anchor
+    comment: >-
+      Optional. Ties this hero to its heading for screen readers, and lets a
+      link jump here. Change it only if you know a link points at it.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  eyebrow:
+    type: text
+    label: Small label above the heading
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+    comment: Shown in the accent style at the end of the heading. Leave empty for a plain heading.
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+    comment: Usually just a full stop or a question mark.
+  background_image:
+    type: image
+    label: Background photo
+    comment: >-
+      Fills the whole banner. A wide, landscape photo works best. Use the crop
+      tool to change the framing. Leave it empty for a plain hero on the page
+      background — the soft overlay that sits above the photo is dropped with
+      it, so an empty hero is not tinted.
+  paragraphs:
+    type: array
+    label: Paragraphs
+    comment: Use + to add a paragraph, the item menu to duplicate or delete, and drag to reorder.
+    options:
+      structures:
+        values:
+          - label: Paragraph
+            picker_preview:
+              text: Paragraph
+              subtext: Another line of intro copy
+              icon: notes
+            preview:
+              text:
+                - key: text
+                - 'Empty paragraph'
+              icon:
+                - notes
+            value:
+              text: ''
+            _inputs:
+              text:
+                type: textarea
+                label: Paragraph
+  buttons:
+    type: array
+    label: Buttons
+    options:
+      structures: _structures.buttons

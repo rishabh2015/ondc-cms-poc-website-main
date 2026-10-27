@@ -1,0 +1,53 @@
+<section class="infra" id="{{ anchor_id | default: "find-your-place" }}">
+  <div class="container">
+    <div class="section-header hv-rv">
+      <h2>{{ title }}</h2>
+      <p>{{ intro }}</p>
+    </div>
+    <div class="doors-wrap">
+      <button aria-label="Previous" class="doors-arrow prev" type="button"><svg
+          fill="none"
+          height="16"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewbox="0 0 20 20"
+          width="16"><path d="M13 4l-6 6 6 6"></path></svg></button><button aria-label="Next" class="doors-arrow next" type="button"><svg
+          fill="none"
+          height="16"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewbox="0 0 20 20"
+          width="16"><path d="M7 4l6 6-6 6"></path></svg></button>
+      <div class="doors-track">
+        {% for card in cards %}
+          <div class="door-card hv-rv" style="transition-delay: {{ forloop.index0 | times: 90 }}ms;">
+            <div class="door-media">
+              <div class="cms-img"><img alt="{{ card.heading }}" loading="lazy" src="{{ card.image }}"/></div><div class="door-media-tag">{{ card.tag }}</div>
+            </div>
+            <div class="door-body">
+              <div class="infra-name">{{ card.heading }}</div>
+              <div class="infra-desc">{{ card.lead }}</div>
+              <ul class="infra-bullets">
+                {% for bullet in card.bullets %}
+                  <li>{{ bullet.text }}</li>
+                {% endfor %}
+              </ul>
+              <a
+                class="btn btn-primary"
+                href="{{ card.cta_url }}"{% if card.new_tab %} rel="noopener"
+                target="_blank"{% endif %} style="margin-top: auto; align-self: flex-start;">{{ card.cta_label }}</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="doors-progress">
+      <div class="doors-progress-bar">
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+/* =====================================================================
+   Participant directory — the [hidden] guards the ledger needs.
+   =====================================================================
+   WHY THIS FILE EXISTS, AND WHY THESE RULES ARE NOT IN beckn.css
+
+   ondc.org BUILDS the filter chips and the role toggles with innerHTML
+   every time a filter changes. This build cannot: Bookshop replaces the
+   section's DOM while an editor types, so anything the script created
+   would vanish on the next keystroke. So the template draws every chip
+   and every role toggle once, up front, and the script only ever sets
+   `hidden` on them.
+
+   That shifts the work onto the `hidden` attribute — and `hidden` is
+   only a UA-stylesheet `display: none`. ANY author rule that sets
+   `display` on the same element outranks it, and the element stays on
+   screen with the attribute set and no visible effect. Three of ours do:
+
+       .bk-np-chip  { display: inline-flex }
+       .bk-np-role  { display: inline-flex }
+       .bk-np-chk   { display: flex }
+
+   Without the guards below, ticking one role filter showed EVERY chip in
+   the taxonomy at once, and the four TSP toggles sat there reading "0".
+
+   beckn.css already does exactly this for the two elements the original
+   does hide — `.bk-np-chips[hidden]` and `.bk-np-cat-kids[hidden]`. The
+   rules here are the same idea for the three the original never had to
+   hide, kept in their own file because beckn.css is byte-identical with
+   the copy on ondc.org: refresh that file from upstream and anything
+   added to it is silently lost, taking the bug's fix with it.
+
+   Everything else the script hides is safe without a guard — `.bk-np-cat`
+   branches, table rows, the <tbody> per list, the pagination numbers and
+   the "+N" tail carry no `display` of their own, so the UA rule wins.
+
+   Load AFTER beckn.css. Any page using the Participant directory
+   component needs this sheet in its `override:styles`.
+   ===================================================================== */
+
+.bk-np-chip[hidden],
+.bk-np-chip-clear[hidden],
+.bk-np-role[hidden],
+.bk-np-chk[hidden] {
+  display: none !important;
+}

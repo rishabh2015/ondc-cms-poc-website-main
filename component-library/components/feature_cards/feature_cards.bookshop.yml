@@ -1,0 +1,21 @@
+spec:
+  structures:
+  - sections
+  label: Cards
+  description: A row of cards, each with a picture or video, a title and text.
+  icon: grid_view
+blueprint:
+  background: light
+  heading: A row of cards
+  intro: ''
+  columns: 3
+  cards:
+  - title: First card
+    text: <p>What this card is about.</p>
+    media:
+      kind: image
+      image: ''
+      alt: ''
+    link_label: ''
+    link_url: ''
+_inputs: {}

@@ -1,0 +1,109 @@
+{%- comment -%}
+  A legal document — the privacy policy, and the shape the cookie policy and
+  terms of use take too.
+  ==========================================================================
+  A reading instrument, not a landing page: no hero image, no figures, no
+  marquee. The whole page is one section, because a clause is not a section
+  an editor should be able to drag out from under its own numbering.
+
+  The clause NUMBER is not stored. It is the position in the list, so
+  deleting clause 3 renumbers 4..12 without anyone touching them — the one
+  thing a hand-numbered legal document always gets wrong.
+
+  THE INDEX IS GENERATED from the same list, so a clause cannot exist
+  without a link to it, and a link cannot point at a clause that is gone.
+  `index_label` is separate from the heading on purpose: upstream shortens
+  "Collection of Personal Information and its use" to "Collection & Use of
+  PII" in the rail, and the rail is narrow.
+
+  js/ondc/doc-index.js only toggles a class on those links. It never creates
+  a node — Bookshop replaces this section's DOM while an editor types.
+{%- endcomment -%}
+<section class="bk-legal-head">
+  {% if eyebrow != blank %}<div class="bk-eyebrow">{{ eyebrow }}</div>{% endif %}
+  <h1 data-bk-intro>{{ heading }}{% if heading_accent != blank %} <em>{{ heading_accent }}</em>{% endif %}</h1>
+  {% if sub != blank %}<p class="bk-hero-sub" data-bk-scrub>{{ sub }}</p>{% endif %}
+  {%- comment -%}
+    A <div> where upstream writes a <p>: the field is rich text, so whatever
+    an editor types arrives wrapped in its own <p>, and a <p> inside a <p> is
+    closed by the parser before the links are reached. `.bk-note` has no
+    rule that depends on the tag. The margin guard is in legal-doc.css.
+  {%- endcomment -%}
+  {% if read_alongside != blank %}<div class="bk-note">{{ read_alongside }}</div>{% endif %}
+</section>
+
+{%- comment -%}
+    Without the index the body is one centred column, and how wide that
+    column is depends on the document: `--bk-legal-measure` is a custom
+    property beckn.css already defaults to .62fr, so an empty field is
+    upstream's default and the cookie policy's .58fr is its own choice.
+  {%- endcomment -%}
+  <section class="bk-legal-body{% unless show_index %} bk-legal-body-solo{% endunless %}"{% if measure != blank %} style="--bk-legal-measure: {{ measure }}"{% endif %} aria-label="{{ body_label }}">
+
+  {% if show_index %}
+    <aside class="bk-doc-index" aria-label="{{ index_aria | default: "On this page" }}">
+      {% for clause in clauses %}<a class="bk-doc-index-link" href="#{{ clause.clause_anchor }}" data-bk-doc-link>{{ clause.index_label | default: clause.clause_title }}</a>{% endfor %}
+    </aside>
+  {% endif %}
+
+  {% comment -%}
+    The number counts NUMBERED clauses, not loop positions. Terms of Use opens
+    with an unnumbered preamble and then runs 01..11, so a clause that opts out
+    of the number must not consume one either — otherwise the ledger it prints
+    of itself disagrees with the clauses it points at.
+  {%- endcomment -%}{%- assign clause_n = 0 -%}
+  <div class="bk-clauses">
+    {% for clause in clauses %}{%- unless clause.unnumbered -%}{%- assign clause_n = clause_n | plus: 1 -%}{%- endunless %}
+      <article class="bk-clause" id="{{ clause.clause_anchor }}" data-bk-clause>
+        {% unless clause.unnumbered %}<span class="bk-clause-num" aria-hidden="true">{% if clause_n < 10 %}0{% endif %}{{ clause_n }}</span>
+        {% endunless %}<h2>{{ clause.clause_title }}</h2>
+        {%- for part in clause.parts -%}
+          {%- case part.part_kind -%}
+            {%- when "subheading" -%}
+              <h3 class="bk-clause-sub">{{ part.subheading }}</h3>
+            {%- when "barriers" -%}
+              {%- comment -%}
+                A <div> where upstream writes a <span>, for the same reason the
+                related-documents line is one: the row's text is rich text, and
+                an editor's <p> does not belong inside a <span>. `.bk-barrier`
+                is a flex row, so a div and a span are the same flex item.
+              {%- endcomment -%}
+              <div class="bk-barriers">{% for row in part.barriers %}<div class="bk-barrier"><span class="bk-barrier-n">{{ row.marker }}</span><div class="bk-barrier-t">{{ row.text_html }}</div></div>{% endfor %}</div>
+            {%- when "caps_p" -%}
+              {%- comment -%}
+                The statutory blocks are set in capitals and `.bk-caps` has to
+                sit on the <p> or the <ul> itself — `.bk-clause p` sets an
+                explicit font-size, so a wrapper would not win by inheritance.
+                No rich-text editor will put a class there, which is why these
+                are their own part kinds rather than a tick-box on Text.
+              {%- endcomment -%}
+              <p class="bk-caps">{{ part.caps_text }}</p>
+            {%- when "caps_ul" -%}
+              <ul class="bk-caps">{% for caps_item in part.caps_items %}<li>{{ caps_item.html }}</li>{% endfor %}</ul>
+            {%- when "clause_index" -%}
+              {%- comment -%}
+                The ledger Terms of Use prints of itself, in place of the side
+                index the other two legal pages carry. Generated from the same
+                clause list, with the same count, so a clause cannot be in one
+                and missing from the other.
+              {%- endcomment -%}
+              <nav class="bk-clause-toc"{% if part.nav_label != blank %} aria-label="{{ part.nav_label }}"{% endif %}>
+                {%- assign toc_n = 0 -%}
+                {%- for toc_clause in clauses -%}
+                  {%- unless toc_clause.unnumbered -%}
+                    {%- assign toc_n = toc_n | plus: 1 -%}
+                    <a href="#{{ toc_clause.clause_anchor }}"><b>{% if toc_n < 10 %}0{% endif %}{{ toc_n }}</b>{{ toc_clause.index_label | default: toc_clause.clause_title }}</a>
+                  {%- endunless -%}
+                {%- endfor -%}
+              </nav>
+            {%- when "note" -%}
+              <div class="bk-clause-note">{% if part.note_title != blank %}<h3 class="bk-clause-sub">{{ part.note_title }}</h3>{% endif %}{{ part.note_html }}</div>
+            {%- else -%}
+              {{ part.html }}
+          {%- endcase -%}
+        {%- endfor -%}
+      </article>
+    {% endfor %}
+  </div>
+
+</section>

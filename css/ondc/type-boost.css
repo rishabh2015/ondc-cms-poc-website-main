@@ -1,0 +1,13 @@
+/* Historically this file opted category pages out of the site-wide 0.85 UI
+ * downscale in scale.css, because body copy on them rendered near 11px and the
+ * small uppercase labels near 8.5px — flagged in stakeholder review as too
+ * small to read.
+ *
+ * That downscale has since been retired for every page (scale.css now holds
+ * --ui-scale: 1 at all widths), so this override is a no-op and the two type
+ * worlds are one again. It is kept, rather than unlinked from 28 pages, so the
+ * opt-out remains one edit away if a downscale is ever reintroduced.
+ */
+@media (min-width: 1024px) {
+  :root { --ui-scale: 1; }
+}

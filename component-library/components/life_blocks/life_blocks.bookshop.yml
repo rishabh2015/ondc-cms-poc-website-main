@@ -1,0 +1,113 @@
+spec:
+  structures: [sections]
+  label: Text blocks beside photos
+  description: >-
+    A heading and a run of short titled blocks on one side, a column of photos
+    on the other. Used for "Life at ONDC" on the Careers page.
+  icon: vertical_split
+
+blueprint:
+  screen_label: Life at ONDC
+  anchor_id: ''
+  eyebrow: ''
+  heading: A heading for this section
+  heading_accent: ''
+  heading_suffix: ''
+  blocks:
+    - title: First block
+      text: A sentence or two about it.
+  images: []
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: Lets menu and button links jump to this section, for example "life". Change only if you know a link points here.
+  eyebrow:
+    type: text
+    label: Small label above the heading
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+    comment: Shown in the accent style at the end of the heading. Leave empty for a plain heading.
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+    comment: Usually just a full stop.
+  blocks:
+    type: array
+    label: Text blocks
+    comment: >-
+      Each one is a short title and a paragraph. Three is the usual number —
+      they fade in one after another, and past the third they all share the
+      last delay.
+    options:
+      structures:
+        values:
+          - label: Text block
+            picker_preview:
+              text: Text block
+              subtext: A short title and a paragraph
+              icon: subject
+            preview:
+              text:
+                - key: title
+                - 'Untitled block'
+              subtext:
+                - key: text
+              icon:
+                - subject
+            value:
+              title: ''
+              text: ''
+            _inputs:
+              title:
+                type: text
+                label: Title
+              text:
+                type: textarea
+                label: Text
+  images:
+    type: array
+    label: Photos
+    comment: >-
+      The column beside the text. Two works best. Leave the list empty to drop
+      the photo column and let the text run full width.
+    options:
+      structures:
+        values:
+          - label: Photo
+            picker_preview:
+              text: Photo
+              subtext: Another photo in the column
+              icon: image
+            preview:
+              text:
+                - key: alt
+                - 'Photo'
+              image:
+                - key: image
+              icon:
+                - image
+            value:
+              image: ''
+              alt: ''
+            _inputs:
+              image:
+                type: image
+                label: Photo
+                comment: Upload a new picture or pick one already on the site. Use the crop tool to change the framing.
+              alt:
+                type: text
+                label: Image description
+                comment: Describes the picture for screen readers and when the image cannot load.

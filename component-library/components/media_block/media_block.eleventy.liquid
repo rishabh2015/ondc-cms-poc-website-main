@@ -1,0 +1,15 @@
+<section class="block block-media block--{{ background | default: "light" }}">
+  <div class="container">
+    <div class="block-inner{% if full_width %} is-wide{% endif %}">
+      {% if heading %}
+        <h2 class="block-h2">{{ heading }}</h2>
+      {% endif %}
+      <figure class="block-figure">
+        {% bookshop_include "media" media: media %}
+        {% if caption %}
+          <figcaption class="block-caption">{{ caption }}</figcaption>
+        {% endif %}
+      </figure>
+    </div>
+  </div>
+</section>

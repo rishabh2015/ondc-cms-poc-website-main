@@ -1,0 +1,658 @@
+/* ONDC "forming-India" hero — ported from the Next.js extract.
+ * Tokens + fonts + component styles in one sheet. Everything visual is
+ * scoped under .ondc-hero so the site's light theme is untouched; the
+ * token custom properties live on :root because the canvas renderers read
+ * them via getComputedStyle(documentElement). Names carry no collisions
+ * with the site's own :root tokens. */
+
+/* ---- tokens (13-design-system.md §1, §7 — the subset the hero uses) ---- */
+:root {
+  /* The hero is the one sanctioned dark surface in the system, and it stays
+   * dark end to end — a deep navy rather than a near-black, so the ground
+   * belongs to the blue the network is drawn in. Everything below the hero
+   * is the light Beckn canvas; that seam is the page's one hard cut. */
+  --void: #0a1430;
+  --surface: #0f1c3d;
+  --line: #24345c;
+  /* One blue family: the edges carry the network blue itself, the particles
+   * a lit tint of it so single dots still read against the navy. */
+  --ondc-blue: #2151F5;
+  --blue-deep: #16307a;
+  --ondc-cyan: #6E8CFF;
+  --cyan-glow: rgba(110, 140, 255, 0.32);
+  --text-hi: #edf2f9;
+  --text-mid: #92a5bf;
+  --text-low: #55677f;
+
+  --font-display: "Space Grotesk", "Space Grotesk Fallback", sans-serif;
+  --font-body-hero: "Space Grotesk", "Space Grotesk Fallback", Inter, system-ui, sans-serif;
+  /* Kept as a name so the rules that reference it still read sensibly; it is
+   * the same family as everything else now, used at the label tracking. */
+  --font-mono: "Space Grotesk", "Space Grotesk Fallback", Inter, system-ui, sans-serif;
+
+  --type-beat: clamp(2.2rem, 5.2vw, 4.4rem);
+  --type-beat-lh: 1.06;
+  --type-beat-ls: -0.01em;
+  --type-section: clamp(1.75rem, 3.4vw, 2.75rem);
+  --type-panel: clamp(1.6rem, 2.6vw, 2.4rem);
+  --type-body-hero: clamp(1rem, 1.15vw, 1.125rem);
+  --type-mono: 0.8125rem;
+  --type-mono-ls: 0.08em;
+  --type-metric: clamp(2.4rem, 4.5vw, 4rem);
+
+  --weight-display: 600;
+  --weight-metric: 700;
+
+  --u2: 0.5rem;
+  --u3: 0.75rem;
+  --u4: 1rem;
+  --u5: 1.25rem;
+  --u6: 1.5rem;
+  --u8: 2rem;
+  --u10: 2.5rem;
+  --u11: 2.75rem;
+  --u12: 3rem;
+  --u16: 4rem;
+  --hairline: 1px;
+  --focus-ring: 2px;
+  --pad-section: clamp(4rem, 9vh, 8rem);
+  --radius-pill: 999px;
+
+  --t-word: 600ms;
+  --t-panel: 480ms;
+  --t-state: 900ms;
+  --t-line: 400ms;
+  --t-reel: 520ms;
+  /* Row count per word reel (Hero.jsx REEL_WORD_DEPTH) — one constant so
+     the CSS transform math and the JS markup can't drift apart. */
+  --reel-depth: 3;
+  /* Space Grotesk paints ~0.13em outside a 1em line box (ascender .98 +
+     descender .27 against a 1em row). --reel-bleed widens the mask's clip
+     region by that much plus slack, so a word's own tails are not sheared
+     off; --reel-gap then spaces the rows far enough apart that the
+     *neighbouring* row's tails fall outside that widened region instead of
+     settling inside the window as stray dashes above the letters. */
+  --reel-bleed: 0.22em;
+  --reel-gap: 0.6em;
+}
+
+/* ---- faces ----
+ * Space Grotesk and its fallback are declared once, in fx.css, which every
+ * page loads. The homepage's Space Mono is gone: the system is one family,
+ * and the label voice it used to carry is the tracked-out Space Grotesk
+ * label step instead. Two fewer font files over the wire. */
+/* Inter 400/500 already arrive via the site's Google Fonts link; the
+ * self-hosted files stay in fonts/ if that link is ever dropped. */
+
+/* ---- site header reveal: the fixed wrapper keeps the navbar
+ * out of flow (the hero owns the full viewport from load) and slides
+ * them in once the hero has scrolled past. ---- */
+#site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 400;
+  transform: translateY(-100%);
+  transition: transform var(--t-panel) ease;
+}
+
+#site-header[data-visible="true"] {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #site-header {
+    transition: none;
+  }
+}
+
+/* ---- hero wrapper: the ground the particle field needs, which develops
+ * from void to paper as the map forms. The dark state is the system's one
+ * sanctioned dark surface; by the lockup the page is fully in the Beckn
+ * canvas and every section below simply continues it. ---- */
+.ondc-hero {
+  position: relative;
+  isolation: isolate;
+  /* `clip` (never `hidden` — that would make this a scroll container and
+   * unstick the stage): the sticky stage's zero-height margin box legally
+   * overhangs the hero's bottom edge for its last viewport of scroll, which
+   * painted the map over the light section below. The map belongs to the
+   * blue screen; here is where the blue screen ends. */
+  overflow: clip;
+  background: var(--void);
+  color: var(--text-hi);
+  font-family: var(--font-body-hero);
+  font-size: var(--type-body-hero);
+  line-height: 1.6;
+}
+
+/* The navy is not flat: a very slow radial lift behind the forming map keeps
+ * the ground from reading as a dead rectangle, the dark-surface equivalent of
+ * the canvas dot grid. */
+.ondc-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 42%, rgba(33, 81, 245, .16), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 12% 96%, rgba(110, 140, 255, .08), transparent 72%);
+}
+
+.ondc-hero ::selection {
+  background: var(--blue-deep);
+  color: var(--text-hi);
+}
+
+.ondc-hero :focus-visible {
+  outline: var(--focus-ring) solid var(--ondc-cyan);
+  outline-offset: 2px;
+}
+
+/* ── The story's spine ──────────────────────────────────────────────────────
+ * A hairline down the left edge of the act, drawn in as the reader descends —
+ * the same growing line the About journey uses, scaled rather than sized so
+ * nothing reflows. --hero-spine is written per frame beside --hero-mix. */
+.hero-spine {
+  position: absolute;
+  left: clamp(16px, 4vw, 46px);
+  top: 12vh;
+  bottom: 12vh;
+  width: 1px;
+  z-index: 2;
+  pointer-events: none;
+  background: rgba(255, 255, 255, .14);
+}
+
+.hero-spine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ondc-blue);
+  transform: scaleY(var(--hero-spine, 0));
+  transform-origin: top;
+}
+
+/* ── The lockup's swish ─────────────────────────────────────────────────────
+ * The blue sheen that crosses the wordmark the first time it paints, the same
+ * mark the award lightbox uses. Fires once; the guard lives in the choreo. */
+.hero-lockup-swish {
+  position: absolute;
+  inset: -4% -8%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(100deg,
+      rgba(110, 140, 255, 0) 0%,
+      rgba(110, 140, 255, .30) 34%,
+      rgba(180, 200, 255, .42) 50%,
+      rgba(110, 140, 255, .30) 66%,
+      rgba(110, 140, 255, 0) 100%);
+  transform: translateX(-118%);
+}
+
+@keyframes heroSwish {
+  0% { opacity: 0; transform: translateX(-118%); }
+  14% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(118%); }
+}
+
+[data-lockup][data-swished="true"] .hero-lockup-swish {
+  animation: heroSwish .78s cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+/* ── Metric landmarks ───────────────────────────────────────────────────────
+ * Arriving at a figure sweeps a wash across it and pops a node on its leader,
+ * the same landmark language the About milestones use. */
+.hero-metric { position: relative; }
+
+.hero-metric-wash {
+  position: absolute;
+  inset: -10px -16px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 16px;
+  /* On the navy the wash is the blue lit up, not the paper tint the light
+   * sections use — same landmark move, read for a dark ground. */
+  background: rgba(33, 81, 245, .26);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .75s cubic-bezier(.16, 1, .3, 1);
+}
+
+.hero-metric[data-ignited="true"] .hero-metric-wash { transform: scaleX(1); }
+
+.hero-metric-node {
+  position: absolute;
+  left: -4px;
+  top: 12px;
+  width: 9px;
+  height: 9px;
+  background: var(--ondc-blue);
+  box-shadow: 0 0 0 6px rgba(33, 81, 245, 0);
+  transform: scale(.82);
+  transition: box-shadow .45s cubic-bezier(.16, 1, .3, 1),
+              transform .45s cubic-bezier(.16, 1, .3, 1);
+}
+
+.hero-metric[data-ignited="true"] .hero-metric-node {
+  box-shadow: 0 0 0 6px rgba(33, 81, 245, .14);
+  transform: scale(1);
+}
+
+/* ---- MeshStage (was position:fixed in the extract; sticky here so the
+ * canvas is mechanically contained inside the hero and cannot bleed
+ * behind the rest of the site) ---- */
+.mesh-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  margin-bottom: -100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mesh-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--t-state);
+}
+
+/* --hero-exit (0 → 1 over the impact act's last stretch) dissolves the map as
+ * the reader leaves the hero, so its departure is a fade the choreography
+ * owns rather than a hard cut at the clip edge. */
+.mesh-canvas.visible {
+  opacity: calc(1 - var(--hero-exit, 0));
+}
+
+/* ---- BeatBlock ---- */
+/* Scoped to .ondc-hero because fx.css's `body.home h1, body.home h2` (0,1,2)
+ * paints homepage headings in the light-canvas ink and outranks a bare
+ * `.hero-beat` (0,1,0) — which silently swallowed the colour on the two beats
+ * rendered as headings. The hero is the one dark ground, so its beats opt out.
+ * Same move as the `.ondc-hero a.hero-cta-primary` rule below. */
+.ondc-hero .hero-beat {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--type-beat);
+  line-height: var(--type-beat-lh);
+  letter-spacing: var(--type-beat-ls);
+  color: #fff;
+  max-width: min(92vw, 46ch);
+}
+
+.hero-beat[data-align="center"] {
+  text-align: center;
+  margin-inline: auto;
+}
+
+.hero-beat .hb-line {
+  display: block;
+}
+
+/* ---- per-word reel (the "slot machine" reveal) ----
+ * Each word sits inside a fixed-height mask; a strip of the word's own
+ * letters scrambled a couple of times, ending in the real word, stacks
+ * vertically inside it (Hero.jsx HeroReelWord). Painting the beat
+ * transitions the strip's own transform — still a plain scroll listener
+ * flipping a data attribute, CSS doing every frame of the animation, no
+ * per-frame JS. Un-painting reverses it, so scrolling back up spins the
+ * reel out the way it came in. */
+.hero-beat .hb-mask,
+.hero-beat .hb-static {
+  display: inline-block;
+  vertical-align: bottom;
+  opacity: 1;
+  transition: opacity var(--t-word) var(--rdelay, 0ms);
+}
+
+.hero-beat .hb-mask {
+  /* content-box on purpose: styles.css's global border-box reset would make
+     the padding eat into the 1em row window instead of extending the clip
+     region past it. The negative margin cancels the padding again, so the
+     margin box stays exactly 1em and `vertical-align: bottom` lands the
+     baseline where it always did — the beat's line spacing is untouched. */
+  box-sizing: content-box;
+  overflow: hidden;
+  height: 1em;
+  line-height: 1em;
+  padding-block: var(--reel-bleed);
+  margin-block: calc(-1 * var(--reel-bleed));
+}
+
+/* A beat that isn't the active one is never mid-reel: the scrambled word a
+ * reel shows while hidden would otherwise read as garbled text bleeding
+ * through during a fast scroll, before the container-level opacity
+ * (below) finishes fading a previous beat out. Fading each word too means
+ * what's briefly visible mid-cross-fade is a blur, not nonsense letters. */
+.hero-beat[data-armed="true"]:not([data-painted="true"]) .hb-mask,
+.hero-beat[data-armed="true"]:not([data-painted="true"]) .hb-static {
+  opacity: 0;
+}
+
+/* Settled position by default (last row — the real word — sits in the
+ * mask window): matching the word-mask's own convention below, only the
+ * *hidden* state needs an override rule, so painted falls out naturally
+ * once "not painted" stops matching. Every reel is built with the same
+ * REEL_WORD_DEPTH (Hero.jsx), so the offset is one shared constant, not a
+ * per-word custom property. */
+.hero-beat .hb-reel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--reel-gap);
+  transform: translateY(calc((var(--reel-depth) - 1) * -1 * (1em + var(--reel-gap))));
+  transition: transform var(--t-reel, 520ms) var(--rdelay, 0ms) cubic-bezier(0.15, 0.9, 0.1, 1);
+}
+
+.hero-beat .hb-reel span {
+  display: block;
+  height: 1em;
+  line-height: 1em;
+}
+
+.hero-beat[data-armed="true"]:not([data-painted="true"]) .hb-reel {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-beat .hb-reel {
+    transition: none;
+  }
+}
+
+/* ---- Act 1: Genesis (420vh; the 100vh stage rides native sticky and a
+ * scroll listener supplies the scrub — the pinned-GSAP fork of the
+ * extract collapses onto its own touch path) ---- */
+.hero-act-genesis {
+  position: relative;
+  height: 420vh;
+  z-index: 10;
+}
+
+.hero-genesis-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-beat-stack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--u6);
+  pointer-events: none;
+}
+
+.hero-beat-stack > * {
+  grid-area: 1 / 1;
+}
+
+.hero-beat-stack > [data-beat] {
+  transition: opacity var(--t-word);
+  margin: 0;
+}
+
+.hero-beat-stack > [data-beat]:not(:first-child):not([data-painted="true"]) {
+  opacity: 0;
+}
+
+.hero-lockup {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--u3);
+  text-align: center;
+  padding: var(--u6);
+  opacity: 0;
+  transform: translateY(var(--u4));
+  transition: opacity var(--t-word), transform var(--t-word);
+  pointer-events: none;
+}
+
+.hero-lockup[data-painted="true"] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.hero-lockup p {
+  margin: 0;
+}
+
+.hero-wordmark {
+  font-family: var(--font-display);
+  font-weight: var(--weight-metric);
+  font-size: var(--type-section);
+  color: var(--text-hi);
+  letter-spacing: var(--type-mono-ls);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--type-panel);
+  color: var(--text-hi);
+  max-width: 24ch;
+}
+
+.hero-tagline {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: var(--type-mono-ls);
+  text-transform: uppercase;
+  color: var(--text-mid);
+}
+
+.hero-ctas {
+  display: flex;
+  gap: var(--u4);
+  margin-top: var(--u6);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-cta-primary,
+.hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--u11);
+  padding: var(--u3) var(--u6);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  text-decoration: none;
+  border: var(--hairline) solid var(--ondc-blue);
+}
+
+/* The filled CTA keeps the blue on both grounds — it is the one mark that has
+ * to read while the ground is still void — so its label stays white rather
+ * than following the ink crossfade underneath it. */
+.ondc-hero a.hero-cta-primary {
+  background: var(--ondc-blue);
+  color: #fff;
+}
+
+.ondc-hero a.hero-cta-primary:hover,
+.ondc-hero a.hero-cta-primary:focus-visible {
+  background: var(--blue-deep);
+  color: #fff;
+}
+
+.ondc-hero a.hero-cta-secondary {
+  background: none;
+  color: var(--text-hi);
+}
+
+.ondc-hero a.hero-cta-secondary:hover,
+.ondc-hero a.hero-cta-secondary:focus-visible {
+  border-color: var(--ondc-cyan);
+  color: var(--text-hi);
+}
+
+
+/* ---- Act 2: Impact ---- */
+.hero-act-impact {
+  position: relative;
+  min-height: 150vh;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
+  gap: var(--u8);
+  padding: var(--pad-section) var(--u6);
+}
+
+.hero-map-dock {
+  min-height: 60vh;
+}
+
+.hero-impact-content {
+  display: grid;
+  align-content: start;
+  gap: var(--u8);
+  padding-top: var(--u16);
+}
+
+.hero-impact-headline {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--type-section);
+  color: var(--text-hi);
+  max-width: 20ch;
+  margin: 0;
+}
+
+.hero-metrics {
+  display: grid;
+  gap: var(--u10);
+}
+
+@media (max-width: 767px) {
+  .hero-act-impact {
+    grid-template-columns: 1fr;
+  }
+  .hero-map-dock {
+    min-height: 44vh;
+  }
+}
+
+/* ---- MetricModule ---- */
+.hero-metric {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--u16) 1fr;
+  align-items: center;
+  gap: var(--u4);
+  transition: opacity var(--t-panel);
+}
+
+.hero-metric[data-armed="true"] {
+  opacity: 0;
+}
+
+.hero-metric[data-ignited="true"] {
+  opacity: 1;
+}
+
+.hero-metric-leader {
+  width: var(--u16);
+  height: var(--u6);
+  overflow: visible;
+}
+
+.hero-metric-leader path {
+  stroke: var(--ondc-cyan);
+  stroke-width: var(--hairline);
+  fill: none;
+}
+
+.hero-metric-numeral {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--weight-metric);
+  font-size: var(--type-metric);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-hi);
+  line-height: 1.1;
+}
+
+.hero-metric-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: var(--type-mono-ls);
+  text-transform: uppercase;
+  color: var(--text-mid);
+  max-width: 36ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-metric {
+    opacity: 1;
+    transition: none;
+  }
+
+  /* The finished state: spine drawn, landmarks landed, nothing moving. */
+  .ondc-hero { --hero-spine: 1; }
+  .hero-spine::after { transform: scaleY(1); }
+  .hero-lockup-swish { display: none; }
+
+  .hero-metric-wash {
+    transform: scaleX(1);
+    transition: none;
+  }
+
+  .hero-metric-node {
+    box-shadow: 0 0 0 6px rgba(33, 81, 245, .14);
+    transform: scale(1);
+    transition: none;
+  }
+}
+
+/* ---- Reduced motion: content-identical static parity — one static
+ * viewport-ish act, formed map behind (Tier C), everything set ---- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-act-genesis {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .hero-genesis-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+    display: grid;
+    gap: var(--u16);
+    padding: var(--pad-section) var(--u6);
+  }
+
+  .hero-beat-stack,
+  .hero-lockup {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .hero-beat-stack > [data-beat]:not(:first-child):not([data-painted="true"]) {
+    opacity: 1;
+  }
+
+  .hero-beat-stack {
+    display: grid;
+    gap: var(--u12);
+  }
+
+  .hero-beat-stack > * {
+    grid-area: auto;
+  }
+}

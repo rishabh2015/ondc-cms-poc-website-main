@@ -1,0 +1,131 @@
+spec:
+  structures: [sections]
+  label: Buyer App directory
+  description: >-
+    The searchable, paged list of Buyer Apps with their support and grievance
+    contacts. The wording around it is editable here; the apps themselves come
+    from the directory data file.
+  icon: apps
+
+blueprint:
+  screen_label: Buyer App directory
+  anchor_id: buyer-apps
+  heading_id: ''
+  heading: Find your
+  heading_accent: Buyer App
+  heading_suffix: ''
+  intro: ''
+  search_placeholder: Search by app or company name
+  search_label: Search Buyer Applications
+  per_page: '24'
+  per_page_choices: '24, 48, 96'
+  per_page_label: Per page
+  prev_label: Prev
+  next_label: Next
+  item_noun: Buyer App
+  item_noun_plural: Buyer Apps
+  empty_heading: No Buyer App matches
+  clear_label: Clear search
+  no_details_text: No contact details published for this app.
+
+# WHERE THE APPS COME FROM
+# The 143 entries are not fields on this section. They live in
+# src/_data/buyer_apps.json, a snapshot of the published ONDC Buyer App
+# directory, and they are listed in cloudcannon.config.yml under `data_config`
+# so CloudCannon can edit that file directly and Bookshop's live rendering can
+# still see it while editing.
+#
+# They are kept out of the section for two reasons: 143 entries nested in a
+# page's front matter is unusable in the sidebar, and the list is a copy of an
+# upstream directory rather than page copy — it is refreshed wholesale, not
+# edited line by line.
+#
+# Every card is rendered into the page at build time; searching and paging only
+# hide and show cards that are already there. Nothing is ever moved or created,
+# which is what stops the script fighting Bookshop's re-render in the editor —
+# the same rule the RFP ledger follows.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: >-
+      Lets menu and button links jump to this section. The hero's "Find my
+      Buyer App" button points at "buyer-apps".
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading_id:
+    type: text
+    label: Heading anchor
+    comment: Optional. Ties this section to its heading for screen readers.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+  intro:
+    type: textarea
+    label: Line under the heading
+  search_placeholder:
+    type: text
+    label: Grey hint in the search box
+  search_label:
+    type: text
+    label: Search box name for screen readers
+  per_page:
+    type: text
+    label: Cards per page to start with
+    comment: Must be one of the choices below.
+    options:
+      pattern: '^\d+$'
+      pattern_message: Digits only.
+  per_page_choices:
+    type: text
+    label: Per-page choices
+    comment: >-
+      The options in the "Per page" dropdown, separated by commas — for example
+      24, 48, 96.
+    options:
+      pattern: '^\s*\d+\s*(,\s*\d+\s*)*$'
+      pattern_message: Whole numbers separated by commas, for example 24, 48, 96.
+  per_page_label:
+    type: text
+    label: "\"Per page\" label"
+  prev_label:
+    type: text
+    label: Previous-page button
+  next_label:
+    type: text
+    label: Next-page button
+  item_noun:
+    type: text
+    label: What one entry is called
+    comment: Used in the count line, for example "Showing 1–24 of 143 Buyer Apps".
+  item_noun_plural:
+    type: text
+    label: What several entries are called
+  empty_heading:
+    type: text
+    label: Message when nothing matches
+    comment: The search term is added on the end, in quotes.
+  clear_label:
+    type: text
+    label: "\"Clear search\" button"
+  no_details_text:
+    type: text
+    label: Message when an app has no contacts

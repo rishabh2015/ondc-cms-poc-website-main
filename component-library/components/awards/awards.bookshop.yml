@@ -1,0 +1,31 @@
+spec:
+  structures: [sections]
+  label: Awards and recognitions
+  description: A featured award plus awards grouped by year. Each award opens a larger view.
+  icon: emoji_events
+
+blueprint:
+  anchor_id: recognitions
+  screen_label: ''
+  eyebrow: ''
+  heading: A heading for this section
+  heading_accent: ''
+  lead: ''
+  featured:
+    eyebrow: Featured recognition
+    title: ''
+    name: ''
+    year: ''
+    description: ''
+    image: ''
+    alt: ''
+  years:
+    - year: '2025'
+      awards:
+        - title: Award name
+          name: Awarding body
+          description: One sentence about this award.
+          image: ''
+          alt: ''
+
+_inputs: {}

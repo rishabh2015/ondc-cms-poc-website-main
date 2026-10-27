@@ -1,0 +1,24 @@
+spec:
+  structures:
+  - sections
+  label: News rail
+  description: A swipeable row of press cards, numbered automatically.
+  icon: newspaper
+blueprint:
+  title: ONDC in the News
+  intro: ''
+  cards:
+  - image: ''
+    tag: ''
+    source: ''
+    headline: ''
+    dek: ''
+    link: ''
+  more:
+    show: true
+    label: Stay in the loop
+    headline: View more on LinkedIn
+    dek: ''
+    cta_label: View on LinkedIn
+    url: https://www.linkedin.com/company/open-network-for-digital-commerce
+_inputs: {}

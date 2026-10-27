@@ -1,0 +1,332 @@
+spec:
+  structures: [sections]
+  label: Participant directory
+  description: >-
+    The filterable, paged ledger of participants — category tree on the left,
+    role toggles, search, CSV export. The wording and the layout are edited
+    here; the participants themselves live in the Network Participants data
+    file so one list can be reused on more than one page.
+
+    NEEDS css/ondc/np-directory.css in the page's `override:styles`, after
+    beckn.css. The ledger filters by setting `hidden` on rows, chips and
+    toggles it has already drawn, and three of those classes carry a
+    `display` rule that outranks the browser's `[hidden]` rule — without that
+    sheet, every chip in the taxonomy shows at once. See ADDING_PAGES.md,
+    rule 9.
+  icon: table_rows
+
+blueprint:
+  screen_label: Participant directory
+  anchor_id: participant-roles
+  directory_tabs:
+    - label: Network Participants
+      url: /network-participants.html
+      current: true
+    - label: Ecosystem Participants
+      url: /ecosystem-participants.html
+      current: false
+  lists:
+    - label: Key Network Participants
+      source: key
+      sort: alphabetical
+      note: >-
+        The highest-volume Network Participants of the last three months,
+        refreshed monthly and listed alphabetically.
+    - label: Integrated Network Participants
+      source: integrated
+      sort: alphabetical
+      note: >-
+        Every Network Participant live on the ONDC Network, including the Key
+        Network Participants, in alphabetical order.
+  search_placeholder: Search by name, category, contact or website
+  per_page: '20'
+  per_page_choices: 20, 30, 50, 100
+  show_export: true
+  export_label: Export CSV
+  disclaimer: >-
+    Disclaimer: The list provided here is for information purposes only. ONDC
+    does not endorse any of the participants listed. ONDC does not offer any
+    terms or make any representations or warranties regarding the participants
+    or services provided by them.
+  labels:
+    aria: Participant directory
+    tabs_aria: Participant directories
+    filters: Filter by category
+    category_heading: Category
+    search: Search participants
+    list_switch: Participant list
+    roles: Filter by role
+    active_filters: Active filters
+    remove_filter: remove this filter
+    clear_all: Clear all
+    col_participant: Participant
+    col_role: Role
+    col_categories: Categories
+    col_contact: Contact
+    enabled_by: Enabled by
+    not_recorded: Not recorded
+    fewer: Fewer
+    email: Email
+    call: Call
+    website: Website
+    website_sr: for
+    empty: No participants match these filters. Remove one above to widen the search.
+    rows_per_page: Rows per page
+    prev: Previous page
+    next: Next page
+    item_noun: participant
+    item_noun_plural: participants
+    export_filename: ondc-network-participants
+
+# WHERE THE PARTICIPANTS COME FROM
+# Not from this section. The 494 entries live in
+# src/_data/network_participants.json and are edited under "Network
+# Participants" in the CMS sidebar; the category taxonomy behind the left-hand
+# tree is src/_data/np_categories.json and the role keys are
+# src/_data/np_roles.json. All three are listed in cloudcannon.config.yml under
+# `data_config`, which is what lets CloudCannon edit them AND what makes them
+# reach Bookshop's live rendering, so the ledger still draws while editing.
+#
+# They are kept out of the section for two reasons: 494 entries nested in a
+# page's front matter is unusable in the sidebar, and the same list is wanted
+# on more than one page — a section field would mean two copies that drift.
+#
+# Deleting a participant in the data file deletes it from every page that
+# lists it, because every row is rendered from that file at build time.
+#
+# Every row is rendered into the page at build time; filtering, searching and
+# paging only hide and show rows that are already there. Nothing is ever moved
+# or created, which is what stops the script fighting Bookshop's re-render in
+# the editor — the same rule the Buyer App directory and the RFP ledger follow.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields, and a
+# `structures: _structures.<name>` reference drops the per-value `_inputs` —
+# see ADDING_PAGES.md, rule 5. Structures are therefore written inline.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: >-
+      Lets menu and button links jump to this section. The hero's "Browse
+      participants" button points at "participant-roles".
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+
+  directory_tabs:
+    type: array
+    label: Tabs above the directory
+    comment: >-
+      The row of links at the top, for moving between this directory and the
+      other ones. Tick "This is the current page" on the one that points here.
+      Leave the list empty to drop the row.
+    options:
+      structures:
+        values:
+          - label: Tab
+            icon: tab
+            value:
+              label: New tab
+              url: ''
+              current: false
+            _inputs:
+              label:
+                type: text
+                label: Tab text
+              url:
+                type: text
+                label: Page address
+                comment: For example /ecosystem-participants.html
+              current:
+                type: checkbox
+                label: This is the current page
+                comment: Draws the tab as selected. Tick exactly one.
+
+  lists:
+    type: array
+    label: Lists in this directory
+    comment: >-
+      Each list becomes one option in the switcher above the table. Use + to
+      add one, the item menu to duplicate or delete, and drag to reorder — the
+      first one is what visitors see when the page opens.
+    options:
+      structures:
+        values:
+          - label: List
+            icon: list
+            value:
+              label: New list
+              source: integrated
+              sort: alphabetical
+              note: ''
+            _inputs:
+              label:
+                type: text
+                label: List name
+                comment: Shown in the switcher above the table.
+              source:
+                type: select
+                label: Which participants
+                comment: >-
+                  Which list from the Network Participants data file to show.
+                  Add a participant there and it appears here automatically.
+                options:
+                  values:
+                    - value: key
+                      label: Key Network Participants
+                    - value: integrated
+                      label: Integrated Network Participants
+                    - value: ecosystem
+                      label: Ecosystem Participants
+              sort:
+                type: select
+                label: Order
+                comment: >-
+                  "Alphabetical" sorts by participant name every time the site
+                  builds, so a participant added in the CMS lands in the right
+                  place by itself. "As listed in the data file" keeps the
+                  order of the file — use it only for a list whose order
+                  carries meaning, such as a ranking.
+                options:
+                  values:
+                    - value: alphabetical
+                      label: Alphabetical by name
+                    - value: as_listed
+                      label: As listed in the data file
+              note:
+                type: textarea
+                label: Line under the switcher
+                comment: Explains what this particular list is. Leave empty for none.
+
+  search_placeholder:
+    type: text
+    label: Grey hint in the search box
+  per_page:
+    type: text
+    label: Rows per page to start with
+    comment: Must be one of the choices below.
+    options:
+      pattern: '^\d+$'
+      pattern_message: Digits only.
+  per_page_choices:
+    type: text
+    label: "\"Rows per page\" choices"
+    comment: The options in the dropdown, separated by commas — for example 20, 30, 50, 100.
+    options:
+      pattern: '^\s*\d+\s*(,\s*\d+\s*)*$'
+      pattern_message: Whole numbers separated by commas, for example 20, 30, 50, 100.
+  show_export:
+    type: checkbox
+    label: Show the "Export CSV" button
+    comment: Downloads whatever the current filters and search have left on screen.
+  export_label:
+    type: text
+    label: "\"Export CSV\" button text"
+  disclaimer:
+    type: textarea
+    label: Note under the directory
+    comment: The small grey paragraph below the table. Leave empty to drop it.
+
+  labels:
+    type: object
+    label: Wording inside the directory
+    comment: >-
+      Column headings, button text and the messages the directory shows. These
+      rarely need changing — open this only to reword something specific.
+    options:
+      preview:
+        text:
+          - Column headings, buttons and messages
+  aria:
+    type: text
+    label: Section description for screen readers
+  tabs_aria:
+    type: text
+    label: Name of the tab row, for screen readers
+  filters:
+    type: text
+    label: Name of the filter panel, for screen readers
+  category_heading:
+    type: text
+    label: Heading above the category tree
+  search:
+    type: text
+    label: Search box name for screen readers
+  list_switch:
+    type: text
+    label: List switcher name for screen readers
+  roles:
+    type: text
+    label: Name of the role toggles, for screen readers
+  active_filters:
+    type: text
+    label: Name of the active-filter row, for screen readers
+  remove_filter:
+    type: text
+    label: "\"Remove this filter\" wording for screen readers"
+  clear_all:
+    type: text
+    label: "\"Clear all\" button"
+  col_participant:
+    type: text
+    label: "Column heading: participant"
+  col_role:
+    type: text
+    label: "Column heading: role"
+  col_categories:
+    type: text
+    label: "Column heading: categories"
+  col_contact:
+    type: text
+    label: "Column heading: contact"
+  enabled_by:
+    type: text
+    label: Label before the technology service provider
+    comment: Printed under the participant's name on the rows that have one.
+  not_recorded:
+    type: text
+    label: What a blank cell says to a screen reader
+  fewer:
+    type: text
+    label: "\"Fewer\" button, for collapsing a long category list"
+  email:
+    type: text
+    label: "\"Email\" link text"
+  call:
+    type: text
+    label: "\"Call\" link text"
+  website:
+    type: text
+    label: "\"Website\" link text"
+  website_sr:
+    type: text
+    label: Word before the brand name in the website link, for screen readers
+    comment: 'Reads as: Website for Namma Yatri, opens in a new tab.'
+  empty:
+    type: textarea
+    label: Message when nothing matches
+  rows_per_page:
+    type: text
+    label: "\"Rows per page\" label"
+  prev:
+    type: text
+    label: Previous-page button, for screen readers
+  next:
+    type: text
+    label: Next-page button, for screen readers
+  item_noun:
+    type: text
+    label: What one entry is called
+    comment: Used in the count line, for example "150 participants · showing 1–20".
+  item_noun_plural:
+    type: text
+    label: What several entries are called
+  export_filename:
+    type: text
+    label: Name of the downloaded CSV file
+    comment: Without the .csv — the list name and the extension are added for you.

@@ -1,0 +1,16 @@
+spec:
+  structures:
+  - sections
+  label: Call to action
+  description: A wide banner with a heading and buttons.
+  icon: campaign
+blueprint:
+  background: dark
+  heading: Ready to join the network?
+  subtext: ''
+  buttons:
+  - label: Get started
+    url: https://portal.ondc.org/
+    style: primary
+    new_tab: true
+_inputs: {}

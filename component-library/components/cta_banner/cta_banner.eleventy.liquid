@@ -1,0 +1,20 @@
+<section class="block block-cta block--{{ background | default: "dark" }}">
+  <div class="container">
+    <div class="block-cta-inner">
+      <div class="block-cta-copy">
+        <h2 class="block-h2">{{ heading }}</h2>
+        {% if subtext %}
+          <p class="block-cta-text">{{ subtext }}</p>
+        {% endif %}
+      </div>
+      {% if buttons.size > 0 %}
+        <div class="block-actions">
+          {% for button in buttons %}<a
+              class="btn {% if button.style == "secondary" %}btn-light{% else %}btn-primary{% endif %}"
+              href="{{ button.url }}"{% if button.new_tab %} rel="noopener"
+              target="_blank"{% endif %}>{{ button.label }}</a>{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

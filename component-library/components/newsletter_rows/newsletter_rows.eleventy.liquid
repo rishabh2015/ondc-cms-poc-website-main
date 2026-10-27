@@ -1,0 +1,25 @@
+{%- comment -%}
+  The newsletter band on the Resources hub — a stack of wide download rows.
+  Unlike the rest of this page these ARE fields on the section: there are two
+  of them, they change a couple of times a year, and they are page copy rather
+  than knowledge-base records.
+{%- endcomment -%}
+<section class="bk-nl"{% if anchor_id %} id="{{ anchor_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Newsletters" }}"{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %}>
+  <div class="bk-nl-head bk-rv">
+    {% if eyebrow %}<div class="bk-eyebrow">{{ eyebrow }}</div>{% endif %}
+    <h2 class="bk-h2"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+    {% if lead %}<p class="bk-nl-lead">{{ lead }}</p>{% endif %}
+  </div>
+  {% if rows.size > 0 %}
+    <div class="bk-nl-rows bk-rv bk-rv-d1">
+      {% for row in rows %}
+        <a class="bk-nl-row" href="{{ row.url }}"{% if row.new_tab %} target="_blank" rel="noopener"{% endif %}{% if row.download %} download{% endif %}>
+          {% if row.eyebrow %}<div class="bk-eyebrow">{{ row.eyebrow }}</div>{% endif %}
+          <div class="bk-nl-title">{{ row.title }}</div>
+          {% if row.description %}<p class="bk-nl-desc">{{ row.description }}</p>{% endif %}
+          {% if row.link_label %}<span class="bk-ul">{{ row.link_label }}</span>{% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>

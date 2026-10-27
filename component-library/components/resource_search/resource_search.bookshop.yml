@@ -1,0 +1,54 @@
+spec:
+  structures: [sections]
+  label: Resources search
+  description: >-
+    The search box at the top of the Resources hub that searches every document
+    in the knowledge base at once. The wording is edited here; what it searches
+    comes from the Resources library data file.
+  icon: search
+
+blueprint:
+  search_placeholder: Search every guide, policy and document
+  search_label: Search all ONDC resources
+  shortcut_hint: "Ctrl / ⌘ K"
+  result_limit: '30'
+  section_chip: Section
+  open_label: Open
+  empty_text: Nothing found. Try a different term.
+
+# WHAT IT SEARCHES
+# Every document in src/_data/resources.json, plus one row per area. All of it
+# is rendered into the page at build time and hidden; the script only shows
+# the rows that match. Nothing is fetched, so the search works on the first
+# keystroke and keeps working with no network.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  search_placeholder:
+    type: text
+    label: Grey hint in the search box
+  search_label:
+    type: text
+    label: Search box name for screen readers
+  shortcut_hint:
+    type: text
+    label: Keyboard shortcut shown in the box
+    comment: The shortcut itself is Ctrl-K / Cmd-K. Changing this text does not change the shortcut.
+  result_limit:
+    type: text
+    label: Most results to show at once
+    options:
+      pattern: '^\d+$'
+      pattern_message: Digits only.
+  section_chip:
+    type: text
+    label: Tag on a result that is an area rather than a document
+  open_label:
+    type: text
+    label: Text on a result's button
+  empty_text:
+    type: text
+    label: Message when a search finds nothing
+    comment: The search term is added after it, in quotes.

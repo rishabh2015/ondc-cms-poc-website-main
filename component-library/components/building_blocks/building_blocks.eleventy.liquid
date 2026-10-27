@@ -1,0 +1,52 @@
+<section class="dpi" id="{{ anchor_id | default: "infrastructure" }}" style="--dpi-n: {{ cards | size }};">
+  <div class="dpi-bg">
+  </div>
+  <div class="dpi-stage">
+    <div class="container">
+      <div class="dpi-header">
+        <h2 class="dpi-h2">{{ title }}</h2>
+        <p class="dpi-sub">{{ intro }}</p>
+      </div>
+    </div>
+    <div class="dpi-deck">
+      {% for card in cards %}
+        <article class="dpi-card">
+          <span aria-hidden="true" class="dpi-card-wash"></span>
+          <div class="dpi-card-body">
+            <span aria-hidden="true" class="dpi-card-ghost">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span><div class="dpi-eyebrow"><span>{{ card.eyebrow | default: "Building block" }}</span>{% if card.coming_soon %}<span class="dpi-soon">Coming soon</span>{% endif %}</div>
+            <h3 class="dpi-name">{{ card.name }}</h3>
+            <div class="dpi-tagline">{{ card.tagline }}</div>
+            <p class="dpi-desc">{{ card.details }}</p>
+          </div>
+          <div class="dpi-media" style="--dpi-img:url({{ card.image }});">
+            <div class="cms-img"><img alt="{{ card.image_tag }}" loading="lazy" src="{{ card.image }}"/></div>
+            <div class="dpi-media-tag">{{ card.image_tag }}</div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+    <div class="dpi-controls">
+      <button aria-label="Previous" class="dpi-arrow prev"><svg
+          fill="none"
+          height="18"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewbox="0 0 20 20"
+          width="18"><path d="M13 4l-6 6 6 6"></path></svg></button>
+      <div class="dpi-dots">
+        {% for card in cards %}<button aria-label="Go to block {{ forloop.index }}" class="dpi-dot"></button>{% endfor %}
+      </div>
+      <button aria-label="Next" class="dpi-arrow next"><svg
+          fill="none"
+          height="18"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewbox="0 0 20 20"
+          width="18"><path d="M7 4l6 6-6 6"></path></svg></button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,25 @@
+spec:
+  structures: [sections]
+  label: Institutions
+  description: Named organisations with descriptions, plus an optional logo grid with a counter.
+  icon: account_balance
+
+blueprint:
+  anchor_id: investor-relations
+  screen_label: ''
+  eyebrow: ''
+  heading: A heading for this section
+  heading_accent: ''
+  lead: ''
+  rows:
+    - eyebrow: Founding member
+      name: Organisation name
+      description: One or two sentences about this organisation.
+  logos:
+    heading: ''
+    count: '0'
+    count_label: ''
+    image: ''
+    alt: ''
+
+_inputs: {}

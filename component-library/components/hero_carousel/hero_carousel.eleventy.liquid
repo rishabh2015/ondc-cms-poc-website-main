@@ -1,0 +1,69 @@
+<div id="{{ anchor_id | default: "site-top" }}">
+  <section class="hero">
+    <div class="hero-slides">
+      {% for slide in slides %}
+        <div class="slide{% if forloop.first %} active{% endif %}" data-pill="{{ slide.pill }}">
+          <div class="slide-bg">
+            <img
+              class="slide-photo fx-drift is-loaded"
+              src="{{ slide.image }}"
+              alt=""
+              decoding="async"{% if forloop.first %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
+          </div>
+          <div class="container">
+            <div class="slide-content">
+              <div class="slide-sector-tag"><span class="dot"></span><span>{{ slide.sector }}</span></div>
+              <h1 class="slide-h1">{{ slide.title }}</h1>
+              <div class="slide-actions">
+                <a class="btn btn-light hero-cta" href="{{ slide.cta_url }}">{{ slide.cta_label }}</a>
+              </div>
+            </div>
+            <aside class="slide-stats" aria-labelledby="slide-stats-title-{{ forloop.index0 }}">
+              <div class="stats-header">
+                <h2 class="stats-title" id="slide-stats-title-{{ forloop.index0 }}">By the numbers</h2>
+                <span class="stats-pill">{{ slide.badge }}</span>
+              </div>
+              <div class="stats-figures">
+                {% for figure in slide.figures %}
+                  <div class="stats-fig">
+                    <div class="stats-fig-num{% if figure.word_style %} is-word{% endif %}">{{ figure.value }}</div>
+                    <div class="stats-fig-label">{{ figure.label }}</div>
+                  </div>
+                {% endfor %}
+              </div>
+              <ul class="stats-list">
+                {% for point in slide.points %}
+                  <li>{{ point.text }}</li>
+                {% endfor %}
+              </ul>
+            </aside>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <button class="hero-arrow prev" aria-label="Previous sector" type="button"><svg
+        width="18"
+        height="18"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"><path d="M13 4l-6 6 6 6"/></svg></button><button class="hero-arrow next" aria-label="Next sector" type="button"><svg
+        width="18"
+        height="18"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"><path d="M7 4l6 6-6 6"/></svg></button>
+    <div class="hero-pills">
+      <div class="container">
+        <div class="sector-rail" role="group" aria-label="Sectors on the network">{% for slide in slides %}<button
+              type="button"
+              class="sector-pill{% if forloop.first %} active{% endif %}"{% if forloop.first %} aria-current="true"{% endif %}>{{ slide.pill }}</button>{% endfor %}</div>
+      </div>
+    </div>
+  </section>
+</div>

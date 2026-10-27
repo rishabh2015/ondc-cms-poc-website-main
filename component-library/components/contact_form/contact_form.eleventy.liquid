@@ -1,0 +1,96 @@
+{%- assign hid = heading_id | default: "contact-form-title" -%}
+<section
+  class="bk-contact-shell"
+  aria-labelledby="{{ hid }}"
+  data-screen-label="{{ screen_label | default: "Contact form" }}">
+  <div>
+    <div class="bk-contact-intro bk-rv">
+      <h2 id="{{ hid }}">{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+      {% if intro %}
+        <p>{{ intro }}</p>
+      {% endif %}
+    </div>
+    <form
+      id="contactForm"
+      class="bk-contact-form bk-rv"
+      novalidate
+      data-contact-to="{{ recipient_email }}"
+      data-contact-subject-prefix="{{ subject_prefix }}"
+      data-contact-subject-field="{{ subject_field }}"
+      data-contact-subject-fallback="{{ subject_fallback }}">
+      {% for row in rows %}
+        {% assign count = row.fields | size %}
+        {% if count == 0 %}
+          {% continue %}
+        {% endif %}
+        {% if count > 1 %}
+          <div class="field-row">
+          {% endif %}
+          {% for f in row.fields %}
+            {% unless f.name %}
+              {% continue %}
+            {% endunless %}
+            <div class="field">
+              <label for="{{ f.name }}">{{ f.label }}</label>{% if f.type == "select" %}<select
+                  id="{{ f.name }}"
+                  name="{{ f.name }}"{% if f.required %} required{% endif %} data-contact-field="{{ f.email_label | default: f.label }}"><option value="">{{ f.placeholder | default: f.label }}</option>{% for c in f.choices %}<option value="{{ c.label }}">{{ c.label }}</option>{% endfor %}</select>{% elsif f.type == "textarea" %}<textarea
+                  id="{{ f.name }}"
+                  name="{{ f.name }}"
+                  placeholder="{{ f.placeholder }}"{% if f.required %} required{% endif %} data-contact-field="{{ f.email_label | default: f.label }}"
+                  data-contact-long></textarea>{% else %}<input
+                  type="{{ f.type | default: "text" }}"
+                  id="{{ f.name }}"
+                  name="{{ f.name }}"
+                  placeholder="{{ f.placeholder }}"{% if f.pattern %} pattern="{{ f.pattern }}"{% endif %}{% if f.autocomplete %} autocomplete="{{ f.autocomplete }}"{% endif %}{% if f.required %} required{% endif %} data-contact-field="{{ f.email_label | default: f.label }}">
+              {% endif %}
+            </div>
+          {% endfor %}
+          {% if count > 1 %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      {% if consent_text %}
+        <label class="field-consent"><input type="checkbox" id="terms" name="terms"{% if consent_required %} required{% endif %}><span>{{ consent_text }}</span></label>
+      {% endif %}          <button type="submit" class="bk-btn bk-btn-solid">{{ submit_label | default: "Submit" }}</button>
+      <div class="send-options" id="sendOptions" hidden>
+        <p class="send-options-head">{{ send_heading }}</p>
+        <div class="send-options-row">
+          <a
+            class="bk-btn bk-btn-solid"
+            id="sendGmail"
+            data-contact-send="gmail"
+            target="_blank"
+            rel="noopener">{{ gmail_label | default: "Open in Gmail" }}</a><a
+            class="bk-btn bk-btn-ghost"
+            id="sendOutlook"
+            data-contact-send="outlook"
+            target="_blank"
+            rel="noopener">{{ outlook_label | default: "Outlook on the web" }}</a><a class="bk-btn bk-btn-ghost" id="sendDefault" data-contact-send="default">{{ default_mail_label | default: "Default mail app" }}</a>
+        </div>
+        {% if send_note %}
+          <p class="send-options-note">{{ send_note }}</p>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+  {% if support_rows.size > 0 or map_embed_url or directions_url %}
+    <aside class="bk-contact-support bk-rv" aria-label="{{ support_label | default: "ONDC office details" }}">
+      {% for r in support_rows %}
+        <div class="bk-contact-support-row">
+          <h3>{{ r.heading }}</h3>
+          <p>{{ r.body }}</p>
+        </div>
+      {% endfor %}
+      {% if map_embed_url %}
+        <iframe
+          class="bk-contact-map"
+          title="{{ map_title | default: "ONDC office location" }}"
+          src="{{ map_embed_url }}"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      {% endif %}{% if directions_url %}        <a class="bk-btn bk-btn-ghost" href="{{ directions_url }}" target="_blank" rel="noopener">{{ directions_label | default: "Get directions" }}</a>
+      {% endif %}
+    </aside>
+  {% endif %}
+</section>

@@ -1,0 +1,42 @@
+<section class="bk-escalate-panel"{% if anchor_id %} id="{{ anchor_id }}"{% endif %}{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Escalate" }}">
+  <div class="bk-rv">
+    <h2 class="bk-h2"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+    {% if lead %}
+      <p class="bk-escalate-lede">{{ lead }}</p>
+    {% endif %}
+    {% if triggers.size > 0 %}
+      <div class="bk-escalate-list">
+        {% for t in triggers %}
+          <div class="bk-escalate-item">
+            <span class="bk-dot">&middot;</span><span>{{ t.text }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if buttons.size > 0 %}
+      <div class="bk-escalate-actions">
+        {% for button in buttons %}          <a
+            class="bk-btn {% if button.style == "ghost" %}bk-btn-ghost{% else %}bk-btn-solid{% endif %}"
+            href="{{ button.url }}"{% if button.new_tab %} target="_blank"
+            rel="noopener"{% endif %}>{{ button.label }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if note %}
+      <p class="bk-escalate-note">{{ note }}</p>
+    {% endif %}
+  </div>
+  {% if aside_rows.size > 0 or doc_url %}
+    <aside class="bk-escalate-aside bk-rv bk-rv-d1">
+      {% for r in aside_rows %}
+        <div class="bk-ec-row">
+          <b>{{ r.term }}</b>
+          <span>{{ r.desc }}</span>
+        </div>
+      {% endfor %}
+      {% if doc_url %}
+        <a class="bk-ul bk-escalate-doc" href="{{ doc_url }}" target="_blank" rel="noopener">{{ doc_label | default: "Read the full note" }}</a>
+      {% endif %}
+    </aside>
+  {% endif %}
+</section>

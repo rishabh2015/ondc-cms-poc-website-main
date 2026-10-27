@@ -1,0 +1,5453 @@
+[
+  {
+    "name": "awards",
+    "label": "Awards and recognitions",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "lead",
+        "label": "Summary",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "featured",
+        "label": "Featured item",
+        "type": "object",
+        "fields": [
+          {
+            "name": "eyebrow",
+            "label": "Small label above the heading",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "label": "Title",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+          },
+          {
+            "name": "year",
+            "label": "Year",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "label": "Search engine description",
+            "description": "One or two sentences. Shown in Google results and when the page is shared.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "image",
+            "label": "Image",
+            "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+            "type": "image"
+          },
+          {
+            "name": "alt",
+            "label": "Image description",
+            "description": "Describes the picture for screen readers and when the image cannot load.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "years",
+        "label": "Years",
+        "description": "Use + to add a year, the item menu to duplicate or delete, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "year",
+            "label": "Year",
+            "type": "string"
+          },
+          {
+            "name": "awards",
+            "label": "Awards",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "title",
+                "label": "Title",
+                "type": "string"
+              },
+              {
+                "name": "name",
+                "label": "Name",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "label": "Search engine description",
+                "description": "One or two sentences. Shown in Google results and when the page is shared.",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              },
+              {
+                "name": "image",
+                "label": "Image",
+                "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+                "type": "image"
+              },
+              {
+                "name": "alt",
+                "label": "Image description",
+                "description": "Describes the picture for screen readers and when the image cannot load.",
+                "type": "string"
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "title": "Award name",
+                "name": "Awarding body",
+                "description": "One sentence about this award.",
+                "image": "",
+                "alt": ""
+              }
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "year": "2025",
+            "awards": [
+              {
+                "title": "Award name",
+                "name": "Awarding body",
+                "description": "One sentence about this award.",
+                "image": "",
+                "alt": ""
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "recognitions",
+        "screen_label": "",
+        "eyebrow": "",
+        "heading": "A heading for this section",
+        "heading_accent": "",
+        "lead": "",
+        "featured": {
+          "eyebrow": "Featured recognition",
+          "title": "",
+          "name": "",
+          "year": "",
+          "description": "",
+          "image": "",
+          "alt": ""
+        },
+        "years": [
+          {
+            "year": "2025",
+            "awards": [
+              {
+                "title": "Award name",
+                "name": "Awarding body",
+                "description": "One sentence about this award.",
+                "image": "",
+                "alt": ""
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "building_blocks",
+    "label": "Building blocks deck",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Intro text",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "cards",
+        "label": "Cards",
+        "description": "Use + to add a card, the ⋮ menu to duplicate or delete one, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+          },
+          {
+            "name": "tagline",
+            "label": "Closing line",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "details",
+            "label": "Description",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "image",
+            "label": "Image",
+            "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+            "type": "image"
+          },
+          {
+            "name": "image_tag",
+            "label": "Small label on the picture",
+            "type": "string"
+          },
+          {
+            "name": "coming_soon",
+            "label": "Mark as coming soon",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "name": "New building block",
+            "tagline": "One line about it.",
+            "details": "",
+            "image": "",
+            "image_tag": "",
+            "coming_soon": false
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "infrastructure",
+        "title": "Building Blocks Behind the Network",
+        "intro": "",
+        "cards": [
+          {
+            "name": "New building block",
+            "tagline": "One line about it.",
+            "details": "",
+            "image": "",
+            "image_tag": "",
+            "coming_soon": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "buyer_directory",
+    "label": "Buyer App directory",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu and button links jump to this section. The hero's \"Find my Buyer App\" button points at \"buyer-apps\".",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading anchor",
+        "description": "Optional. Ties this section to its heading for screen readers.",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Line under the heading",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "search_placeholder",
+        "label": "Grey hint in the search box",
+        "type": "string"
+      },
+      {
+        "name": "search_label",
+        "label": "Search box name for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "per_page",
+        "label": "Cards per page to start with",
+        "description": "Must be one of the choices below.",
+        "type": "string"
+      },
+      {
+        "name": "per_page_choices",
+        "label": "Per-page choices",
+        "description": "The options in the \"Per page\" dropdown, separated by commas — for example 24, 48, 96.",
+        "type": "string"
+      },
+      {
+        "name": "per_page_label",
+        "label": "\"Per page\" label",
+        "type": "string"
+      },
+      {
+        "name": "prev_label",
+        "label": "Previous-page button",
+        "type": "string"
+      },
+      {
+        "name": "next_label",
+        "label": "Next-page button",
+        "type": "string"
+      },
+      {
+        "name": "item_noun",
+        "label": "What one entry is called",
+        "description": "Used in the count line, for example \"Showing 1–24 of 143 Buyer Apps\".",
+        "type": "string"
+      },
+      {
+        "name": "item_noun_plural",
+        "label": "What several entries are called",
+        "type": "string"
+      },
+      {
+        "name": "empty_heading",
+        "label": "Message when nothing matches",
+        "description": "The search term is added on the end, in quotes.",
+        "type": "string"
+      },
+      {
+        "name": "clear_label",
+        "label": "\"Clear search\" button",
+        "type": "string"
+      },
+      {
+        "name": "no_details_text",
+        "label": "Message when an app has no contacts",
+        "type": "string"
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Buyer App directory",
+        "anchor_id": "buyer-apps",
+        "heading_id": "",
+        "heading": "Find your",
+        "heading_accent": "Buyer App",
+        "heading_suffix": "",
+        "intro": "",
+        "search_placeholder": "Search by app or company name",
+        "search_label": "Search Buyer Applications",
+        "per_page": "24",
+        "per_page_choices": "24, 48, 96",
+        "per_page_label": "Per page",
+        "prev_label": "Prev",
+        "next_label": "Next",
+        "item_noun": "Buyer App",
+        "item_noun_plural": "Buyer Apps",
+        "empty_heading": "No Buyer App matches",
+        "clear_label": "Clear search",
+        "no_details_text": "No contact details published for this app."
+      }
+    }
+  },
+  {
+    "name": "closing_cta",
+    "label": "Closing call to action",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "variant",
+        "label": "Layout",
+        "description": "\"Plain\" is the wide band at the foot of the About page. \"Panel\" is the white rounded card on the role pages — it can also carry a paragraph. \"Band\" is the full-width call to action at the foot of the Resources and legal pages.",
+        "type": "string",
+        "options": [
+          {
+            "value": "",
+            "label": "Plain"
+          },
+          {
+            "value": "role",
+            "label": "Panel"
+          },
+          {
+            "value": "band",
+            "label": "Band"
+          }
+        ]
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading id",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop. The heading reads \"Unlock business opportunities.\" — \"opportunities\" is the highlighted part and \".\" is this.",
+        "type": "string"
+      },
+      {
+        "name": "body",
+        "label": "Paragraph",
+        "description": "Only shown by the \"Panel\" layout. Leave empty for just a heading and buttons.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "buttons",
+        "label": "Buttons",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+            "type": "string"
+          },
+          {
+            "name": "style",
+            "label": "Button style",
+            "type": "string",
+            "options": [
+              {
+                "value": "primary",
+                "label": "primary"
+              },
+              {
+                "value": "secondary",
+                "label": "secondary"
+              },
+              {
+                "value": "solid",
+                "label": "solid"
+              },
+              {
+                "value": "ghost",
+                "label": "ghost"
+              }
+            ]
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "Get started",
+            "url": "https://portal.ondc.org/",
+            "style": "solid",
+            "new_tab": true
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "",
+        "variant": "",
+        "anchor_id": "",
+        "heading_id": "",
+        "heading": "A closing line for this page",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "body": "",
+        "buttons": [
+          {
+            "label": "Get started",
+            "url": "https://portal.ondc.org/",
+            "style": "solid",
+            "new_tab": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "contact_form",
+    "label": "Contact form",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading anchor",
+        "description": "Ties this section to its heading for screen readers, and lets a link jump here. Change it only if you know a link points at it.",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop.",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Paragraph under the heading",
+        "description": "Links are allowed here — select some text and use the link button to point it at an email address or another page.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "recipient_email",
+        "label": "Send messages to",
+        "description": "Every message composed by this form is addressed to this inbox. There is no server behind the form: pressing Submit opens the visitor's own mail service with the message filled in, so nothing is stored on the website and nothing is sent until the visitor presses send in their mail app.",
+        "type": "string"
+      },
+      {
+        "name": "subject_prefix",
+        "label": "Subject line starts with",
+        "description": "The subject of the composed email. The visitor's chosen option from the dropdown below is added on the end — keep the trailing space or dash.",
+        "type": "string"
+      },
+      {
+        "name": "subject_field",
+        "label": "Which field finishes the subject line",
+        "description": "The \"Field name\" of one of the fields below, usually the dropdown. Whatever the visitor picks there is added to the end of the subject. Leave empty to always use the fallback.",
+        "type": "string"
+      },
+      {
+        "name": "subject_fallback",
+        "label": "Subject if that field is left empty",
+        "description": "Used when the visitor did not choose anything.",
+        "type": "string"
+      },
+      {
+        "name": "rows",
+        "label": "Form rows",
+        "description": "Each row holds one or two fields. Two fields share the row side by side; one field spans the full width. Drag rows to reorder the form. All of the visitor's answers are written into the email in this order.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "fields",
+            "label": "Fields in this row",
+            "description": "One field fills the row. Two sit side by side. More than two will not fit.",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "name",
+                "label": "Field name",
+                "description": "The internal name for this field. Lower-case letters, numbers and underscores, no spaces — for example firstname. It is never shown to the visitor. Changing it on an existing field is safe, but if it is named in \"Which field finishes the subject line\" above, change that too.",
+                "type": "string"
+              },
+              {
+                "name": "label",
+                "label": "Label",
+                "description": "Shown above the box, and used as the heading for this answer in the email.",
+                "type": "string"
+              },
+              {
+                "name": "email_label",
+                "label": "Name for this answer in the email",
+                "description": "Optional. Leave empty to use the Label above. Set it when the label is a long question but the email reads better with a short word.",
+                "type": "string"
+              },
+              {
+                "name": "type",
+                "label": "Kind of field",
+                "description": "\"Email\" and \"Phone\" bring up the right keyboard on a phone and check the format. \"Dropdown\" uses the list of choices below. \"Long message\" is the tall box, and always goes at the end of the email.",
+                "type": "string",
+                "options": [
+                  {
+                    "value": "text",
+                    "label": "Short text"
+                  },
+                  {
+                    "value": "email",
+                    "label": "Email"
+                  },
+                  {
+                    "value": "tel",
+                    "label": "Phone"
+                  },
+                  {
+                    "value": "select",
+                    "label": "Dropdown"
+                  },
+                  {
+                    "value": "textarea",
+                    "label": "Long message"
+                  }
+                ]
+              },
+              {
+                "name": "placeholder",
+                "label": "Grey hint inside the box",
+                "description": "Optional. For a dropdown this is the first, unselected line of the list.",
+                "type": "string"
+              },
+              {
+                "name": "autocomplete",
+                "label": "Autofill hint",
+                "description": "Optional, and best left alone. Lets the browser fill the box from the visitor's saved details — for example given-name, family-name, email, tel-national.",
+                "type": "string"
+              },
+              {
+                "name": "pattern",
+                "label": "Format check",
+                "description": "Optional, for experts. A regular expression the answer must match. The phone field uses ^\\d{10}$ to require exactly ten digits. Leave empty for no check.",
+                "type": "string"
+              },
+              {
+                "name": "required",
+                "label": "Visitor must fill this in",
+                "type": "boolean"
+              },
+              {
+                "name": "choices",
+                "label": "Dropdown choices",
+                "description": "Only used when the kind of field is \"Dropdown\".",
+                "type": "object",
+                "list": true,
+                "fields": [
+                  {
+                    "name": "label",
+                    "label": "Choice",
+                    "type": "string"
+                  }
+                ],
+                "ui": {
+                  "defaultItem": {
+                    "label": ""
+                  }
+                }
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "name": "firstname",
+                "label": "First Name",
+                "email_label": "",
+                "type": "text",
+                "placeholder": "First Name",
+                "autocomplete": "given-name",
+                "pattern": "",
+                "required": true,
+                "choices": []
+              }
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "fields": [
+              {
+                "name": "firstname",
+                "label": "First Name",
+                "email_label": "",
+                "type": "text",
+                "placeholder": "First Name",
+                "autocomplete": "given-name",
+                "pattern": "",
+                "required": true,
+                "choices": []
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "consent_text",
+        "label": "Tick-box wording",
+        "description": "The sentence beside the tick box, usually with a link to the privacy policy. Leave empty to drop the tick box entirely.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "consent_required",
+        "label": "Visitor must tick the box",
+        "type": "boolean"
+      },
+      {
+        "name": "submit_label",
+        "label": "Button text",
+        "type": "string"
+      },
+      {
+        "name": "send_heading",
+        "label": "Line shown after Submit",
+        "description": "Submitting opens Gmail in a new tab. This panel then appears under the button with the other ways to send, for visitors who do not use Gmail.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "gmail_label",
+        "label": "Gmail button",
+        "type": "string"
+      },
+      {
+        "name": "outlook_label",
+        "label": "Outlook button",
+        "type": "string"
+      },
+      {
+        "name": "default_mail_label",
+        "label": "Default mail app button",
+        "type": "string"
+      },
+      {
+        "name": "send_note",
+        "label": "Small print under those buttons",
+        "description": "Optional. Usually the address again, as a plain link.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "support_label",
+        "label": "Right-hand panel name for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "support_rows",
+        "label": "Office details",
+        "description": "The stacked blocks on the right, above the map. Leave the list empty, with no map and no directions link, to drop the right-hand column and let the form run full width.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "heading",
+            "label": "Small heading",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "label": "Text",
+            "description": "Links are allowed. Use Shift+Enter for a line break inside an address so it stays one block.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "heading": "",
+            "body": ""
+          }
+        }
+      },
+      {
+        "name": "map_embed_url",
+        "label": "Map",
+        "description": "The embed address for the map. In Google Maps open the place, choose Share, then \"Embed a map\", then Copy HTML, and paste only the part between src=\" and the next quote. Leave empty to hide the map.",
+        "type": "string"
+      },
+      {
+        "name": "map_title",
+        "label": "Map description for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "directions_label",
+        "label": "Directions button",
+        "type": "string"
+      },
+      {
+        "name": "directions_url",
+        "label": "Directions link",
+        "description": "Where the button goes — the normal Google Maps link for the place, not the embed address. Leave empty to hide the button.",
+        "type": "string"
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Contact form",
+        "heading_id": "contact-form-title",
+        "heading": "Send a",
+        "heading_accent": "request",
+        "heading_suffix": ".",
+        "intro": "",
+        "recipient_email": "team@ondc.org",
+        "subject_prefix": "ONDC Contact Form Request — ",
+        "subject_field": "interest",
+        "subject_fallback": "General Enquiries",
+        "rows": [
+          {
+            "fields": [
+              {
+                "name": "firstname",
+                "label": "First Name",
+                "email_label": "",
+                "type": "text",
+                "placeholder": "First Name",
+                "autocomplete": "given-name",
+                "pattern": "",
+                "required": true,
+                "choices": []
+              }
+            ]
+          }
+        ],
+        "consent_text": "",
+        "consent_required": true,
+        "submit_label": "Submit",
+        "send_heading": "Gmail should have opened in a new tab with your message ready to send. Not a Gmail user?",
+        "gmail_label": "Open in Gmail",
+        "outlook_label": "Outlook on the web",
+        "default_mail_label": "Default mail app",
+        "send_note": "",
+        "support_label": "ONDC office details",
+        "support_rows": [],
+        "map_embed_url": "",
+        "map_title": "ONDC office location",
+        "directions_label": "Get directions",
+        "directions_url": ""
+      }
+    }
+  },
+  {
+    "name": "cta_banner",
+    "label": "Call to action",
+    "fields": [
+      {
+        "name": "background",
+        "label": "Background",
+        "type": "string",
+        "options": [
+          {
+            "value": "light",
+            "label": "light"
+          },
+          {
+            "value": "white",
+            "label": "white"
+          },
+          {
+            "value": "tint",
+            "label": "tint"
+          },
+          {
+            "value": "dark",
+            "label": "dark"
+          }
+        ]
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "subtext",
+        "label": "Supporting line",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "buttons",
+        "label": "Buttons",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+            "type": "string"
+          },
+          {
+            "name": "style",
+            "label": "Button style",
+            "type": "string",
+            "options": [
+              {
+                "value": "primary",
+                "label": "primary"
+              },
+              {
+                "value": "secondary",
+                "label": "secondary"
+              }
+            ]
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "Get started",
+            "url": "https://portal.ondc.org/",
+            "style": "primary",
+            "new_tab": true
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "background": "dark",
+        "heading": "Ready to join the network?",
+        "subtext": "",
+        "buttons": [
+          {
+            "label": "Get started",
+            "url": "https://portal.ondc.org/",
+            "style": "primary",
+            "new_tab": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "doors",
+    "label": "Doors — find your place",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Intro text",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "cards",
+        "label": "Cards",
+        "description": "Use + to add a card, the ⋮ menu to duplicate or delete one, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "image",
+            "label": "Image",
+            "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+            "type": "image"
+          },
+          {
+            "name": "tag",
+            "label": "Small label on the picture",
+            "type": "string"
+          },
+          {
+            "name": "heading",
+            "label": "Heading",
+            "type": "string"
+          },
+          {
+            "name": "lead",
+            "label": "Summary",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "bullets",
+            "label": "Bullet points",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "text",
+                "label": "Text",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              }
+            ]
+          },
+          {
+            "name": "cta_label",
+            "label": "Button text",
+            "type": "string"
+          },
+          {
+            "name": "cta_url",
+            "label": "Button link",
+            "type": "string"
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "image": "",
+            "tag": "",
+            "heading": "For…",
+            "lead": "",
+            "bullets": [],
+            "cta_label": "Learn more",
+            "cta_url": "#",
+            "new_tab": false
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "find-your-place",
+        "title": "Find Your Place on the Network",
+        "intro": "",
+        "cards": [
+          {
+            "image": "",
+            "tag": "",
+            "heading": "For…",
+            "lead": "",
+            "bullets": [],
+            "cta_label": "Learn more",
+            "cta_url": "#",
+            "new_tab": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "escalate_panel",
+    "label": "Escalation panel",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu and button links jump to this panel, for example \"escalate\". Change it only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading anchor",
+        "description": "Optional. Ties this panel to its heading for screen readers.",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "type": "string"
+      },
+      {
+        "name": "lead",
+        "label": "Line under the heading",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "triggers",
+        "label": "Conditions",
+        "description": "The bulleted list of situations this panel applies to. Use + to add one and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "text",
+            "label": "Condition",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "text": ""
+          }
+        }
+      },
+      {
+        "name": "buttons",
+        "label": "Buttons",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Button text",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Where it goes",
+            "type": "string"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "type": "string",
+            "options": [
+              {
+                "value": "solid",
+                "label": "Filled"
+              },
+              {
+                "value": "ghost",
+                "label": "Outlined"
+              }
+            ]
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "",
+            "url": "",
+            "style": "solid",
+            "new_tab": true
+          }
+        }
+      },
+      {
+        "name": "note",
+        "label": "Small print under the buttons",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "aside_rows",
+        "label": "Key facts on the right",
+        "description": "Each one is a short bold figure with a line explaining it, for example \"48 hours\" and what it means.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "term",
+            "label": "The figure",
+            "description": "Shown in bold, for example \"48 hours\".",
+            "type": "string"
+          },
+          {
+            "name": "desc",
+            "label": "What it means",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "term": "",
+            "desc": ""
+          }
+        }
+      },
+      {
+        "name": "doc_label",
+        "label": "Document link text",
+        "type": "string"
+      },
+      {
+        "name": "doc_url",
+        "label": "Document link",
+        "description": "Usually a PDF already hosted on ONDC's S3 bucket. Leave empty to hide the link.",
+        "type": "string"
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Escalate",
+        "anchor_id": "",
+        "heading_id": "",
+        "heading": "A heading for this panel",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "lead": "",
+        "triggers": [],
+        "buttons": [],
+        "note": "",
+        "aside_rows": [],
+        "doc_label": "",
+        "doc_url": ""
+      }
+    }
+  },
+  {
+    "name": "faq_accordion",
+    "label": "FAQ",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu and button links jump to this section, for example \"faq\".",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading anchor",
+        "description": "Optional. Ties this section to its heading for screen readers.",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "type": "string"
+      },
+      {
+        "name": "items",
+        "label": "Questions",
+        "description": "Use + to add one and drag to reorder. The first question in the list is the one that starts open on the page.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "question",
+            "label": "Question",
+            "type": "string"
+          },
+          {
+            "name": "answer",
+            "label": "Answer",
+            "description": "Links are allowed — select some text and use the link button.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "question": "A question",
+            "answer": "The answer to it."
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "FAQ",
+        "anchor_id": "",
+        "heading_id": "",
+        "eyebrow": "FAQ",
+        "heading": "Questions people",
+        "heading_accent": "ask us most",
+        "heading_suffix": "",
+        "items": [
+          {
+            "question": "A question",
+            "answer": "The answer to it."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "feature_cards",
+    "label": "Cards",
+    "fields": [
+      {
+        "name": "background",
+        "label": "Background",
+        "type": "string",
+        "options": [
+          {
+            "value": "light",
+            "label": "light"
+          },
+          {
+            "value": "white",
+            "label": "white"
+          },
+          {
+            "value": "tint",
+            "label": "tint"
+          },
+          {
+            "value": "dark",
+            "label": "dark"
+          }
+        ]
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Intro text",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "columns",
+        "label": "Cards per row",
+        "type": "number"
+      },
+      {
+        "name": "cards",
+        "label": "Cards",
+        "description": "Use + to add a card, the ⋮ menu to duplicate or delete one, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "title",
+            "label": "Title",
+            "type": "string"
+          },
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "media",
+            "label": "Picture or video",
+            "description": "Choose a picture, upload a video file, or paste a YouTube / Vimeo link.",
+            "type": "object",
+            "fields": [
+              {
+                "name": "kind",
+                "label": "What to show",
+                "type": "string",
+                "options": [
+                  {
+                    "value": "image",
+                    "label": "A picture"
+                  },
+                  {
+                    "value": "video_file",
+                    "label": "A video file I upload"
+                  },
+                  {
+                    "value": "video_embed",
+                    "label": "A YouTube or Vimeo link"
+                  }
+                ]
+              },
+              {
+                "name": "image",
+                "label": "Image",
+                "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+                "type": "image"
+              },
+              {
+                "name": "alt",
+                "label": "Image description",
+                "description": "Describes the picture for screen readers and when the image cannot load.",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "link_label",
+            "label": "Link text",
+            "type": "string"
+          },
+          {
+            "name": "link_url",
+            "label": "Link address",
+            "type": "string"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "title": "First card",
+            "text": "<p>What this card is about.</p>",
+            "media": {
+              "kind": "image",
+              "image": "",
+              "alt": ""
+            },
+            "link_label": "",
+            "link_url": ""
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "background": "light",
+        "heading": "A row of cards",
+        "intro": "",
+        "columns": 3,
+        "cards": [
+          {
+            "title": "First card",
+            "text": "<p>What this card is about.</p>",
+            "media": {
+              "kind": "image",
+              "image": "",
+              "alt": ""
+            },
+            "link_label": "",
+            "link_url": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "hero_carousel",
+    "label": "Sector carousel",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "slides",
+        "label": "Slides",
+        "description": "Use + to add a slide, the ⋮ menu to duplicate or delete one, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "pill",
+            "label": "Tab name",
+            "description": "The short name shown in the row of buttons under the slide.",
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "label": "Image",
+            "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+            "type": "image"
+          },
+          {
+            "name": "sector",
+            "label": "Sector label",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "label": "Title",
+            "type": "string"
+          },
+          {
+            "name": "cta_label",
+            "label": "Button text",
+            "type": "string"
+          },
+          {
+            "name": "cta_url",
+            "label": "Button link",
+            "type": "string"
+          },
+          {
+            "name": "badge",
+            "label": "Status badge",
+            "description": "For example Live or Upcoming.",
+            "type": "string"
+          },
+          {
+            "name": "figures",
+            "label": "Numbers",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "value",
+                "label": "Number",
+                "type": "string"
+              },
+              {
+                "name": "label",
+                "label": "Label",
+                "type": "string"
+              },
+              {
+                "name": "word_style",
+                "label": "This is a word, not a number",
+                "description": "Tick when the value is a word such as \"Marine\" so it is sized for text.",
+                "type": "boolean"
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "value": "0",
+                "label": "What this number counts",
+                "word_style": false
+              }
+            }
+          },
+          {
+            "name": "points",
+            "label": "Bullet points",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "text",
+                "label": "Text",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              }
+            ]
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "pill": "New sector",
+            "image": "",
+            "sector": "Sector name",
+            "title": "Headline for this sector",
+            "cta_label": "Explore →",
+            "cta_url": "#",
+            "badge": "Live",
+            "figures": [
+              {
+                "value": "0",
+                "label": "What this number counts",
+                "word_style": false
+              }
+            ],
+            "points": []
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "site-top",
+        "slides": [
+          {
+            "pill": "New sector",
+            "image": "",
+            "sector": "Sector name",
+            "title": "Headline for this sector",
+            "cta_label": "Explore →",
+            "cta_url": "#",
+            "badge": "Live",
+            "figures": [
+              {
+                "value": "0",
+                "label": "What this number counts",
+                "word_style": false
+              }
+            ],
+            "points": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "hero_story",
+    "label": "Hero — scrolling story",
+    "fields": [
+      {
+        "name": "note",
+        "label": "Note for editors",
+        "description": "Only shown inside the CMS, never on the live site.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "beats",
+        "label": "Story beats",
+        "description": "Four beats work best. Each one fades in as the reader scrolls.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "line1",
+            "label": "First line",
+            "type": "string"
+          },
+          {
+            "name": "line2",
+            "label": "Second line",
+            "type": "string"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "line1": "First line of the first beat",
+            "line2": "Second line of the first beat"
+          }
+        }
+      },
+      {
+        "name": "impact_line1",
+        "label": "Closing line 1",
+        "type": "string"
+      },
+      {
+        "name": "impact_line2",
+        "label": "Closing line 2",
+        "type": "string"
+      },
+      {
+        "name": "sub_line",
+        "label": "Line under the closing lines",
+        "type": "string"
+      },
+      {
+        "name": "wordmark",
+        "label": "Wordmark",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "string"
+      },
+      {
+        "name": "tagline",
+        "label": "Closing line",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "buttons",
+        "label": "Buttons",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+            "type": "string"
+          },
+          {
+            "name": "style",
+            "label": "Button style",
+            "type": "string",
+            "options": [
+              {
+                "value": "primary",
+                "label": "primary"
+              },
+              {
+                "value": "secondary",
+                "label": "secondary"
+              }
+            ]
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ]
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "note": "HERO — on the live site this text plays as the scroll animation. Keep the order: 4 story beats, the closing beat, its sub-line, the wordmark, title, tagline, 2 buttons.",
+        "beats": [
+          {
+            "line1": "First line of the first beat",
+            "line2": "Second line of the first beat"
+          }
+        ],
+        "impact_line1": "One Open network.",
+        "impact_line2": "A connected India.",
+        "sub_line": "",
+        "wordmark": "ONDC",
+        "title": "",
+        "tagline": "",
+        "buttons": []
+      }
+    }
+  },
+  {
+    "name": "institutions",
+    "label": "Institutions",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "lead",
+        "label": "Summary",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "rows",
+        "label": "Organisations",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "eyebrow",
+            "label": "Small label above the heading",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "label": "Search engine description",
+            "description": "One or two sentences. Shown in Google results and when the page is shared.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "eyebrow": "Founding member",
+            "name": "Organisation name",
+            "description": "One or two sentences about this organisation."
+          }
+        }
+      },
+      {
+        "name": "logos",
+        "label": "Logo strip",
+        "type": "object",
+        "fields": [
+          {
+            "name": "heading",
+            "label": "Heading",
+            "type": "string"
+          },
+          {
+            "name": "count",
+            "label": "Number",
+            "description": "Counts up as the reader scrolls into view.",
+            "type": "string"
+          },
+          {
+            "name": "count_label",
+            "label": "What the number counts",
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "label": "Image",
+            "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+            "type": "image"
+          },
+          {
+            "name": "alt",
+            "label": "Image description",
+            "description": "Describes the picture for screen readers and when the image cannot load.",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "investor-relations",
+        "screen_label": "",
+        "eyebrow": "",
+        "heading": "A heading for this section",
+        "heading_accent": "",
+        "lead": "",
+        "rows": [
+          {
+            "eyebrow": "Founding member",
+            "name": "Organisation name",
+            "description": "One or two sentences about this organisation."
+          }
+        ],
+        "logos": {
+          "heading": "",
+          "count": "0",
+          "count_label": "",
+          "image": "",
+          "alt": ""
+        }
+      }
+    }
+  },
+  {
+    "name": "journey_spine",
+    "label": "Numbered journey (spine)",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Must stay \"bk-mech\". It is the id the animation script looks for — change it and the line stops growing and the step dots stop lighting up.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading anchor",
+        "description": "Optional. Ties this section to its heading for screen readers, and lets a link jump here.",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop.",
+        "type": "string"
+      },
+      {
+        "name": "lead",
+        "label": "Line under the heading",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "steps",
+        "label": "Steps",
+        "description": "Numbered automatically, and they alternate left and right down the line. Use + to add one and drag to reorder — the numbering follows.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "title",
+            "label": "Step title",
+            "type": "string"
+          },
+          {
+            "name": "desc",
+            "label": "What happens at this step",
+            "description": "Links are allowed — select some text and use the link button. A link to another section on this page is written as #escalate or #buyer-apps.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "title": "First step",
+            "desc": "What happens at this step."
+          }
+        }
+      },
+      {
+        "name": "details_label",
+        "label": "Name for the expandable list, for screen readers",
+        "description": "Optional, for example \"Longer answers\".",
+        "type": "string"
+      },
+      {
+        "name": "details",
+        "label": "Expandable detail below the steps",
+        "description": "Optional. Each one is a title the reader clicks to open. Only one is open at a time, and the first one starts open. Leave the list empty to show the steps on their own.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "title",
+            "label": "Title",
+            "description": "What the reader clicks to open this.",
+            "type": "string"
+          },
+          {
+            "name": "bullets",
+            "label": "Bullet points",
+            "description": "Shown as a bulleted list. Leave empty to use the paragraph below instead.",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "text",
+                "label": "Point",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "text": ""
+              }
+            }
+          },
+          {
+            "name": "body",
+            "label": "Or a paragraph instead",
+            "description": "Used when there are no bullet points. If both are filled in, the bullets come first.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "title": "",
+            "bullets": [],
+            "body": ""
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "How it works",
+        "anchor_id": "bk-mech",
+        "heading_id": "",
+        "heading": "A heading for this section",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "lead": "",
+        "steps": [
+          {
+            "title": "First step",
+            "desc": "What happens at this step."
+          }
+        ],
+        "details_label": "",
+        "details": []
+      }
+    }
+  },
+  {
+    "name": "legal_document",
+    "label": "Legal document",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the title",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Title",
+        "description": "The first half of the title, in bold.",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Title, second half",
+        "description": "Set in the lighter weight — \"Privacy **Policy**\". Leave empty for a title all in bold.",
+        "type": "string"
+      },
+      {
+        "name": "sub",
+        "label": "Line under the title",
+        "type": "string"
+      },
+      {
+        "name": "read_alongside",
+        "label": "Related-documents line",
+        "description": "The grey line under the title, usually \"Read alongside our Terms of Use and Cookie Policy\" with both named documents linked. Leave empty to drop it.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "body_label",
+        "label": "Name of the document body, for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "show_index",
+        "label": "Show the index down the left",
+        "description": "The sticky list of clauses, which highlights the one you are reading. Untick on a short document — it then sets its own narrower measure, the way the cookie policy does.",
+        "type": "boolean"
+      },
+      {
+        "name": "index_aria",
+        "label": "Name of the index, for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "measure",
+        "label": "Width of the text column",
+        "description": "Only used when the index is off. A CSS grid width such as \".58fr\" — smaller is narrower. Leave empty for the standard width.",
+        "type": "string"
+      },
+      {
+        "name": "clauses",
+        "label": "Clauses",
+        "description": "Each one is a numbered section of the document. The number is the position in this list, so deleting or dragging a clause renumbers the others on its own. Use + to add one, the item menu to duplicate or delete, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "clause_anchor",
+            "label": "Link target",
+            "description": "What the index link and any link from another page points at — lower-case, no spaces, for example \"user-consent\". Changing it breaks links people have already shared.",
+            "type": "string"
+          },
+          {
+            "name": "index_label",
+            "label": "Short name, for the index",
+            "description": "The rail is narrow, so this is usually shorter than the heading. Leave empty to use the heading itself.",
+            "type": "string"
+          },
+          {
+            "name": "clause_title",
+            "label": "Heading",
+            "type": "string"
+          },
+          {
+            "name": "parts",
+            "label": "What the clause says",
+            "description": "Text, a sub-heading, or a boxed aside — in the order they should be read.",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "part_kind",
+                "label": "Part kind",
+                "type": "string"
+              },
+              {
+                "name": "html",
+                "label": "Text",
+                "description": "Paragraphs and lists.",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              },
+              {
+                "name": "barriers",
+                "label": "The points",
+                "description": "A ruled list where each point carries its own marker — \"01\", \"02\" or \"a\", \"b\" — and a sentence that usually opens with the term in bold.",
+                "type": "object",
+                "list": true,
+                "fields": [
+                  {
+                    "name": "marker",
+                    "label": "Marker",
+                    "description": "Shown in blue at the left — typed out rather than counted, because some of these lists run 01, 02 and others a, b.",
+                    "type": "string"
+                  },
+                  {
+                    "name": "text_html",
+                    "label": "The point",
+                    "type": "string",
+                    "ui": {
+                      "component": "textarea"
+                    }
+                  }
+                ],
+                "ui": {
+                  "defaultItem": {
+                    "marker": "",
+                    "text_html": ""
+                  }
+                }
+              },
+              {
+                "name": "caps_text",
+                "label": "The paragraph",
+                "description": "Set in the smaller all-capitals style the law requires for disclaimers. Type it in capitals — the style does not capitalise it for you.",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              },
+              {
+                "name": "caps_items",
+                "label": "The points",
+                "description": "One point can itself hold a sub-list and a closing sentence, which is why each is rich text rather than a plain line.",
+                "type": "object",
+                "list": true,
+                "fields": [
+                  {
+                    "name": "html",
+                    "label": "The point",
+                    "description": "Type it in capitals — the style does not capitalise it for you.",
+                    "type": "string",
+                    "ui": {
+                      "component": "textarea"
+                    }
+                  }
+                ],
+                "ui": {
+                  "defaultItem": {
+                    "html": ""
+                  }
+                }
+              },
+              {
+                "name": "nav_label",
+                "label": "Name of the ledger, for screen readers",
+                "description": "A numbered list of every numbered clause in this document, built from the clauses themselves — add or delete one and this follows. Used by Terms of Use in place of a side index.",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "label": "Sub-heading",
+                "type": "string"
+              },
+              {
+                "name": "note_title",
+                "label": "Heading of the box",
+                "description": "For example \"*Note:\". Leave empty for a box with no heading.",
+                "type": "string"
+              },
+              {
+                "name": "note_html",
+                "label": "Text in the box",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "part_kind": "text",
+                "html": ""
+              }
+            }
+          },
+          {
+            "name": "unnumbered",
+            "label": "No number on this clause",
+            "description": "Tick on an opening preamble. It also stops the clause taking a number from the ones after it, so they still run 01, 02, 03 — and the ledger a clause can print of the others agrees with them.",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "clause_anchor": "section-one",
+            "index_label": "First clause",
+            "clause_title": "First clause",
+            "parts": [
+              {
+                "part_kind": "text",
+                "html": ""
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Policy document",
+        "eyebrow": "Legal",
+        "heading": "Policy",
+        "heading_accent": "name",
+        "sub": "",
+        "read_alongside": "",
+        "body_label": "Policy document",
+        "show_index": true,
+        "index_aria": "On this page",
+        "measure": "",
+        "clauses": [
+          {
+            "clause_anchor": "section-one",
+            "index_label": "First clause",
+            "clause_title": "First clause",
+            "parts": [
+              {
+                "part_kind": "text",
+                "html": ""
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "life_blocks",
+    "label": "Text blocks beside photos",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu and button links jump to this section, for example \"life\". Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop.",
+        "type": "string"
+      },
+      {
+        "name": "blocks",
+        "label": "Text blocks",
+        "description": "Each one is a short title and a paragraph. Three is the usual number — they fade in one after another, and past the third they all share the last delay.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "title",
+            "label": "Title",
+            "type": "string"
+          },
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "title": "First block",
+            "text": "A sentence or two about it."
+          }
+        }
+      },
+      {
+        "name": "images",
+        "label": "Photos",
+        "description": "The column beside the text. Two works best. Leave the list empty to drop the photo column and let the text run full width.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "image",
+            "label": "Photo",
+            "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+            "type": "image"
+          },
+          {
+            "name": "alt",
+            "label": "Image description",
+            "description": "Describes the picture for screen readers and when the image cannot load.",
+            "type": "string"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "image": "",
+            "alt": ""
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Life at ONDC",
+        "anchor_id": "",
+        "eyebrow": "",
+        "heading": "A heading for this section",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "blocks": [
+          {
+            "title": "First block",
+            "text": "A sentence or two about it."
+          }
+        ],
+        "images": []
+      }
+    }
+  },
+  {
+    "name": "media_block",
+    "label": "Image or video",
+    "fields": [
+      {
+        "name": "background",
+        "label": "Background",
+        "type": "string",
+        "options": [
+          {
+            "value": "light",
+            "label": "light"
+          },
+          {
+            "value": "white",
+            "label": "white"
+          },
+          {
+            "value": "tint",
+            "label": "tint"
+          },
+          {
+            "value": "dark",
+            "label": "dark"
+          }
+        ]
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "media",
+        "label": "Picture or video",
+        "description": "Choose a picture, upload a video file, or paste a YouTube / Vimeo link.",
+        "type": "object",
+        "fields": [
+          {
+            "name": "kind",
+            "label": "What to show",
+            "type": "string",
+            "options": [
+              {
+                "value": "image",
+                "label": "A picture"
+              },
+              {
+                "value": "video_file",
+                "label": "A video file I upload"
+              },
+              {
+                "value": "video_embed",
+                "label": "A YouTube or Vimeo link"
+              }
+            ]
+          },
+          {
+            "name": "image",
+            "label": "Image",
+            "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+            "type": "image"
+          },
+          {
+            "name": "alt",
+            "label": "Image description",
+            "description": "Describes the picture for screen readers and when the image cannot load.",
+            "type": "string"
+          },
+          {
+            "name": "video",
+            "label": "Video file",
+            "description": "An .mp4 works everywhere. Keep it under about 20 MB so the page stays fast.",
+            "type": "string"
+          },
+          {
+            "name": "poster",
+            "label": "Image",
+            "type": "image"
+          },
+          {
+            "name": "embed_url",
+            "label": "YouTube or Vimeo link",
+            "description": "Paste the normal address of the video, for example https://www.youtube.com/watch?v=…",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "caption",
+        "label": "Caption",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "full_width",
+        "label": "Use the full width",
+        "type": "boolean"
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "background": "light",
+        "heading": "",
+        "media": {
+          "kind": "image",
+          "image": "",
+          "alt": "",
+          "video": "",
+          "poster": "",
+          "embed_url": ""
+        },
+        "caption": "",
+        "full_width": false
+      }
+    }
+  },
+  {
+    "name": "metrics",
+    "label": "Key numbers",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "string"
+      },
+      {
+        "name": "items",
+        "label": "Items",
+        "description": "Use + to add, the ⋮ menu to duplicate or delete, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "value",
+            "label": "Number",
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "value": "100+",
+            "label": "What this number counts"
+          }
+        }
+      },
+      {
+        "name": "tagline",
+        "label": "Closing line",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "financial",
+        "title": "The impact one open network has enabled",
+        "items": [
+          {
+            "value": "100+",
+            "label": "What this number counts"
+          }
+        ],
+        "tagline": ""
+      }
+    }
+  },
+  {
+    "name": "news",
+    "label": "News rail",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Intro text",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "cards",
+        "label": "Cards",
+        "description": "Use + to add a card, the ⋮ menu to duplicate or delete one, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "image",
+            "label": "Image",
+            "description": "Upload a new picture or pick one already on the site. Use the crop tool to change the framing.",
+            "type": "image"
+          },
+          {
+            "name": "tag",
+            "label": "Small label on the picture",
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "label": "Publication",
+            "description": "The button reads \"Read on …\" followed by this.",
+            "type": "string"
+          },
+          {
+            "name": "headline",
+            "label": "Headline",
+            "type": "string"
+          },
+          {
+            "name": "dek",
+            "label": "Short summary",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "link",
+            "label": "Link address",
+            "type": "string"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "image": "",
+            "tag": "",
+            "source": "",
+            "headline": "",
+            "dek": "",
+            "link": ""
+          }
+        }
+      },
+      {
+        "name": "more",
+        "label": "Last card (\"View more\")",
+        "type": "object",
+        "fields": [
+          {
+            "name": "show",
+            "label": "Show this card",
+            "type": "boolean"
+          },
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "headline",
+            "label": "Headline",
+            "type": "string"
+          },
+          {
+            "name": "dek",
+            "label": "Short summary",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "cta_label",
+            "label": "Button text",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "title": "ONDC in the News",
+        "intro": "",
+        "cards": [
+          {
+            "image": "",
+            "tag": "",
+            "source": "",
+            "headline": "",
+            "dek": "",
+            "link": ""
+          }
+        ],
+        "more": {
+          "show": true,
+          "label": "Stay in the loop",
+          "headline": "View more on LinkedIn",
+          "dek": "",
+          "cta_label": "View on LinkedIn",
+          "url": "https://www.linkedin.com/company/open-network-for-digital-commerce"
+        }
+      }
+    }
+  },
+  {
+    "name": "newsletter_rows",
+    "label": "Newsletter rows",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu and button links jump to this section, for example newsletters.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading id",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted part of the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "type": "string"
+      },
+      {
+        "name": "lead",
+        "label": "Line under the heading",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "rows",
+        "label": "Newsletters",
+        "description": "Use + to add one, the item menu to duplicate or delete, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "eyebrow",
+            "label": "Small label above the title",
+            "description": "For example \"Annual newsletter\".",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "label": "Title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "label": "Short description",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "link_label",
+            "label": "Link text at the bottom of the row",
+            "description": "Include the size if you know it, for example: Download PDF · 17 MB",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "A web address, or upload the PDF and paste its address here.",
+            "type": "string"
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          },
+          {
+            "name": "download",
+            "label": "Download rather than open",
+            "description": "Only affects files hosted on this site.",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "eyebrow": "Annual newsletter",
+            "title": "ONDC — FY25-26 in Focus",
+            "description": "The year in review: how the network grew across categories and geographies through FY 2025-26.",
+            "link_label": "Download PDF · 17 MB",
+            "url": "",
+            "new_tab": true,
+            "download": true
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Newsletters",
+        "anchor_id": "newsletters",
+        "heading_id": "",
+        "eyebrow": "Newsletters",
+        "heading": "Follow the network's progress,",
+        "heading_accent": "issue by issue",
+        "heading_suffix": "",
+        "lead": "Our newsletters track how the network is growing — participation, categories, transactions and the work behind them. Read the annual round-up, or the latest quarterly update.",
+        "rows": [
+          {
+            "eyebrow": "Annual newsletter",
+            "title": "ONDC — FY25-26 in Focus",
+            "description": "The year in review: how the network grew across categories and geographies through FY 2025-26.",
+            "link_label": "Download PDF · 17 MB",
+            "url": "",
+            "new_tab": true,
+            "download": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "numbered_lists",
+    "label": "Numbered lists",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "variant",
+        "label": "Layout",
+        "description": "\"Panel\" is the boxed two-column layout on the sector pages, where each group gets its own sub-heading. \"Our people\" is the plainer full-width band used on Careers: the group sub-headings are not shown and the points are numbered straight through. \"Requirements\" is the role-page layout — the intro sits above a grid of cards, and each point shows its own heading.",
+        "type": "string",
+        "options": [
+          {
+            "value": "",
+            "label": "Panel"
+          },
+          {
+            "value": "culture",
+            "label": "Our people"
+          },
+          {
+            "value": "role",
+            "label": "Requirements"
+          },
+          {
+            "value": "relay",
+            "label": "Relay"
+          },
+          {
+            "value": "service",
+            "label": "Service lanes"
+          },
+          {
+            "value": "outcomes",
+            "label": "Outcome rows"
+          }
+        ]
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section. On Careers this is bk-mech, which is also what switches on the word-by-word colour effect in the lead paragraph — changing it there turns that effect off.",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Plain tail of the heading",
+        "description": "Comes after the highlighted part — the full stop in \"The discovery *relay*.\" Include the leading space if one is needed.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading id",
+        "type": "string"
+      },
+      {
+        "name": "list_style",
+        "label": "How the points are shown",
+        "description": "Only used by the \"Requirements\" layout. \"Numbered cards\" counts the points and flows them in a grid — the Buyer page. \"Node types\" is a two-up ledger where each point shows its own code instead of a number — the Seller page's MSN and ISN.",
+        "type": "string",
+        "options": [
+          {
+            "value": "",
+            "label": "Numbered cards"
+          },
+          {
+            "value": "nodes",
+            "label": "Node types"
+          }
+        ]
+      },
+      {
+        "name": "lead",
+        "label": "Lead paragraph",
+        "description": "Not used by the \"Requirements\" layout, which uses the paragraphs below.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "aria_label",
+        "label": "Name of the list, for screen readers",
+        "description": "Only used by the \"Requirements\" layout.",
+        "type": "string"
+      },
+      {
+        "name": "paragraphs",
+        "label": "Intro paragraphs",
+        "description": "Used by the \"Requirements\", \"Relay\" and \"Service lanes\" layouts, which need more than the one lead paragraph the others take.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "text",
+            "label": "Paragraph",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "text": ""
+          }
+        }
+      },
+      {
+        "name": "lead_link",
+        "label": "Link under the intro",
+        "description": "Only used by the \"Requirements\" layout — the underlined link below the intro paragraphs. Leave the text empty for no link.",
+        "type": "object",
+        "fields": [
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+            "type": "string"
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "name": "groups",
+        "label": "Groups",
+        "description": "Each group has a heading and its own list of points. Numbering is automatic. The \"Our people\" layout hides the group headings and numbers every point straight through, so one group is usually enough there.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "heading",
+            "label": "Group heading",
+            "description": "Not shown by the \"Our people\" layout.",
+            "type": "string"
+          },
+          {
+            "name": "intro",
+            "label": "Line under the group heading",
+            "description": "Optional. Not shown by the \"Our people\" layout.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "items",
+            "label": "Points",
+            "description": "Numbered automatically. Use + to add one and drag to reorder.",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "text",
+                "label": "Point",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              },
+              {
+                "name": "point_title",
+                "label": "Point heading",
+                "description": "Only shown by the \"Requirements\" layout. Leave empty on the other two.",
+                "type": "string"
+              },
+              {
+                "name": "code",
+                "label": "Code",
+                "description": "Only shown by the \"Node types\" style — a short code such as MSN, standing where the number goes.",
+                "type": "string"
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "text": "First point"
+              }
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "heading": "First group",
+            "intro": "",
+            "items": [
+              {
+                "text": "First point"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "",
+        "variant": "",
+        "anchor_id": "",
+        "eyebrow": "",
+        "heading": "A heading for this section",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "heading_id": "",
+        "list_style": "",
+        "lead": "",
+        "aria_label": "",
+        "paragraphs": [],
+        "lead_link": {
+          "label": "",
+          "url": "",
+          "new_tab": false
+        },
+        "groups": [
+          {
+            "heading": "First group",
+            "intro": "",
+            "items": [
+              {
+                "text": "First point"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "page_hero",
+    "label": "Page hero",
+    "fields": [
+      {
+        "name": "variant",
+        "label": "Layout",
+        "description": "\"Full banner\" is the tall hero with a background photo, used on About and Careers. \"Compact\" is the short banner at the top of each Resources sub-page — a small tag, a heading and one line, no photo. \"Not live yet\" is the holding page: the heading runs a slow blue wave through its letters and a status line sits under it.",
+        "type": "string",
+        "options": [
+          {
+            "value": "",
+            "label": "Full banner"
+          },
+          {
+            "value": "compact",
+            "label": "Compact"
+          },
+          {
+            "value": "holding",
+            "label": "Not live yet"
+          }
+        ]
+      },
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading anchor",
+        "description": "Optional. Ties this hero to its heading for screen readers, and lets a link jump here. Change it only if you know a link points at it.",
+        "type": "string"
+      },
+      {
+        "name": "animation",
+        "label": "How the hero appears",
+        "description": "\"Fade in on scroll\" is the About page's behaviour. \"Entrance\" plays once as the page loads and is what Careers uses. Purely visual — the words are the same either way.",
+        "type": "string",
+        "options": [
+          {
+            "value": "reveal",
+            "label": "Fade in on scroll"
+          },
+          {
+            "value": "intro",
+            "label": "Entrance on load"
+          }
+        ]
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop or a question mark.",
+        "type": "string"
+      },
+      {
+        "name": "background_image",
+        "label": "Background photo",
+        "description": "Fills the whole banner. A wide, landscape photo works best. Use the crop tool to change the framing. Leave it empty for a plain hero on the page background — the soft overlay that sits above the photo is dropped with it, so an empty hero is not tinted.",
+        "type": "image"
+      },
+      {
+        "name": "status_label",
+        "label": "Status line",
+        "description": "Only used by the \"Not live yet\" layout — the short line under the heading, beside the hairline and its dot. For example \"Not live yet\". Leave empty for no status line.",
+        "type": "string"
+      },
+      {
+        "name": "paragraphs",
+        "label": "Paragraphs",
+        "description": "Use + to add a paragraph, the item menu to duplicate or delete, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "text",
+            "label": "Paragraph",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "text": "One or two sentences introducing the page."
+          }
+        }
+      },
+      {
+        "name": "buttons",
+        "label": "Buttons",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+            "type": "string"
+          },
+          {
+            "name": "style",
+            "label": "Button style",
+            "type": "string",
+            "options": [
+              {
+                "value": "primary",
+                "label": "primary"
+              },
+              {
+                "value": "secondary",
+                "label": "secondary"
+              },
+              {
+                "value": "solid",
+                "label": "solid"
+              },
+              {
+                "value": "ghost",
+                "label": "ghost"
+              }
+            ]
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "Button text",
+            "url": "#",
+            "style": "primary",
+            "new_tab": false
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "variant": "",
+        "screen_label": "",
+        "heading_id": "",
+        "animation": "reveal",
+        "eyebrow": "",
+        "heading": "A heading for this page",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "background_image": "",
+        "status_label": "",
+        "paragraphs": [
+          {
+            "text": "One or two sentences introducing the page."
+          }
+        ],
+        "buttons": []
+      }
+    }
+  },
+  {
+    "name": "page_title_band",
+    "label": "Page title band",
+    "fields": [
+      {
+        "name": "variant",
+        "label": "Layout",
+        "description": "\"Standard\" is the band at the top of the Contact page. \"Knowledge base\" is the wider masthead on the Resources hub.",
+        "type": "string",
+        "options": [
+          {
+            "value": "",
+            "label": "Standard"
+          },
+          {
+            "value": "library",
+            "label": "Knowledge base"
+          }
+        ]
+      },
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading anchor",
+        "description": "Used internally so screen readers can tie this band to its heading, and lets a link jump here. Lower-case letters and dashes only. Change it only if you know a link points at it.",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "description": "The first part of the heading, in the plain style.",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop.",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Line under the heading",
+        "description": "Optional. One short sentence.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "variant": "",
+        "screen_label": "Page title",
+        "heading_id": "page-title",
+        "heading": "A heading for this page",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "intro": ""
+      }
+    }
+  },
+  {
+    "name": "participant_directory",
+    "label": "Participant directory",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu and button links jump to this section. The hero's \"Browse participants\" button points at \"participant-roles\".",
+        "type": "string"
+      },
+      {
+        "name": "directory_tabs",
+        "label": "Tabs above the directory",
+        "description": "The row of links at the top, for moving between this directory and the other ones. Tick \"This is the current page\" on the one that points here. Leave the list empty to drop the row.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Tab text",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Page address",
+            "description": "For example /ecosystem-participants.html",
+            "type": "string"
+          },
+          {
+            "name": "current",
+            "label": "This is the current page",
+            "description": "Draws the tab as selected. Tick exactly one.",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "Network Participants",
+            "url": "/network-participants.html",
+            "current": true
+          }
+        }
+      },
+      {
+        "name": "lists",
+        "label": "Lists in this directory",
+        "description": "Each list becomes one option in the switcher above the table. Use + to add one, the item menu to duplicate or delete, and drag to reorder — the first one is what visitors see when the page opens.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "List name",
+            "description": "Shown in the switcher above the table.",
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "label": "Which participants",
+            "description": "Which list from the Network Participants data file to show. Add a participant there and it appears here automatically.",
+            "type": "string",
+            "options": [
+              {
+                "value": "key",
+                "label": "Key Network Participants"
+              },
+              {
+                "value": "integrated",
+                "label": "Integrated Network Participants"
+              },
+              {
+                "value": "ecosystem",
+                "label": "Ecosystem Participants"
+              }
+            ]
+          },
+          {
+            "name": "sort",
+            "label": "Order",
+            "description": "\"Alphabetical\" sorts by participant name every time the site builds, so a participant added in the CMS lands in the right place by itself. \"As listed in the data file\" keeps the order of the file — use it only for a list whose order carries meaning, such as a ranking.",
+            "type": "string",
+            "options": [
+              {
+                "value": "alphabetical",
+                "label": "Alphabetical by name"
+              },
+              {
+                "value": "as_listed",
+                "label": "As listed in the data file"
+              }
+            ]
+          },
+          {
+            "name": "note",
+            "label": "Line under the switcher",
+            "description": "Explains what this particular list is. Leave empty for none.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "Key Network Participants",
+            "source": "key",
+            "sort": "alphabetical",
+            "note": "The highest-volume Network Participants of the last three months, refreshed monthly and listed alphabetically."
+          }
+        }
+      },
+      {
+        "name": "search_placeholder",
+        "label": "Grey hint in the search box",
+        "type": "string"
+      },
+      {
+        "name": "per_page",
+        "label": "Rows per page to start with",
+        "description": "Must be one of the choices below.",
+        "type": "string"
+      },
+      {
+        "name": "per_page_choices",
+        "label": "\"Rows per page\" choices",
+        "description": "The options in the dropdown, separated by commas — for example 20, 30, 50, 100.",
+        "type": "string"
+      },
+      {
+        "name": "show_export",
+        "label": "Show the \"Export CSV\" button",
+        "description": "Downloads whatever the current filters and search have left on screen.",
+        "type": "boolean"
+      },
+      {
+        "name": "export_label",
+        "label": "\"Export CSV\" button text",
+        "type": "string"
+      },
+      {
+        "name": "disclaimer",
+        "label": "Note under the directory",
+        "description": "The small grey paragraph below the table. Leave empty to drop it.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "labels",
+        "label": "Wording inside the directory",
+        "description": "Column headings, button text and the messages the directory shows. These rarely need changing — open this only to reword something specific.",
+        "type": "object",
+        "fields": [
+          {
+            "name": "aria",
+            "label": "Aria",
+            "type": "string"
+          },
+          {
+            "name": "tabs_aria",
+            "label": "Tabs aria",
+            "type": "string"
+          },
+          {
+            "name": "filters",
+            "label": "Filters",
+            "type": "string"
+          },
+          {
+            "name": "category_heading",
+            "label": "Category heading",
+            "type": "string"
+          },
+          {
+            "name": "search",
+            "label": "Search",
+            "type": "string"
+          },
+          {
+            "name": "list_switch",
+            "label": "List switch",
+            "type": "string"
+          },
+          {
+            "name": "roles",
+            "label": "Roles",
+            "description": "Pick every role this participant is live in. The table prints the short key for each.",
+            "type": "string"
+          },
+          {
+            "name": "active_filters",
+            "label": "Active filters",
+            "type": "string"
+          },
+          {
+            "name": "remove_filter",
+            "label": "Remove filter",
+            "type": "string"
+          },
+          {
+            "name": "clear_all",
+            "label": "Clear all",
+            "type": "string"
+          },
+          {
+            "name": "col_participant",
+            "label": "Col participant",
+            "type": "string"
+          },
+          {
+            "name": "col_role",
+            "label": "Col role",
+            "type": "string"
+          },
+          {
+            "name": "col_categories",
+            "label": "Col categories",
+            "type": "string"
+          },
+          {
+            "name": "col_contact",
+            "label": "Col contact",
+            "type": "string"
+          },
+          {
+            "name": "enabled_by",
+            "label": "Technology Service Provider",
+            "description": "Optional. Printed under the participant's name as \"Enabled by …\" on the rows that have one.",
+            "type": "string"
+          },
+          {
+            "name": "not_recorded",
+            "label": "Not recorded",
+            "type": "string"
+          },
+          {
+            "name": "fewer",
+            "label": "Fewer",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "label": "Contact email",
+            "description": "Becomes the \"Email\" link on the row. Leave empty to drop it.",
+            "type": "string"
+          },
+          {
+            "name": "call",
+            "label": "Call",
+            "type": "string"
+          },
+          {
+            "name": "website",
+            "label": "Website",
+            "description": "Becomes the \"Website\" link on the row. Include https://",
+            "type": "string"
+          },
+          {
+            "name": "website_sr",
+            "label": "Website sr",
+            "type": "string"
+          },
+          {
+            "name": "empty",
+            "label": "Empty",
+            "type": "string"
+          },
+          {
+            "name": "rows_per_page",
+            "label": "Rows per page",
+            "type": "string"
+          },
+          {
+            "name": "prev",
+            "label": "Prev",
+            "type": "string"
+          },
+          {
+            "name": "next",
+            "label": "Next",
+            "type": "string"
+          },
+          {
+            "name": "item_noun",
+            "label": "Item noun",
+            "type": "string"
+          },
+          {
+            "name": "item_noun_plural",
+            "label": "Item noun plural",
+            "type": "string"
+          },
+          {
+            "name": "export_filename",
+            "label": "Export filename",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Participant directory",
+        "anchor_id": "participant-roles",
+        "directory_tabs": [
+          {
+            "label": "Network Participants",
+            "url": "/network-participants.html",
+            "current": true
+          },
+          {
+            "label": "Ecosystem Participants",
+            "url": "/ecosystem-participants.html",
+            "current": false
+          }
+        ],
+        "lists": [
+          {
+            "label": "Key Network Participants",
+            "source": "key",
+            "sort": "alphabetical",
+            "note": "The highest-volume Network Participants of the last three months, refreshed monthly and listed alphabetically."
+          },
+          {
+            "label": "Integrated Network Participants",
+            "source": "integrated",
+            "sort": "alphabetical",
+            "note": "Every Network Participant live on the ONDC Network, including the Key Network Participants, in alphabetical order."
+          }
+        ],
+        "search_placeholder": "Search by name, category, contact or website",
+        "per_page": "20",
+        "per_page_choices": "20, 30, 50, 100",
+        "show_export": true,
+        "export_label": "Export CSV",
+        "disclaimer": "Disclaimer: The list provided here is for information purposes only. ONDC does not endorse any of the participants listed. ONDC does not offer any terms or make any representations or warranties regarding the participants or services provided by them.",
+        "labels": {
+          "aria": "Participant directory",
+          "tabs_aria": "Participant directories",
+          "filters": "Filter by category",
+          "category_heading": "Category",
+          "search": "Search participants",
+          "list_switch": "Participant list",
+          "roles": "Filter by role",
+          "active_filters": "Active filters",
+          "remove_filter": "remove this filter",
+          "clear_all": "Clear all",
+          "col_participant": "Participant",
+          "col_role": "Role",
+          "col_categories": "Categories",
+          "col_contact": "Contact",
+          "enabled_by": "Enabled by",
+          "not_recorded": "Not recorded",
+          "fewer": "Fewer",
+          "email": "Email",
+          "call": "Call",
+          "website": "Website",
+          "website_sr": "for",
+          "empty": "No participants match these filters. Remove one above to widen the search.",
+          "rows_per_page": "Rows per page",
+          "prev": "Previous page",
+          "next": "Next page",
+          "item_noun": "participant",
+          "item_noun_plural": "participants",
+          "export_filename": "ondc-network-participants"
+        }
+      }
+    }
+  },
+  {
+    "name": "people_grid",
+    "label": "People grid",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "lead",
+        "label": "Summary",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "people",
+        "label": "People",
+        "description": "Use + to add a person, the item menu to duplicate or delete, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "photo",
+            "label": "Photo",
+            "description": "A square portrait works best.",
+            "type": "image"
+          },
+          {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "label": "Role and company",
+            "type": "string"
+          },
+          {
+            "name": "org",
+            "label": "Organisation",
+            "type": "string"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "photo": "",
+            "name": "Full name",
+            "role": "Role",
+            "org": "Organisation"
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "board-of-directors",
+        "screen_label": "",
+        "eyebrow": "",
+        "heading": "Board of Directors",
+        "lead": "",
+        "people": [
+          {
+            "photo": "",
+            "name": "Full name",
+            "role": "Role",
+            "org": "Organisation"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "resource_index",
+    "label": "Knowledge base index",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu and button links jump to this section.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading id",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted part of the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop.",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Line under the heading",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "count_noun",
+        "label": "Word after the number on a card",
+        "description": "Reads as: 127 resources.",
+        "type": "string"
+      },
+      {
+        "name": "external_label",
+        "label": "Shown instead of a count on a card that leaves the site",
+        "type": "string"
+      },
+      {
+        "name": "open_label",
+        "label": "Text on the card's button",
+        "type": "string"
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Knowledge base index",
+        "anchor_id": "",
+        "heading_id": "library-index-title",
+        "heading": "The ONDC",
+        "heading_accent": "Knowledge Base",
+        "heading_suffix": ".",
+        "intro": "Explore the network's governance, policy, technical, financial, marketing, and learning resources from one index.",
+        "count_noun": "resources",
+        "external_label": "External",
+        "open_label": "Open"
+      }
+    }
+  },
+  {
+    "name": "resource_library",
+    "label": "Knowledge base area",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "category",
+        "label": "Which part of the library",
+        "description": "The id of the area this page shows, exactly as it is written in the Resources library — for example \"policies\" or \"guidance-tax\". Open \"Resources library\" in the sidebar to see the ids.",
+        "type": "string"
+      },
+      {
+        "name": "hub_url",
+        "label": "Address of the Resources home page",
+        "description": "Where the breadcrumbs and the sidebar's first link point. Change only if the hub moves.",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Intro paragraph",
+        "description": "The paragraph above the documents. Leave empty to drop it.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "notice",
+        "label": "Notice above the documents",
+        "description": "A boxed caution shown between the intro and the filter — \"Use as published\" on Marketing, the password warning on Investor Corner. Leave empty for no box.",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "show_videos",
+        "label": "Show a video grid above the documents",
+        "description": "Tick on an area whose documents include videos — the ONDC Academy page. The videos are the items of type \"Video\" in that area.",
+        "type": "boolean"
+      },
+      {
+        "name": "collapsible",
+        "label": "Fold each group of documents",
+        "description": "Tick on an area with so many documents that the group headings are what you scan rather than the rows — Disclosures, with a hundred of them. Each group becomes a bar you click to open, one at a time, and carries the number of documents it holds. Filtering opens every group that has a match and puts them back as they were when the box is cleared.",
+        "type": "boolean"
+      },
+      {
+        "name": "buttons",
+        "label": "Buttons above the documents",
+        "description": "Used by the Academy page for its \"Visit ONDC Academy\" link. Leave empty for none.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Button text",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "type": "string"
+          },
+          {
+            "name": "style",
+            "label": "Button style",
+            "type": "string",
+            "options": [
+              {
+                "value": "primary",
+                "label": "Solid"
+              },
+              {
+                "value": "secondary",
+                "label": "Outline"
+              }
+            ]
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "Button text",
+            "url": "",
+            "style": "primary",
+            "new_tab": true
+          }
+        }
+      },
+      {
+        "name": "labels",
+        "label": "Wording around the documents",
+        "description": "The sidebar heading, the breadcrumb, the filter hint and the messages. These rarely need changing.",
+        "type": "object",
+        "fields": [
+          {
+            "name": "breadcrumb",
+            "label": "Breadcrumb",
+            "type": "string"
+          },
+          {
+            "name": "hub",
+            "label": "Show a card on the Resources hub",
+            "type": "string"
+          },
+          {
+            "name": "nav",
+            "label": "Menu",
+            "type": "string"
+          },
+          {
+            "name": "browse",
+            "label": "Browse",
+            "type": "string"
+          },
+          {
+            "name": "nav_head",
+            "label": "Nav head",
+            "type": "string"
+          },
+          {
+            "name": "home",
+            "label": "Home",
+            "type": "string"
+          },
+          {
+            "name": "count_noun",
+            "label": "Count noun",
+            "type": "string"
+          },
+          {
+            "name": "videos",
+            "label": "Videos",
+            "type": "string"
+          },
+          {
+            "name": "filter_placeholder",
+            "label": "Filter placeholder",
+            "type": "string"
+          },
+          {
+            "name": "empty",
+            "label": "Empty",
+            "type": "string"
+          },
+          {
+            "name": "date_chip",
+            "label": "Date chip",
+            "type": "string"
+          },
+          {
+            "name": "ref_chip",
+            "label": "Ref chip",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Knowledge base content",
+        "category": "policies",
+        "hub_url": "/resources.html",
+        "intro": "",
+        "notice": "",
+        "show_videos": false,
+        "collapsible": false,
+        "buttons": [],
+        "labels": {
+          "breadcrumb": "Breadcrumb",
+          "hub": "Resources",
+          "nav": "Knowledge base navigation",
+          "browse": "Browse the Knowledge Base",
+          "nav_head": "Knowledge Base",
+          "home": "Resources Home",
+          "count_noun": "resources",
+          "videos": "Videos",
+          "filter_placeholder": "Filter documents on this page",
+          "empty": "No matching documents on this page.",
+          "date_chip": "Date",
+          "ref_chip": "Notification No."
+        }
+      }
+    }
+  },
+  {
+    "name": "resource_search",
+    "label": "Resources search",
+    "fields": [
+      {
+        "name": "search_placeholder",
+        "label": "Grey hint in the search box",
+        "type": "string"
+      },
+      {
+        "name": "search_label",
+        "label": "Search box name for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "shortcut_hint",
+        "label": "Keyboard shortcut shown in the box",
+        "description": "The shortcut itself is Ctrl-K / Cmd-K. Changing this text does not change the shortcut.",
+        "type": "string"
+      },
+      {
+        "name": "result_limit",
+        "label": "Most results to show at once",
+        "type": "string"
+      },
+      {
+        "name": "section_chip",
+        "label": "Tag on a result that is an area rather than a document",
+        "type": "string"
+      },
+      {
+        "name": "open_label",
+        "label": "Text on a result's button",
+        "type": "string"
+      },
+      {
+        "name": "empty_text",
+        "label": "Message when a search finds nothing",
+        "description": "The search term is added after it, in quotes.",
+        "type": "string"
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "search_placeholder": "Search every guide, policy and document",
+        "search_label": "Search all ONDC resources",
+        "shortcut_hint": "Ctrl / ⌘ K",
+        "result_limit": "30",
+        "section_chip": "Section",
+        "open_label": "Open",
+        "empty_text": "Nothing found. Try a different term."
+      }
+    }
+  },
+  {
+    "name": "rfp_ledger",
+    "label": "RFP / RFQ ledger",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading id",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop.",
+        "type": "string"
+      },
+      {
+        "name": "tally_id",
+        "label": "Tally id",
+        "type": "string"
+      },
+      {
+        "name": "auto_by_date",
+        "label": "Move tenders between Open and Closed automatically",
+        "description": "Leave this on. A tender then sits under Open until its deadline passes and appears under Closed straight after, with no rebuild needed. Turn it off only if you want to decide each tender's tab by hand. Empanelled agencies are never moved either way.",
+        "type": "boolean"
+      },
+      {
+        "name": "show_search",
+        "label": "Show the search box",
+        "type": "boolean"
+      },
+      {
+        "name": "search_placeholder",
+        "label": "Search box placeholder",
+        "type": "string"
+      },
+      {
+        "name": "search_label",
+        "label": "Search box description for screen readers",
+        "description": "Optional. Falls back to the placeholder text.",
+        "type": "string"
+      },
+      {
+        "name": "tabs_label",
+        "label": "Name of the tab row for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "due_label",
+        "label": "Wording under each deadline",
+        "type": "string"
+      },
+      {
+        "name": "timezone_label",
+        "label": "Timezone shown after each deadline",
+        "description": "Shown next to the time, for example IST. Clear it to show no timezone.",
+        "type": "string"
+      },
+      {
+        "name": "tabs",
+        "label": "Tabs",
+        "description": "The three tabs above the table. The first one is open when the page loads. You will rarely need to change these.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "tab_key",
+            "label": "Tab key",
+            "type": "string"
+          },
+          {
+            "name": "tab_label",
+            "label": "Tab name",
+            "type": "string"
+          },
+          {
+            "name": "tab_source",
+            "label": "Tab source",
+            "type": "string"
+          },
+          {
+            "name": "tab_empty_heading",
+            "label": "Heading when this tab is empty",
+            "type": "string"
+          },
+          {
+            "name": "tab_empty_body",
+            "label": "Message when this tab is empty",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "tab_key": "open",
+            "tab_label": "Open",
+            "tab_source": "open",
+            "tab_empty_heading": "No records found",
+            "tab_empty_body": "Nothing matches this filter right now."
+          }
+        }
+      },
+      {
+        "name": "tenders",
+        "label": "RFPs, RFQs and empanelled agencies",
+        "description": "Everything the table lists. Use + to add one — you choose whether it is an open RFP, a closed one, or an empanelled agency. Drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "rfp_tab",
+            "label": "Which tab it appears under",
+            "description": "With \"Move tenders automatically\" switched on (the normal case) the deadline decides Open vs Closed, and this is only the starting point. Empanelled agencies always stay in their own tab.",
+            "type": "string",
+            "options": [
+              {
+                "value": "open",
+                "label": "Open"
+              },
+              {
+                "value": "closed",
+                "label": "Closed"
+              },
+              {
+                "value": "empanelled",
+                "label": "Empanelled agencies"
+              }
+            ]
+          },
+          {
+            "name": "rfp_no",
+            "label": "RFP / RFQ number",
+            "description": "The reference exactly as it should appear, for example ONDC/RFP/2026/001.",
+            "type": "string"
+          },
+          {
+            "name": "rfp_name",
+            "label": "Name",
+            "description": "The title applicants will read.",
+            "type": "string"
+          },
+          {
+            "name": "rfp_deadline",
+            "label": "Deadline — last date and time to apply",
+            "description": "Day.Month.Year, then the time on a 24-hour clock — for example 30.11.2026 17:30, or 30.11.2026 23:59:59. Times are India Standard Time. The tender stays under Open until this exact moment. The time is optional; without one the deadline is the end of that day. Leave the whole field empty for an empanelled agency.",
+            "type": "string"
+          },
+          {
+            "name": "rfp_documents",
+            "label": "Documents",
+            "description": "The documents applicants download — the RFP itself, any corrigendum, annexures. Each one is a name plus a link. Use + to add one and drag to reorder.",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "doc_type",
+                "label": "What this document is",
+                "description": "The wording shown as the download link, for example \"RFP document\" or \"Corrigendum 1\".",
+                "type": "string"
+              },
+              {
+                "name": "doc_url",
+                "label": "Link to the document",
+                "description": "Paste the full web address of the document, for example an ONDC S3 link ending in .pdf. Documents are not uploaded here — host the file wherever ONDC publishes its tender documents and link to it. A document with no link is skipped on the page.",
+                "type": "string"
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "doc_type": "RFP document",
+                "doc_url": ""
+              }
+            }
+          },
+          {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+          },
+          {
+            "name": "last_date",
+            "label": "Last date",
+            "type": "string"
+          },
+          {
+            "name": "documents",
+            "label": "Documents",
+            "description": "Use + to add one, the item menu to duplicate or delete, and drag to reorder. Deleting one here removes it from the page, from the search and from the count on the hub card.",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "doc_type",
+                "label": "Kind of document",
+                "description": "Picks the icon and the tag on the row, and whether the link downloads or opens in a new tab. \"Page on this site\" is the one that opens in the same tab and shows no tag.",
+                "type": "string",
+                "options": [
+                  {
+                    "value": "pdf",
+                    "label": "PDF"
+                  },
+                  {
+                    "value": "doc",
+                    "label": "Word document"
+                  },
+                  {
+                    "value": "xlsx",
+                    "label": "Spreadsheet"
+                  },
+                  {
+                    "value": "zip",
+                    "label": "ZIP archive"
+                  },
+                  {
+                    "value": "video",
+                    "label": "Video"
+                  },
+                  {
+                    "value": "link",
+                    "label": "Link to another site"
+                  },
+                  {
+                    "value": "page",
+                    "label": "Page on this site"
+                  },
+                  {
+                    "value": "RFP document",
+                    "label": "RFP document"
+                  }
+                ]
+              },
+              {
+                "name": "file",
+                "label": "File",
+                "type": "string"
+              },
+              {
+                "name": "url",
+                "label": "Link address",
+                "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+                "type": "string"
+              }
+            ]
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "rfp_tab": "open",
+            "rfp_no": "",
+            "rfp_name": "",
+            "rfp_deadline": "",
+            "rfp_documents": [
+              {
+                "doc_type": "RFP document",
+                "doc_url": ""
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "The ledger",
+        "anchor_id": "rfp-ledger",
+        "heading_id": "",
+        "eyebrow": "The ledger",
+        "heading": "Every opportunity,",
+        "heading_accent": "on the record",
+        "heading_suffix": ".",
+        "tally_id": "",
+        "auto_by_date": true,
+        "show_search": true,
+        "search_placeholder": "Search by RFP name or number",
+        "search_label": "",
+        "tabs_label": "Categories",
+        "due_label": "Last date to apply",
+        "timezone_label": "IST",
+        "tabs": [
+          {
+            "tab_key": "open",
+            "tab_label": "Open",
+            "tab_source": "open",
+            "tab_empty_heading": "No records found",
+            "tab_empty_body": "Nothing matches this filter right now."
+          },
+          {
+            "tab_key": "closed",
+            "tab_label": "Closed",
+            "tab_source": "closed",
+            "tab_empty_heading": "No records found",
+            "tab_empty_body": "Nothing matches this filter right now."
+          },
+          {
+            "tab_key": "empanelled",
+            "tab_label": "Empanelled agencies",
+            "tab_source": "empanelled",
+            "tab_empty_heading": "No empanelled agencies yet",
+            "tab_empty_body": "This list is empty for now. Check back after the next empanelment cycle."
+          }
+        ],
+        "tenders": []
+      }
+    }
+  },
+  {
+    "name": "rich_text",
+    "label": "Rich text",
+    "fields": [
+      {
+        "name": "background",
+        "label": "Background",
+        "type": "string",
+        "options": [
+          {
+            "value": "light",
+            "label": "light"
+          },
+          {
+            "value": "white",
+            "label": "white"
+          },
+          {
+            "value": "tint",
+            "label": "tint"
+          },
+          {
+            "value": "dark",
+            "label": "dark"
+          }
+        ]
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "body",
+        "label": "Text",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "full_width",
+        "label": "Use the full width",
+        "type": "boolean"
+      },
+      {
+        "name": "buttons",
+        "label": "Buttons",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+            "type": "string"
+          },
+          {
+            "name": "style",
+            "label": "Button style",
+            "type": "string",
+            "options": [
+              {
+                "value": "primary",
+                "label": "primary"
+              },
+              {
+                "value": "secondary",
+                "label": "secondary"
+              }
+            ]
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "Button text",
+            "url": "#",
+            "style": "primary",
+            "new_tab": false
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "background": "light",
+        "eyebrow": "",
+        "heading": "A new section",
+        "body": "<p>Write the text for this section here.</p>",
+        "full_width": false,
+        "buttons": []
+      }
+    }
+  },
+  {
+    "name": "role_hero",
+    "label": "Role page hero",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading id",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "description": "Usually just a full stop. The heading reads \"Unlock business opportunities.\" — \"opportunities\" is the highlighted part and \".\" is this.",
+        "type": "string"
+      },
+      {
+        "name": "copy",
+        "label": "Intro paragraph",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "buttons",
+        "label": "Buttons",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "label": "Link address",
+            "description": "Where this link or button goes. Every button on the site has one — a page of this site such as /careers.html, a spot on the current page such as #buyer-role, or a full web address. The sign-up buttons go to https://portal.ondc.org/.",
+            "type": "string"
+          },
+          {
+            "name": "style",
+            "label": "Button style",
+            "type": "string",
+            "options": [
+              {
+                "value": "primary",
+                "label": "primary"
+              },
+              {
+                "value": "secondary",
+                "label": "secondary"
+              },
+              {
+                "value": "solid",
+                "label": "solid"
+              },
+              {
+                "value": "ghost",
+                "label": "ghost"
+              }
+            ]
+          },
+          {
+            "name": "new_tab",
+            "label": "Open in a new tab",
+            "type": "boolean"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "Sign up",
+            "url": "",
+            "style": "ghost",
+            "new_tab": false
+          }
+        }
+      },
+      {
+        "name": "mark",
+        "label": "Wordmark on the right",
+        "description": "One word in blue beside the heading, with a short line next to it — the Gateway page's \"DISCOVER\". A page shows this or the counter, not both. It is hidden from screen readers, because the sentence beside it says the same thing in words.",
+        "type": "object",
+        "fields": [
+          {
+            "name": "show",
+            "label": "Show this card",
+            "type": "boolean"
+          },
+          {
+            "name": "word",
+            "label": "Word",
+            "type": "string"
+          },
+          {
+            "name": "caption",
+            "label": "Caption",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ]
+      },
+      {
+        "name": "tally",
+        "label": "Counter on the right",
+        "description": "The large number beside the heading. Pick which role it counts and the number is worked out from the Network Participants data — the text around it is edited here.",
+        "type": "object",
+        "fields": [
+          {
+            "name": "show",
+            "label": "Show this card",
+            "type": "boolean"
+          },
+          {
+            "name": "value_id",
+            "label": "Value id",
+            "type": "string"
+          },
+          {
+            "name": "aria_label",
+            "label": "Section description for screen readers",
+            "type": "string"
+          },
+          {
+            "name": "animate",
+            "label": "Animate",
+            "type": "boolean"
+          },
+          {
+            "name": "count_role",
+            "label": "Count role",
+            "type": "string"
+          },
+          {
+            "name": "placeholder",
+            "label": "Placeholder",
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "source_note",
+            "label": "Where the number comes from",
+            "description": "The small grey line under the counter, for example \"Refreshed from the live tender feed\".",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Hero",
+        "anchor_id": "",
+        "heading_id": "",
+        "heading": "A heading for this page",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "copy": "One paragraph introducing what this page is for.",
+        "buttons": [
+          {
+            "label": "Sign up",
+            "url": "",
+            "style": "ghost",
+            "new_tab": false
+          }
+        ],
+        "mark": {
+          "show": false,
+          "word": "",
+          "caption": ""
+        },
+        "tally": {
+          "show": false,
+          "value_id": "",
+          "aria_label": "",
+          "animate": false,
+          "count_role": "",
+          "placeholder": "—",
+          "label": "What this number counts.",
+          "source_note": ""
+        }
+      }
+    }
+  },
+  {
+    "name": "stat_grid",
+    "label": "Key numbers",
+    "fields": [
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu and button links jump to this section.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading anchor",
+        "description": "Optional. Ties this section to its heading for screen readers.",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Text after the highlighted part",
+        "type": "string"
+      },
+      {
+        "name": "as_of_note",
+        "label": "Small note beside the heading",
+        "description": "Usually when the figures were last updated, for example \"Last updated on 1 Oct 2026.\" Update it whenever you change the numbers below.",
+        "type": "string"
+      },
+      {
+        "name": "groups",
+        "label": "Rows of numbers",
+        "description": "Each row is a set of tiles with its own small label above it. Two rows is the usual number — they fade in one after another, and past the second they all share the last delay.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "label",
+            "label": "Small label above this row",
+            "description": "Optional.",
+            "type": "string"
+          },
+          {
+            "name": "fit_to_content",
+            "label": "Size tiles to their content",
+            "description": "On, the tiles shrink to fit and sit together — right for a row of years. Off, they share the width equally.",
+            "type": "boolean"
+          },
+          {
+            "name": "tiles",
+            "label": "Numbers in this row",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "value",
+                "label": "The figure",
+                "description": "Type digits only for a figure that counts up — no commas. Turn the switch below off to show text exactly as typed.",
+                "type": "string"
+              },
+              {
+                "name": "label",
+                "label": "What it counts",
+                "type": "string"
+              },
+              {
+                "name": "count_up",
+                "label": "Count up when it scrolls into view",
+                "description": "Turn off for anything that is not a plain whole number, such as a year or a figure with a symbol in it.",
+                "type": "boolean"
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "value": "0",
+                "label": "What this number counts",
+                "count_up": true
+              }
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "label": "",
+            "fit_to_content": false,
+            "tiles": [
+              {
+                "value": "0",
+                "label": "What this number counts",
+                "count_up": true
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "legend",
+        "label": "Legend",
+        "description": "Optional numbered notes under the tiles, explaining what each status means.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "term",
+            "label": "The term",
+            "description": "Shown in bold, with a full stop added automatically.",
+            "type": "string"
+          },
+          {
+            "name": "desc",
+            "label": "What it means",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "term": "",
+            "desc": ""
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "screen_label": "Key numbers",
+        "anchor_id": "",
+        "heading_id": "",
+        "heading": "A heading for this section",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "as_of_note": "",
+        "groups": [
+          {
+            "label": "",
+            "fit_to_content": false,
+            "tiles": [
+              {
+                "value": "0",
+                "label": "What this number counts",
+                "count_up": true
+              }
+            ]
+          }
+        ],
+        "legend": []
+      }
+    }
+  },
+  {
+    "name": "stories",
+    "label": "Story posters",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "label": "Title",
+        "type": "string"
+      },
+      {
+        "name": "intro",
+        "label": "Intro text",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "items",
+        "label": "Items",
+        "description": "Use + to add, the ⋮ menu to duplicate or delete, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "poster",
+            "label": "Image",
+            "type": "image"
+          },
+          {
+            "name": "name",
+            "label": "Name",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "label": "Role and company",
+            "type": "string"
+          },
+          {
+            "name": "quote",
+            "label": "Quote",
+            "description": "The same words that appear on the poster. Used by screen readers.",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          },
+          {
+            "name": "badge",
+            "label": "Status badge",
+            "description": "For example Live or Upcoming.",
+            "type": "string"
+          },
+          {
+            "name": "post_link",
+            "label": "Link to the post",
+            "type": "string"
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "poster": "",
+            "name": "",
+            "role": "",
+            "quote": "",
+            "badge": "Seller Story",
+            "post_link": ""
+          }
+        }
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "stories",
+        "title": "The Network in Action",
+        "intro": "",
+        "items": [
+          {
+            "poster": "",
+            "name": "",
+            "role": "",
+            "quote": "",
+            "badge": "Seller Story",
+            "post_link": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "tagline_strip",
+    "label": "Tagline strip",
+    "fields": [
+      {
+        "name": "variant",
+        "label": "Layout",
+        "description": "\"Standard\" is the full-width strip. \"Network page\" is the two-column band on the Gateway page — heading on the left, sentence on the right.",
+        "type": "string",
+        "options": [
+          {
+            "value": "",
+            "label": "Standard"
+          },
+          {
+            "value": "bk",
+            "label": "Network page"
+          }
+        ]
+      },
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "type": "string"
+      },
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section. Leave empty for none.",
+        "type": "string"
+      },
+      {
+        "name": "heading_id",
+        "label": "Heading id",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted part of the heading",
+        "description": "Set in the lighter weight. Only drawn by the \"Network page\" layout.",
+        "type": "string"
+      },
+      {
+        "name": "heading_suffix",
+        "label": "Plain tail of the heading",
+        "description": "Comes after the highlighted part. Include the leading space if one is needed. Only drawn by the \"Network page\" layout.",
+        "type": "string"
+      },
+      {
+        "name": "subtitle",
+        "label": "Line underneath",
+        "type": "string"
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "variant": "",
+        "screen_label": "",
+        "anchor_id": "",
+        "heading_id": "",
+        "title": "A short, bold statement",
+        "heading_accent": "",
+        "heading_suffix": "",
+        "subtitle": "One supporting line."
+      }
+    }
+  },
+  {
+    "name": "timeline",
+    "label": "Timeline",
+    "fields": [
+      {
+        "name": "anchor_id",
+        "label": "Link anchor",
+        "description": "Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.",
+        "type": "string"
+      },
+      {
+        "name": "screen_label",
+        "label": "Section name for screen readers",
+        "description": "Optional. Describes this section to assistive technology.",
+        "type": "string"
+      },
+      {
+        "name": "eyebrow",
+        "label": "Small label above the heading",
+        "type": "string"
+      },
+      {
+        "name": "heading",
+        "label": "Heading",
+        "type": "string"
+      },
+      {
+        "name": "heading_accent",
+        "label": "Highlighted tail of the heading",
+        "description": "Shown in the accent style at the end of the heading. Leave empty for a plain heading.",
+        "type": "string"
+      },
+      {
+        "name": "lead",
+        "label": "Summary",
+        "type": "string",
+        "ui": {
+          "component": "textarea"
+        }
+      },
+      {
+        "name": "years",
+        "label": "Years",
+        "description": "Use + to add a year, the item menu to duplicate or delete, and drag to reorder.",
+        "type": "object",
+        "list": true,
+        "fields": [
+          {
+            "name": "year",
+            "label": "Year",
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "entries",
+            "label": "Entries",
+            "type": "object",
+            "list": true,
+            "fields": [
+              {
+                "name": "meta",
+                "label": "Date or label",
+                "type": "string"
+              },
+              {
+                "name": "text",
+                "label": "Text",
+                "type": "string",
+                "ui": {
+                  "component": "textarea"
+                }
+              },
+              {
+                "name": "is_milestone",
+                "label": "Show as a highlighted milestone",
+                "type": "boolean"
+              },
+              {
+                "name": "milestone_title",
+                "label": "Milestone headline",
+                "description": "Used when the milestone has no number.",
+                "type": "string"
+              },
+              {
+                "name": "milestone_number",
+                "label": "Milestone number",
+                "description": "Optional. Shown large, and counts up. Leave empty to use the headline instead.",
+                "type": "string"
+              },
+              {
+                "name": "milestone_suffix",
+                "label": "Milestone number suffix",
+                "description": "For example M+ or %.",
+                "type": "string"
+              }
+            ],
+            "ui": {
+              "defaultItem": {
+                "meta": "Month 2021",
+                "text": "What happened.",
+                "is_milestone": false,
+                "milestone_title": "",
+                "milestone_number": "",
+                "milestone_suffix": ""
+              }
+            }
+          }
+        ],
+        "ui": {
+          "defaultItem": {
+            "year": "2021",
+            "label": "The beginning",
+            "entries": [
+              {
+                "meta": "Month 2021",
+                "text": "What happened.",
+                "is_milestone": false,
+                "milestone_title": "",
+                "milestone_number": "",
+                "milestone_suffix": ""
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "finale",
+        "label": "Closing figure",
+        "type": "object",
+        "fields": [
+          {
+            "name": "number",
+            "label": "Number",
+            "type": "string"
+          },
+          {
+            "name": "suffix",
+            "label": "Suffix",
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "label": "Label",
+            "type": "string"
+          },
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "string",
+            "ui": {
+              "component": "textarea"
+            }
+          }
+        ]
+      }
+    ],
+    "ui": {
+      "defaultItem": {
+        "anchor_id": "our-journey",
+        "screen_label": "",
+        "eyebrow": "",
+        "heading": "A heading for this section",
+        "heading_accent": "",
+        "lead": "",
+        "years": [
+          {
+            "year": "2021",
+            "label": "The beginning",
+            "entries": [
+              {
+                "meta": "Month 2021",
+                "text": "What happened.",
+                "is_milestone": false,
+                "milestone_title": "",
+                "milestone_number": "",
+                "milestone_suffix": ""
+              }
+            ]
+          }
+        ],
+        "finale": {
+          "number": "",
+          "suffix": "",
+          "label": "",
+          "text": ""
+        }
+      }
+    }
+  }
+]

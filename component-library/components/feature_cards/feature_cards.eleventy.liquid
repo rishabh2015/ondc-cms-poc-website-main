@@ -1,0 +1,30 @@
+<section class="block block-cards block--{{ background | default: "light" }}">
+  <div class="container">
+    {% if heading %}
+      <div class="section-header hv-rv">
+        <h2>{{ heading }}</h2>
+        {% if intro %}
+          <p>{{ intro }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="block-grid cols-{{ columns | default: 3 }}">
+      {% for card in cards %}
+        <article class="block-card hv-rv" style="transition-delay: {{ forloop.index0 | times: 90 }}ms;">
+          {% if card.media %}
+            <div class="block-card-media">
+              {% bookshop_include "media" media: card.media %}
+            </div>
+          {% endif %}
+          <div class="block-card-body">
+            <h3 class="block-card-title">{{ card.title }}</h3>
+            <div class="block-card-text">{{ card.text }}</div>
+            {% if card.link_label %}
+              <a class="block-card-link" href="{{ card.link_url }}">{{ card.link_label }}</a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

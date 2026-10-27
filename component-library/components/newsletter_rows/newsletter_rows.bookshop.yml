@@ -1,0 +1,112 @@
+spec:
+  structures: [sections]
+  label: Newsletter rows
+  description: >-
+    A heading and a stack of wide rows, each linking to a newsletter or report
+    to download. Used at the foot of the Resources hub.
+  icon: mail
+
+blueprint:
+  screen_label: Newsletters
+  anchor_id: newsletters
+  heading_id: ''
+  eyebrow: Newsletters
+  heading: Follow the network's progress,
+  heading_accent: issue by issue
+  heading_suffix: ''
+  lead: >-
+    Our newsletters track how the network is growing — participation,
+    categories, transactions and the work behind them. Read the annual
+    round-up, or the latest quarterly update.
+  rows:
+    - eyebrow: Annual newsletter
+      title: ONDC — FY25-26 in Focus
+      description: >-
+        The year in review: how the network grew across categories and
+        geographies through FY 2025-26.
+      link_label: Download PDF · 17 MB
+      url: ''
+      new_tab: true
+      download: true
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: Lets menu and button links jump to this section, for example newsletters.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading_id:
+    type: text
+    hidden: true
+  eyebrow:
+    type: text
+    label: Small label above the heading
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted part of the heading
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+  lead:
+    type: textarea
+    label: Line under the heading
+  rows:
+    type: array
+    label: Newsletters
+    comment: Use + to add one, the item menu to duplicate or delete, and drag to reorder.
+    options:
+      structures:
+        values:
+          - label: Newsletter
+            icon: picture_as_pdf
+            preview:
+              text:
+                - key: title
+              subtext:
+                - key: eyebrow
+              icon: picture_as_pdf
+            value:
+              eyebrow: Quarterly newsletter
+              title: A newsletter title
+              description: One or two sentences about this issue.
+              link_label: Download PDF
+              url: ''
+              new_tab: true
+              download: true
+            _inputs:
+              eyebrow:
+                type: text
+                label: Small label above the title
+                comment: For example "Annual newsletter".
+              title:
+                type: text
+                label: Title
+              description:
+                type: textarea
+                label: Short description
+              link_label:
+                type: text
+                label: Link text at the bottom of the row
+                comment: 'Include the size if you know it, for example: Download PDF · 17 MB'
+              url:
+                type: text
+                label: Link address
+                comment: A web address, or upload the PDF and paste its address here.
+              new_tab:
+                type: checkbox
+                label: Open in a new tab
+              download:
+                type: checkbox
+                label: Download rather than open
+                comment: Only affects files hosted on this site.

@@ -1,0 +1,85 @@
+/* Uniform UI downscale — the site renders at 85% while the browser sits at 100%.
+ *
+ * `zoom`, not `transform: scale()`: zoom does not create a containing block, so
+ * #site-header, the sticky navs, .scroll-progress and .aw-modal keep resolving
+ * against the real viewport. It also scales every px literal in the codebase
+ * proportionally without touching any of them.
+ *
+ * Applied to `body`, not `:root`, so document.documentElement stays unzoomed —
+ * the content pages' progress bars divide window.scrollY by
+ * documentElement.scrollHeight, which would skew if the root were zoomed.
+ *
+ * Breakpoints are deliberately NOT scaled: the layout chosen at a given window
+ * width stays identical to scale 1. Tune the amount with --ui-scale.
+ */
+:root { --ui-scale: 1; }
+
+/* The site now renders 1:1 at every width. The desktop downscale that used to
+   sit here (0.85) put body copy near 14px and small labels near 11px on the
+   home page and the 17 resource pages — the 28 pages that load type-boost.css
+   had already opted out of it after a stakeholder review flagged the same
+   thing. Rather than keep two type worlds, the downscale is retired.
+
+   The zoom hook and the viewport compensation below are deliberately left in
+   place: every calc() becomes identity at scale 1, so this stays a single
+   tunable knob if a downscale is ever wanted again. */
+
+body { zoom: var(--ui-scale); }
+
+/* ── Viewport-unit compensation ───────────────────────────────────────────────
+ * Measured in Chrome: zoom scales used lengths but does NOT divide viewport
+ * units by the effective zoom, so `height: 100vh` under zoom 0.85 covers only
+ * 85% of the screen. Real browser zoom does not behave that way, so every
+ * viewport-relative length that must stay viewport-relative is divided back out.
+ *
+ * Only the vw/vh/vmin terms are divided — px and rem terms are already scaled
+ * correctly by zoom itself, and dividing them would double-count.
+ *
+ * At <1024px --ui-scale is 1, so every calc() below is identical to the value it
+ * overrides and the whole block is inert.
+ *
+ * `body` needs no width compensation: its auto width already resolves across the
+ * zoom boundary and spans the viewport exactly (measured body/innerWidth = 1.0).
+ *
+ * Scope is hero.css only. styles.css has no vh at all, and every other viewport
+ * unit in the codebase sits in a clamp()/min() whose px branch wins at >=1024px.
+ */
+
+/* hero.css:26-34,51 — the tokens whose middle term is viewport-relative. */
+:root {
+  --type-beat:      clamp(2.2rem,  calc(5.2vw  / var(--ui-scale)), 4.4rem);
+  --type-section:   clamp(1.75rem, calc(3.4vw  / var(--ui-scale)), 2.75rem);
+  --type-panel:     clamp(1.6rem,  calc(2.6vw  / var(--ui-scale)), 2.4rem);
+  --type-body-hero: clamp(1rem,    calc(1.15vw / var(--ui-scale)), 1.125rem);
+  --type-metric:    clamp(2.4rem,  calc(4.5vw  / var(--ui-scale)), 4rem);
+  --pad-section:    clamp(4rem,    calc(9vh    / var(--ui-scale)), 8rem);
+}
+
+/* The stage geometry below is gated at the same 1024px so it cannot reach the
+   narrow-width rules it shares selectors with — scale.css loads after hero.css,
+   so an ungated .hero-map-dock here would out-order hero.css:467's 44vh. */
+@media (min-width: 1024px) {
+  /* hero.css:162-166 — the sticky canvas stage. Height and the negative margin
+     that cancels it must stay equal, so both are divided. */
+  .mesh-stage {
+    height: calc(100vh / var(--ui-scale));
+    margin-bottom: calc(-100vh / var(--ui-scale));
+  }
+
+  /* hero.css:432-443 — Act 2. */
+  .hero-act-impact { min-height: calc(150vh / var(--ui-scale)); }
+  .hero-map-dock   { min-height: calc(60vh  / var(--ui-scale)); }
+}
+
+/* hero.css:255-265 — Act 1's scroll runway and its pinned stage. If the stage is
+   short the sticky pin releases early and the next section slides into the act.
+   Split on motion preference: hero.css:536-543 collapses both to `height: auto`
+   for reduce, and an unsplit rule here would resurrect the 420vh track. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .hero-act-genesis   { height: calc(420vh / var(--ui-scale)); }
+  .hero-genesis-stage { height: calc(100vh / var(--ui-scale)); }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .hero-act-genesis { min-height: calc(100vh / var(--ui-scale)); }
+}

@@ -1,0 +1,83 @@
+<section
+  class="bk-directory"{% if anchor_id %} id="{{ anchor_id }}"{% endif %}{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Buyer App directory" }}"
+  data-ba-directory
+  data-ba-per-page="{{ per_page | default: 24 }}"
+  data-ba-noun="{{ item_noun | default: "Buyer App" }}"
+  data-ba-noun-plural="{{ item_noun_plural | default: "Buyer Apps" }}">
+  <div class="bk-directory-heading bk-rv">
+    <h2 class="bk-h2"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+    {% if intro %}
+      <p>{{ intro }}</p>
+    {% endif %}
+  </div>
+
+  <div class="bk-ba-toolbar bk-rv bk-rv-d1">
+    <p class="bk-ba-count" data-ba-count aria-live="polite">
+    </p>
+    <input
+      type="search"
+      class="bk-directory-input bk-ba-search"
+      data-ba-search
+      placeholder="{{ search_placeholder | default: "Search by app or company name" }}"
+      aria-label="{{ search_label | default: "Search Buyer Applications" }}"
+      autocomplete="off">
+  </div>
+
+  <div class="bk-ba-grid" role="list">
+    {% for app in buyer_apps.apps %}
+      <details class="bk-ba-card" role="listitem" data-ba-card data-ba-search-text="{{ app.search }}">
+        <summary>
+          {% if app.logo %}
+            <img
+              src="{{ app.logo }}"
+              class="bk-ba-logo"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              data-np-logo
+              data-np-name="{{ app.name }}"
+              data-np-monogram-class="bk-ba-logo-fallback">
+          {% else %}            <span class="bk-ba-logo-fallback" aria-hidden="true">{{ app.initials }}</span>
+          {% endif %}
+          <div class="bk-ba-names">
+            <h3 class="bk-ba-name">{{ app.name }}</h3>
+            {% if app.org %}
+              <p class="bk-ba-org">{{ app.org }}</p>
+            {% endif %}
+          </div>
+        </summary>
+        <dl class="bk-ba-detail">
+          {% for r in app.rows %}
+            <dt>{{ r.label }}</dt>
+            <dd>
+              <a href="{{ r.href }}"{% if r.external %} target="_blank" rel="noopener"{% endif %}>{{ r.text }}</a>
+            </dd>
+          {% endfor %}
+          {% if app.rows.size == 0 %}
+            <dd class="bk-ba-nodetail">{{ no_details_text | default: "No contact details published for this app." }}</dd>
+          {% endif %}
+        </dl>
+      </details>
+    {% endfor %}
+    <div class="bk-ba-span" data-ba-empty hidden>
+      <div class="bk-directory-state">
+        <div class="bk-directory-state-inner">
+          <h3>{{ empty_heading | default: "No Buyer App matches" }} &ldquo;<span data-ba-query></span>&rdquo;.</h3>
+          <button type="button" class="bk-btn bk-btn-ghost" data-ba-clear>{{ clear_label | default: "Clear search" }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bk-ba-pagination" data-ba-pagination>
+    <label class="bk-ba-perpage">
+      <span>{{ per_page_label | default: "Per page" }}</span>
+      <select data-ba-perpage aria-label="{{ per_page_label | default: "Per page" }}">{% assign choices = per_page_choices | default: "24, 48, 96" | split: "," %}{% for c in choices %}{% assign cv = c | strip %}<option value="{{ cv }}"{% if cv == per_page %} selected{% endif %}>{{ cv }}</option>{% endfor %}</select>
+    </label>
+    <div class="bk-ba-pagebtns">
+      <button type="button" class="bk-btn bk-btn-ghost" data-ba-prev>&larr; {{ prev_label | default: "Prev" }}</button>
+      <span class="bk-ba-pageinfo" data-ba-pageinfo></span>
+      <button type="button" class="bk-btn bk-btn-ghost" data-ba-next>{{ next_label | default: "Next" }} &rarr;</button>
+    </div>
+  </div>
+</section>

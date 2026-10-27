@@ -1,0 +1,194 @@
+spec:
+  structures: [sections]
+  label: Numbered journey (spine)
+  description: >-
+    A vertical line with numbered steps that light up as the reader scrolls,
+    with optional expandable sections underneath for the longer detail. Used
+    for "How to get help" on Complaints and for the mechanism on the ten sector
+    pages.
+  icon: timeline
+
+blueprint:
+  screen_label: How it works
+  anchor_id: bk-mech
+  heading_id: ''
+  heading: A heading for this section
+  heading_accent: ''
+  heading_suffix: ''
+  lead: ''
+  steps:
+    - title: First step
+      desc: What happens at this step.
+  details_label: ''
+  details: []
+
+# ONE PER PAGE.
+# beckn.js drives this section through two fixed ids — it calls
+# getElementById('bk-mech') for the section and getElementById('bk-spine-fill')
+# for the line that grows. Both are singletons, so a second spine on the same
+# page would be left unanimated. The section's own Link anchor must stay
+# `bk-mech` for the same reason.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: >-
+      Must stay "bk-mech". It is the id the animation script looks for — change
+      it and the line stops growing and the step dots stop lighting up.
+    options:
+      pattern: '^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading_id:
+    type: text
+    label: Heading anchor
+    comment: >-
+      Optional. Ties this section to its heading for screen readers, and lets a
+      link jump here.
+    options:
+      pattern: '^$|^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+    comment: Shown in the accent style at the end of the heading.
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+    comment: Usually just a full stop.
+  lead:
+    type: textarea
+    label: Line under the heading
+  steps:
+    type: array
+    label: Steps
+    comment: >-
+      Numbered automatically, and they alternate left and right down the line.
+      Use + to add one and drag to reorder — the numbering follows.
+    options:
+      structures:
+        values:
+          - label: Step
+            picker_preview:
+              text: Step
+              subtext: Another step on the line
+              icon: trip_origin
+            preview:
+              text:
+                - key: title
+                - 'Untitled step'
+              subtext:
+                - key: desc
+              icon:
+                - trip_origin
+            value:
+              title: ''
+              desc: ''
+            _inputs:
+              title:
+                type: text
+                label: Step title
+              desc:
+                type: html
+                label: What happens at this step
+                comment: >-
+                  Links are allowed — select some text and use the link button.
+                  A link to another section on this page is written as #escalate
+                  or #buyer-apps.
+                options:
+                  bold: true
+                  italic: true
+                  link: true
+                  undo: true
+                  redo: true
+                  remove_format: true
+  details_label:
+    type: text
+    label: Name for the expandable list, for screen readers
+    comment: Optional, for example "Longer answers".
+  details:
+    type: array
+    label: Expandable detail below the steps
+    comment: >-
+      Optional. Each one is a title the reader clicks to open. Only one is open
+      at a time, and the first one starts open. Leave the list empty to show
+      the steps on their own.
+    options:
+      structures:
+        values:
+          - label: Expandable section
+            picker_preview:
+              text: Expandable section
+              subtext: A title that opens to reveal more
+              icon: expand_more
+            preview:
+              text:
+                - key: title
+                - 'Untitled section'
+              icon:
+                - expand_more
+            value:
+              title: ''
+              bullets: []
+              body: ''
+            _inputs:
+              title:
+                type: text
+                label: Title
+                comment: What the reader clicks to open this.
+              bullets:
+                type: array
+                label: Bullet points
+                comment: Shown as a bulleted list. Leave empty to use the paragraph below instead.
+                options:
+                  structures:
+                    values:
+                      - label: Bullet
+                        picker_preview:
+                          text: Bullet
+                          subtext: Another point in the list
+                          icon: fiber_manual_record
+                        preview:
+                          text:
+                            - key: text
+                            - 'Empty bullet'
+                          icon:
+                            - fiber_manual_record
+                        value:
+                          text: ''
+                        _inputs:
+                          text:
+                            type: html
+                            label: Point
+                            options:
+                              bold: true
+                              italic: true
+                              link: true
+                              undo: true
+                              redo: true
+                              remove_format: true
+              body:
+                type: html
+                label: Or a paragraph instead
+                comment: >-
+                  Used when there are no bullet points. If both are filled in,
+                  the bullets come first.
+                options:
+                  bold: true
+                  italic: true
+                  link: true
+                  bulletedlist: true
+                  numberedlist: true
+                  undo: true
+                  redo: true
+                  remove_format: true

@@ -1,0 +1,103 @@
+spec:
+  structures: [sections]
+  label: Role page hero
+  description: >-
+    The opening band on a role or directory page — a big heading, one paragraph,
+    buttons, and an optional live counter on the right. Used by RFPs/RFQs,
+    Gateway, Network Participants and the Buyer/Seller/TSP pages.
+  icon: campaign
+
+blueprint:
+  screen_label: Hero
+  anchor_id: ''
+  heading_id: ''
+  heading: A heading for this page
+  heading_accent: ''
+  heading_suffix: ''
+  copy: One paragraph introducing what this page is for.
+  buttons:
+    - label: Sign up
+      url: ''
+      style: ghost
+      new_tab: false
+  mark:
+    show: false
+    word: ''
+    caption: ''
+  tally:
+    show: false
+    value_id: ''
+    aria_label: ''
+    animate: false
+    count_role: ''
+    placeholder: '—'
+    label: What this number counts.
+    source_note: ''
+
+_inputs:
+  copy:
+    type: textarea
+    label: Intro paragraph
+  heading_id:
+    type: text
+    hidden: true
+  mark:
+    type: object
+    label: Wordmark on the right
+    comment: >-
+      One word in blue beside the heading, with a short line next to it — the
+      Gateway page's "DISCOVER". A page shows this or the counter, not both.
+      It is hidden from screen readers, because the sentence beside it says
+      the same thing in words.
+    options:
+      preview:
+        text:
+          - key: word
+  word:
+    type: text
+    label: The word
+  caption:
+    type: text
+    label: Line beside the word
+  tally:
+    type: object
+    label: Counter on the right
+    comment: >-
+      The large number beside the heading. Pick which role it counts and the
+      number is worked out from the Network Participants data — the text
+      around it is edited here.
+    options:
+      preview:
+        text:
+          - key: label
+  show:
+    type: checkbox
+    label: Show it
+  animate:
+    type: checkbox
+    label: Fade the counter in with the heading
+    comment: >-
+      On. Off on RFPs/RFQs, where the number arrives from the ledger after the
+      page has settled and a second animation on top of it reads as a glitch.
+  count_role:
+    type: select
+    label: What the number counts
+    comment: >-
+      Counts the distinct organisations in Network Participants holding this
+      role. An organisation listed twice, or holding two roles, is counted
+      once. Leave empty to show the placeholder instead of a number.
+    options:
+      values:
+        - value: ''
+          label: Nothing — show the placeholder
+        - value: Buyer NP
+          label: Buyer network participants
+        - value: Seller NP
+          label: Seller network participants
+  placeholder:
+    type: text
+    label: Shown until the number loads
+    comment: A dash works well. Visitors see this for a moment on a slow connection.
+  value_id:
+    type: text
+    hidden: true

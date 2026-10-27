@@ -1,0 +1,14 @@
+spec:
+  structures:
+  - sections
+  label: Rich text
+  description: A heading and a block of text. The everyday section.
+  icon: notes
+blueprint:
+  background: light
+  eyebrow: ''
+  heading: A new section
+  body: <p>Write the text for this section here.</p>
+  full_width: false
+  buttons: []
+_inputs: {}

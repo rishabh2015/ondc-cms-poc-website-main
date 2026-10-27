@@ -1,0 +1,74 @@
+spec:
+  structures: [sections]
+  label: Page title band
+  description: >-
+    A plain band at the top of a page: one big heading and a line under it.
+    No photo and no buttons — use "Hero" when the page needs those.
+  icon: title
+
+blueprint:
+  variant: ''
+  screen_label: Page title
+  heading_id: page-title
+  heading: A heading for this page
+  heading_accent: ''
+  heading_suffix: ''
+  intro: ''
+
+# NOTE ON THE CSS CLASS
+# This renders `.bk-contact-head`, the class ondc.org uses for the Contact
+# page's title band. The same band appears on other ondc.org pages under
+# sibling class names (.bk-library-head, .bk-relay-head, .bk-service-plane-head,
+# .bk-library-index-head) which beckn.css styles identically.
+#
+# The Resources hub was the first of those to be ported, so the `variant` select
+# this note predicted now exists. Adding the next one is a value here plus a
+# branch in the .liquid — it is not a new component.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  variant:
+    type: select
+    label: Layout
+    comment: >-
+      "Standard" is the band at the top of the Contact page. "Knowledge base" is
+      the wider masthead on the Resources hub.
+    options:
+      values:
+        - value: ''
+          label: Standard
+        - value: library
+          label: Knowledge base
+
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  heading_id:
+    type: text
+    label: Heading anchor
+    comment: >-
+      Used internally so screen readers can tie this band to its heading, and
+      lets a link jump here. Lower-case letters and dashes only. Change it only
+      if you know a link points at it.
+    options:
+      pattern: '^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading:
+    type: text
+    label: Heading
+    comment: The first part of the heading, in the plain style.
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+    comment: Shown in the accent style at the end of the heading. Leave empty for a plain heading.
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+    comment: Usually just a full stop.
+  intro:
+    type: textarea
+    label: Line under the heading
+    comment: Optional. One short sentence.

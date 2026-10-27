@@ -1,0 +1,22 @@
+spec:
+  structures:
+  - sections
+  label: Sector carousel
+  description: The full-screen slides with a photo, a headline and "By the numbers". Use once per page.
+  icon: view_carousel
+blueprint:
+  anchor_id: site-top
+  slides:
+  - pill: New sector
+    image: ''
+    sector: Sector name
+    title: Headline for this sector
+    cta_label: Explore →
+    cta_url: '#'
+    badge: Live
+    figures:
+    - value: '0'
+      label: What this number counts
+      word_style: false
+    points: []
+_inputs: {}

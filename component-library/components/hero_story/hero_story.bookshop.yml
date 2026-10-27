@@ -1,0 +1,20 @@
+spec:
+  structures:
+  - sections
+  label: Hero — scrolling story
+  description: The animated opening story. Use only once, at the very top of a page.
+  icon: auto_stories
+blueprint:
+  note: 'HERO — on the live site this text plays as the scroll animation. Keep the order: 4 story beats,
+    the closing beat, its sub-line, the wordmark, title, tagline, 2 buttons.'
+  beats:
+  - line1: First line of the first beat
+    line2: Second line of the first beat
+  impact_line1: One Open network.
+  impact_line2: A connected India.
+  sub_line: ''
+  wordmark: ONDC
+  title: ''
+  tagline: ''
+  buttons: []
+_inputs: {}

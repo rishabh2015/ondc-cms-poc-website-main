@@ -1,0 +1,108 @@
+---
+title: Careers, ONDC
+description: Some opportunities offer a job. Others offer the chance to shape
+  what's next. ONDC is looking for talent across Technology, Product,
+  Architecture, Data and Business to solve complex challenges, build at scale,
+  and create lasting impact.
+permalink: /careers.html
+preload_image: /images/careers/ondc-team.webp
+wrapper_tag: main
+wrapper_class: bk
+wrapper_id: ''
+show_progress: true
+styles:
+  - fx
+  - scale
+  - type-boost
+  - beckn
+  - mobile
+scripts:
+  - /js/ondc/fx.js
+  - /js/ondc/beckn.js
+  - /js/ondc/scroll-progress.js
+sections:
+  - _template: page_hero
+    screen_label: Hero
+    animation: intro
+    eyebrow: Careers at ONDC
+    heading: Build what
+    heading_accent: matters
+    heading_suffix: ''
+    background_image: /images/careers/ondc-team.webp
+    paragraphs:
+      - text: Some opportunities offer a job. Others offer the chance to shape what's
+          next. We are looking for talent across Technology, Product,
+          Architecture, Data and Business to solve complex challenges, build at
+          scale, and create lasting impact.
+    buttons:
+      - label: See the open seats
+        url: https://ondc.zohorecruit.in/
+        style: solid
+        new_tab: true
+      - label: Life at ONDC
+        url: '#life'
+        style: ghost
+        new_tab: false
+  - _template: numbered_lists
+    screen_label: Our people
+    variant: culture
+    anchor_id: bk-mech
+    eyebrow: Our people, our foundation
+    heading: We pair mission-driven purpose with
+    heading_accent: the people who can realize it
+    lead: When you embrace a growth mindset, your best is always ahead of you. Count
+      on your colleagues to help you find new passions, unlock new
+      possibilities, and work with purpose each and every day — because we're
+      not just building India, we're building better lives for each other.
+    groups:
+      - heading: ''
+        intro: ''
+        items:
+          - text: Workspaces built for collaboration
+          - text: Access to learning through real-time projects and peer coaching
+          - text: Teams across roles and regions with diverse backgrounds and experiences
+          - text: Opportunities to contribute to missions that matter
+          - text: Smart colleagues who elevate the work through shared momentum
+  - _template: life_blocks
+    screen_label: Life at ONDC
+    anchor_id: life
+    eyebrow: Life at ONDC
+    heading: Building India — and
+    heading_accent: better lives for each other
+    heading_suffix: ''
+    blocks:
+      - title: Growth culture
+        text: When you embrace a growth mindset, your best is always ahead of you. Count
+          on your Essentials to help you find new passions, unlock new
+          possibilities, and work with purpose each and every day.
+      - title: Wellbeing
+        text: With countless ways to support your and your dependents' physical, mental,
+          emotional and financial wellbeing, we have your holistic health
+          covered.
+      - title: Diversity and inclusion
+        text: We are committed to celebrating the diversity around us and its power to
+          drive us forward together.
+    images:
+      - image: /images/careers/team-lunch.webp
+        alt: The ONDC team sharing lunch together at the Delhi office
+      - image: /images/careers/hero-digital-india.webp
+        alt: ONDC teams at work on India's open commerce network
+  - _template: closing_cta
+    screen_label: Closing
+    variant: ''
+    anchor_id: ''
+    heading_id: ''
+    heading: Don't see your
+    heading_accent: seat
+    heading_suffix: '?'
+    body: ''
+    buttons:
+      - label: Write to us anyway
+        url: mailto:careers@ondc.org?subject=Application%20-%20Open%20Application
+        style: solid
+        new_tab: false
+      - label: About ONDC
+        url: /about-us.html
+        style: ghost
+        new_tab: false
+---

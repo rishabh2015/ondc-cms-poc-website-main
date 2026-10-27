@@ -1,0 +1,7 @@
+.DS_Store
+_site/
+node_modules/
+# TinaCMS: the built editor and the local dev database. tina/tina-lock.json
+# IS committed — TinaCloud reads the schema from it.
+admin/
+tina/__generated__/

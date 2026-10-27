@@ -1,0 +1,14 @@
+spec:
+  structures:
+  - sections
+  label: Key numbers
+  description: A row of big numbers that count up as the reader arrives.
+  icon: insights
+blueprint:
+  anchor_id: financial
+  title: The impact one open network has enabled
+  items:
+  - value: 100+
+    label: What this number counts
+  tagline: ''
+_inputs: {}

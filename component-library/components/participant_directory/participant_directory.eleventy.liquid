@@ -1,0 +1,346 @@
+{%- comment -%}
+  Participant directory — the ruled ledger on Network Participants.
+  ====================================================================
+  EVERY ROW IS RENDERED HERE, AT BUILD TIME, from src/_data/network_participants.json.
+  js/ondc/network-participants.js only ever toggles `hidden` on nodes that
+  already exist and writes text into elements that already exist. It never
+  creates, moves or removes one. That is the same rule the Buyer App directory
+  and the RFP ledger follow, and it is what stops the script fighting
+  Bookshop's re-render while an editor types — hiding is idempotent, so a
+  re-render costs nothing but a re-run.
+
+  It is also why the filter tree, the role toggles and the filter chips are all
+  drawn in full below and then hidden: a chip the script would have had to
+  create is a chip that vanishes on the next keystroke in the editor.
+{%- endcomment -%}
+<section
+  class="bk-directory"{% if anchor_id %} id="{{ anchor_id }}"{% endif %}
+  data-screen-label="{{ screen_label | default: "Participant directory" }}"
+  aria-label="{{ labels.aria | default: "Participant directory" }}"
+  data-np-directory
+  data-np-per-page="{{ per_page | default: 20 }}"
+  data-np-noun="{{ labels.item_noun | default: "participant" }}"
+  data-np-noun-plural="{{ labels.item_noun_plural | default: "participants" }}"
+  data-np-export-name="{{ labels.export_filename | default: "ondc-network-participants" }}">
+
+  {%- comment -%}
+    Without JavaScript nothing can page, so paging must not be what decides
+    whether a participant is on the page at all. Every row comes back, and the
+    controls that would lie about what they do go away.
+  {%- endcomment -%}
+  <noscript>
+    <style>
+      [data-np-directory] tr[data-np-row][hidden] { display: table-row; }
+      [data-np-directory] [data-np-pagination],
+      [data-np-directory] [data-np-rolebar],
+      [data-np-directory] [data-np-search],
+      [data-np-directory] [data-np-export],
+      [data-np-directory] .bk-np-filters { display: none; }
+      [data-np-directory] .bk-np-layout { display: block; }
+    </style>
+  </noscript>
+
+  <div class="bk-np-toolbar">
+    {% if directory_tabs.size > 0 %}
+      <div class="bk-tabs bk-np-toplevel-tabs" role="tablist" aria-label="{{ labels.tabs_aria | default: "Participant directories" }}">
+        {% for tab in directory_tabs %}<a
+            href="{{ tab.url }}"
+            class="bk-tab{% if tab.current %} active{% endif %}"
+            role="tab"
+            aria-selected="{% if tab.current %}true{% else %}false{% endif %}">{{ tab.label }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if show_export %}
+      <button type="button" class="bk-btn bk-btn-ghost" data-np-export>{{ export_label | default: "Export CSV" }}</button>
+    {% endif %}
+  </div>
+
+  <div class="bk-np-layout">
+    {%- comment -%}
+      The category tree is the official ONDC taxonomy, from
+      src/_data/np_categories.json. Every branch is drawn; the script hides the
+      ones the visible list has no rows for, because a greyed-out option
+      asserts "no participants" when the truth is "none in this list".
+    {%- endcomment -%}
+    <aside class="bk-np-filters" aria-label="{{ labels.filters | default: "Filter by category" }}">
+      <div class="bk-np-filter-group">
+        <div class="bk-eyebrow">{{ labels.category_heading | default: "Category" }}</div>
+        <div data-np-tree>
+          {% assign parents = np_categories.categories | where: "parent", "" %}
+          {% for parent in parents %}
+            {% assign children = np_categories.categories | where: "parent", parent.name %}
+            {% assign kids_id = "npKids-" | append: forloop.index %}
+            <div class="bk-np-cat" data-cat="{{ parent.name | escape }}" data-np-branch hidden>
+              <div class="bk-np-cat-row">
+                <input
+                  type="checkbox"
+                  class="npCat"
+                  id="{{ kids_id }}-box"
+                  value="{{ parent.name | escape }}"
+                  data-np-cat
+                  aria-label="{{ parent.name | escape }}">
+                {%- comment -%}
+                  Two controls, deliberately not one. The checkbox selects the
+                  whole category; the rest of the row is a button that expands
+                  it. Folded into a <summary> instead, one click on the
+                  checkbox would both tick the box and collapse the branch.
+                  A branch with nothing under it gets a label rather than a
+                  button: an expander onto an empty box is a promise it cannot
+                  keep.
+                {%- endcomment -%}
+                {% if children.size > 0 %}<button
+                    type="button"
+                    class="bk-np-cat-toggle"
+                    aria-expanded="false"
+                    aria-controls="{{ kids_id }}">
+                    <span class="bk-np-chk-label">{{ parent.name }}</span>
+                    <span class="bk-np-chk-count" data-np-count>0</span>
+                    <svg class="bk-np-cat-chev" width="9" height="6" viewBox="0 0 8 5" fill="none"
+                      stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+                      stroke-linejoin="round" aria-hidden="true"><path d="M1 1l3 3 3-3"></path></svg>
+                  </button>
+                {% else %}<label class="bk-np-cat-toggle is-leaf" for="{{ kids_id }}-box">
+                    <span class="bk-np-chk-label">{{ parent.name }}</span>
+                    <span class="bk-np-chk-count" data-np-count>0</span>
+                  </label>
+                {% endif %}
+              </div>
+              {% if children.size > 0 %}
+                <div class="bk-np-cat-kids" id="{{ kids_id }}" hidden>
+                  {% for child in children %}
+                    <label class="bk-np-chk" data-np-leaf hidden>
+                      <input
+                        type="checkbox"
+                        class="npSub"
+                        value="{{ child.name | escape }}"
+                        data-np-sub
+                        data-parent="{{ parent.name | escape }}">
+                      <span class="bk-np-chk-label">{{ child.name }}</span>
+                      <span class="bk-np-chk-count" data-np-count>0</span>
+                    </label>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </aside>
+
+    <div class="bk-np-results">
+      <input
+        type="search"
+        class="bk-directory-input"
+        data-np-search
+        aria-label="{{ labels.search | default: "Search participants" }}"
+        placeholder="{{ search_placeholder | default: "Search by name, category, contact or website" }}"
+        autocomplete="off">
+
+      {%- comment -%}
+        Two long list names side by side ate the results row and wrapped at
+        390px. One trigger carrying the current list, opening to both, says the
+        same thing in a third of the width.
+      {%- endcomment -%}
+      {% if lists.size > 1 %}
+        <details class="bk-np-listdrop" data-np-listdrop>
+          <summary aria-label="{{ labels.list_switch | default: "Participant list" }}"><span data-np-tablabel>{{ lists[0].label }}</span>
+            <svg class="nav-drop-chev" width="8" height="5" viewBox="0 0 8 5" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 1l3 3 3-3"></path>
+            </svg>
+          </summary>
+          <div class="bk-np-listdrop-menu">
+            {% for list in lists %}<button
+                type="button"
+                class="np-tab{% if forloop.first %} active{% endif %}"
+                data-np-tab="{{ forloop.index0 }}"
+                data-np-note="{{ list.note | escape }}"{% if forloop.first %} aria-current="true"{% endif %}>{{ list.label }}</button>
+            {% endfor %}
+          </div>
+        </details>
+      {% endif %}
+      {%- comment -%}
+        Kept whenever there is more than one list, even if THIS list's note is
+        empty, because switching lists writes the next one's note into it. A
+        single-list directory with nothing to say drops the element rather than
+        leaving an empty paragraph holding its margin open.
+      {%- endcomment -%}
+      {%- assign show_note = false -%}
+      {%- if lists.size > 1 -%}{%- assign show_note = true -%}{%- endif -%}
+      {%- if lists[0].note != blank -%}{%- assign show_note = true -%}{%- endif -%}
+      {% if show_note %}<p class="bk-np-tabnote" data-np-tabnote>{{ lists[0].note }}</p>{% endif %}
+
+      <div class="bk-np-filterbar">
+        <div class="bk-np-rolebar" data-np-rolebar role="group" aria-label="{{ labels.roles | default: "Filter by role" }}">
+          {% for role in np_roles.roles %}
+            <button
+              type="button"
+              class="bk-np-role"
+              data-np-role="{{ role.role_value | escape }}"
+              aria-pressed="false"
+              hidden>
+              {% if role.role_key != role.role_full %}<span class="bk-np-key">{{ role.role_key }}</span>{% endif %}
+              <span class="bk-np-role-t">{{ role.role_label }}</span>
+              <span class="bk-np-role-n" data-np-count>0</span>
+            </button>
+          {% endfor %}
+        </div>
+        <p class="bk-directory-summary" data-np-caption role="status"></p>
+      </div>
+
+      {%- comment -%}
+        One chip per filter the reader could possibly have on, all hidden. The
+        script unhides the ones that are ticked. Creating them on the fly would
+        break the no-new-nodes rule this whole section is built on.
+      {%- endcomment -%}
+      <div class="bk-np-chips" data-np-chips hidden aria-label="{{ labels.active_filters | default: "Active filters" }}">
+        {% for role in np_roles.roles %}
+          <button type="button" class="bk-np-chip" data-np-chip="role" data-value="{{ role.role_value | escape }}" hidden>{{ role.role_label }}<span aria-hidden="true">&#10005;</span><span class="bk-sr-only"> — {{ labels.remove_filter | default: "remove this filter" }}</span></button>
+        {% endfor %}
+        {% for cat in np_categories.categories %}
+          <button type="button" class="bk-np-chip" data-np-chip="{% if cat.parent == "" %}cat{% else %}sub{% endif %}" data-value="{{ cat.name | escape }}" hidden>{{ cat.name }}<span aria-hidden="true">&#10005;</span><span class="bk-sr-only"> — {{ labels.remove_filter | default: "remove this filter" }}</span></button>
+        {% endfor %}
+        <button type="button" class="bk-np-chip-clear" data-np-clear hidden>{{ labels.clear_all | default: "Clear all" }}</button>
+      </div>
+
+      {%- comment -%}
+        Column labels are the ledger's own. "Brand Logo" and "Link" are not
+        facts a reader looks up, they are parts of Participant and Contact.
+      {%- endcomment -%}
+      <div class="bk-np-table-wrap">
+        <table class="bk-np-table">
+          <colgroup>
+            <col style="width:29%">
+            <col style="width:12%">
+            <col style="width:31%">
+            <col style="width:28%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">{{ labels.col_participant | default: "Participant" }}</th>
+              <th scope="col">{{ labels.col_role | default: "Role" }}</th>
+              <th scope="col">{{ labels.col_categories | default: "Categories" }}</th>
+              <th scope="col">{{ labels.col_contact | default: "Contact" }}</th>
+            </tr>
+          </thead>
+          {%- comment -%}
+            Rows past the first page ship hidden. The script would hide them a
+            moment later anyway, but "a moment later" is 494 rows painted and
+            then collapsed to 20 — a layout shift the length of the page. The
+            <noscript> rule below hands all of them back when there is no
+            script to do the paging.
+          {%- endcomment -%}
+          {% assign page_size = per_page | default: 20 | plus: 0 %}
+          {%- comment -%}
+            Which data file each option in the "Which participants" dropdown
+            reads. Written out rather than looked up dynamically because Liquid
+            cannot resolve a global by a name held in a variable — and because
+            being explicit is what makes a fourth directory two lines here plus
+            one option in the .bookshop.yml, instead of a puzzle.
+          {%- endcomment -%}
+          {% for list in lists %}
+            {% case list.source %}
+              {% when "ecosystem" %}{% assign rows = ecosystem_participants.participants %}
+              {% when "integrated" %}{% assign rows = network_participants.integrated %}
+              {% else %}{% assign rows = network_participants.key %}
+            {% endcase %}
+            {% if list.sort != "as_listed" %}{% assign rows = rows | sort_natural: "name" %}{% endif %}
+            <tbody data-np-body data-np-index="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+              {%- for p in rows %}
+                {%- comment -%}
+                  Searched against every source value, not only the printed
+                  ones: a full role name and a URL fragment both find their
+                  row even though the table prints a key and the word
+                  "Website". Built once here so the script only has to look at
+                  one lower-cased string per row.
+                {%- endcomment -%}
+                {%- assign role_text = p.roles | join: " " -%}
+                {%- assign cat_text = p.categories | join: " " -%}
+                {%- capture row_text -%}
+                  {{ p.name }} {{ p.enabled_by }} {{ p.spoc }} {{ p.email }} {{ p.phone }} {{ p.website }} {{ role_text }} {{ cat_text }}
+                {%- endcapture -%}
+<tr data-np-row{% if forloop.index > page_size %} hidden{% endif %} data-np-roles="{{ p.roles | join: "|" | escape }}" data-np-cats="{{ p.categories | join: "|" | escape }}" data-np-name="{{ p.name | escape }}" data-np-enabled="{{ p.enabled_by | escape }}" data-np-text="{{ row_text | strip | downcase | escape }}">
+                  <td class="bk-np-who" data-label="{{ labels.col_participant | default: "Participant" }}"><span class="bk-np-whoin">
+                      {%- if p.logo -%}<img src="{{ p.logo }}" alt="" loading="lazy" decoding="async" data-np-logo data-np-name="{{ p.name | escape }}">
+                      {%- else -%}{%- assign ini = p.initials -%}{%- if ini == blank -%}{%- assign ini = p.name | slice: 0, 2 | upcase -%}{%- endif -%}<span class="bk-np-monogram" aria-hidden="true">{{ ini }}</span>
+                      {%- endif -%}
+                      <span class="bk-np-name">{{ p.name }}{% if p.enabled_by %}<span class="bk-np-enabled">{{ labels.enabled_by | default: "Enabled by" }} {{ p.enabled_by }}</span>{% endif %}</span>
+                    </span></td>
+                  <td class="bk-np-roles" data-label="{{ labels.col_role | default: "Role" }}">
+                    {%- if p.roles.size == 0 -%}<span class="bk-np-none" aria-hidden="true">&#8212;</span><span class="bk-sr-only">{{ labels.not_recorded | default: "Not recorded" }}</span>
+                    {%- else -%}
+                      {%- for r in p.roles -%}
+                        {%- assign rk = np_roles.roles | where: "role_value", r | first -%}
+                        {%- if rk -%}<abbr class="bk-np-key" title="{{ rk.role_full | escape }}">{{ rk.role_key }}</abbr>
+                        {%- else -%}<span class="bk-np-key">{{ r }}</span>
+                        {%- endif -%}{%- unless forloop.last %} {% endunless -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+</td>
+                  <td class="bk-np-cats" data-label="{{ labels.col_categories | default: "Categories" }}">
+                    {%- if p.categories.size == 0 -%}<span class="bk-np-none" aria-hidden="true">&#8212;</span><span class="bk-sr-only">{{ labels.not_recorded | default: "Not recorded" }}</span>
+                    {%- else -%}
+                      {%- for c in p.categories limit: 3 -%}<span class="bk-np-cat-chip">{{ c }}</span>{% unless forloop.last %} {% endunless %}{%- endfor -%}
+                      {%- if p.categories.size > 3 -%}
+                        <span class="bk-np-cat-rest" hidden>{% for c in p.categories offset: 3 %}<span class="bk-np-cat-chip">{{ c }}</span>{% unless forloop.last %} {% endunless %}{% endfor %}</span>
+                        <button type="button" class="bk-np-more" aria-expanded="false"><span class="bk-np-more-in">+{{ p.categories.size | minus: 3 }}</span><span class="bk-np-more-out">{{ labels.fewer | default: "Fewer" }}</span><span class="bk-sr-only"> {{ labels.col_categories | default: "categories" | downcase }}</span></button>
+                      {%- endif -%}
+                    {%- endif -%}
+</td>
+                  <td class="bk-np-contact" data-label="{{ labels.col_contact | default: "Contact" }}">
+                    {%- assign has_action = false -%}
+                    {%- if p.email != "" or p.phone != "" or p.website != "" -%}{%- assign has_action = true -%}{%- endif -%}
+                    {%- if p.spoc == "" and has_action == false -%}<span class="bk-np-none" aria-hidden="true">&#8212;</span><span class="bk-sr-only">{{ labels.not_recorded | default: "Not recorded" }}</span>
+                    {%- else -%}
+                      {%- if p.spoc != "" -%}<span class="bk-np-contact-line bk-np-spoc">{{ p.spoc }}</span>{%- endif -%}
+                      {%- if has_action -%}<span class="bk-np-contact-line">
+                        {%- assign first = true -%}
+                        {%- if p.email != "" -%}<a class="bk-ul" href="mailto:{{ p.email }}">{{ labels.email | default: "Email" }}<span class="bk-sr-only"> {{ p.name }}</span></a>{%- assign first = false -%}{%- endif -%}
+                        {%- if p.phone != "" -%}{% unless first %} <span class="bk-np-sep" aria-hidden="true">&#183;</span> {% endunless %}<a class="bk-ul" href="tel:{{ p.phone | remove: " " }}">{{ labels.call | default: "Call" }}<span class="bk-sr-only"> {{ p.name }}</span></a>{%- assign first = false -%}{%- endif -%}
+                        {%- if p.website != "" -%}{% unless first %} <span class="bk-np-sep" aria-hidden="true">&#183;</span> {% endunless %}<a class="bk-ul" href="{{ p.website }}" target="_blank" rel="noopener">{{ labels.website | default: "Website" }}<span class="bk-sr-only"> {{ labels.website_sr | default: "for" }} {{ p.name }}</span></a>{%- endif -%}
+                      </span>{%- endif -%}
+                    {%- endif -%}
+</td>
+                </tr>
+              {%- endfor %}
+              <tr data-np-empty hidden>
+                <td colspan="4" class="np-empty">{{ labels.empty | default: "No participants match these filters. Remove one above to widen the search." }}</td>
+              </tr>
+            </tbody>
+          {% endfor %}
+        </table>
+      </div>
+
+      {%- comment -%}
+        Seven number slots and two gaps, all hidden. The script fills in the
+        page numbers it needs — first, last, current and its neighbours — and
+        hides the rest, so paging never adds a node either.
+      {%- endcomment -%}
+      <div class="bk-np-pagination" data-np-pagination>
+        <div class="bk-np-rpp">
+          <label for="{{ anchor_id | default: "np" }}-rpp">{{ labels.rows_per_page | default: "Rows per page" }}</label>
+          <select id="{{ anchor_id | default: "np" }}-rpp" data-np-rpp>
+            {% assign choices = per_page_choices | default: "20, 30, 50, 100" | split: "," %}
+            {% for c in choices %}{% assign cv = c | strip %}<option value="{{ cv }}"{% if cv == per_page %} selected{% endif %}>{{ cv }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="bk-np-pagenums">
+          <button type="button" data-np-prev aria-label="{{ labels.prev | default: "Previous page" }}">&lsaquo;</button>
+          <button type="button" data-np-num hidden></button>
+          <span class="bk-np-ellipsis" data-np-gap hidden>&hellip;</span>
+          <button type="button" data-np-num hidden></button>
+          <button type="button" data-np-num hidden></button>
+          <button type="button" data-np-num hidden></button>
+          <span class="bk-np-ellipsis" data-np-gap hidden>&hellip;</span>
+          <button type="button" data-np-num hidden></button>
+          <button type="button" data-np-next aria-label="{{ labels.next | default: "Next page" }}">&rsaquo;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if disclaimer %}
+    <p class="bk-note" style="margin-top:32px">{{ disclaimer }}</p>
+  {% endif %}
+</section>

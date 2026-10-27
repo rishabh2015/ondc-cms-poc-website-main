@@ -1,0 +1,395 @@
+spec:
+  structures: [sections]
+  label: Contact form
+  description: >-
+    The two-column contact block: a message form on the left, office details
+    and a map on the right. The form has no server behind it — on Submit it
+    composes the message and opens the visitor's own mail service, addressed
+    to the email set below.
+  icon: alternate_email
+
+blueprint:
+  screen_label: Contact form
+  heading_id: contact-form-title
+  heading: Send a
+  heading_accent: request
+  heading_suffix: .
+  intro: ''
+  recipient_email: team@ondc.org
+  subject_prefix: 'ONDC Contact Form Request — '
+  subject_field: interest
+  subject_fallback: General Enquiries
+  rows:
+    - fields:
+        - name: firstname
+          label: First Name
+          email_label: ''
+          type: text
+          placeholder: First Name
+          autocomplete: given-name
+          pattern: ''
+          required: true
+          choices: []
+  consent_text: ''
+  consent_required: true
+  submit_label: Submit
+  send_heading: >-
+    Gmail should have opened in a new tab with your message ready to send. Not
+    a Gmail user?
+  gmail_label: Open in Gmail
+  outlook_label: Outlook on the web
+  default_mail_label: Default mail app
+  send_note: ''
+  support_label: ONDC office details
+  support_rows: []
+  map_embed_url: ''
+  map_title: ONDC office location
+  directions_label: Get directions
+  directions_url: ''
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  heading_id:
+    type: text
+    label: Heading anchor
+    comment: >-
+      Ties this section to its heading for screen readers, and lets a link jump
+      here. Change it only if you know a link points at it.
+    options:
+      pattern: '^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+    comment: Shown in the accent style at the end of the heading.
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+    comment: Usually just a full stop.
+  intro:
+    type: html
+    label: Paragraph under the heading
+    comment: >-
+      Links are allowed here — select some text and use the link button to
+      point it at an email address or another page.
+    options:
+      bold: true
+      italic: true
+      link: true
+      undo: true
+      redo: true
+      remove_format: true
+
+  # ── where the message goes ──────────────────────────────────────────
+  recipient_email:
+    type: email
+    label: Send messages to
+    comment: >-
+      Every message composed by this form is addressed to this inbox. There is
+      no server behind the form: pressing Submit opens the visitor's own mail
+      service with the message filled in, so nothing is stored on the website
+      and nothing is sent until the visitor presses send in their mail app.
+  subject_prefix:
+    type: text
+    label: Subject line starts with
+    comment: >-
+      The subject of the composed email. The visitor's chosen option from the
+      dropdown below is added on the end — keep the trailing space or dash.
+  subject_field:
+    type: text
+    label: Which field finishes the subject line
+    comment: >-
+      The "Field name" of one of the fields below, usually the dropdown.
+      Whatever the visitor picks there is added to the end of the subject.
+      Leave empty to always use the fallback.
+  subject_fallback:
+    type: text
+    label: Subject if that field is left empty
+    comment: Used when the visitor did not choose anything.
+
+  # ── the fields ──────────────────────────────────────────────────────
+  rows:
+    type: array
+    label: Form rows
+    comment: >-
+      Each row holds one or two fields. Two fields share the row side by side;
+      one field spans the full width. Drag rows to reorder the form. All of
+      the visitor's answers are written into the email in this order.
+    options:
+      structures:
+        values:
+          - label: Row of fields
+            picker_preview:
+              text: Row of fields
+              subtext: One or two fields, side by side
+              icon: view_column
+            preview:
+              text:
+                - key: fields.0.label
+                - 'Empty row'
+              subtext:
+                - key: fields.1.label
+                - 'Full-width field'
+              icon:
+                - view_column
+            value:
+              fields:
+                - name: ''
+                  label: ''
+                  email_label: ''
+                  type: text
+                  placeholder: ''
+                  autocomplete: ''
+                  pattern: ''
+                  required: true
+                  choices: []
+            _inputs:
+              fields:
+                type: array
+                label: Fields in this row
+                comment: One field fills the row. Two sit side by side. More than two will not fit.
+                options:
+                  structures:
+                    values:
+                      - label: Field
+                        picker_preview:
+                          text: Field
+                          subtext: A box the visitor fills in
+                          icon: input
+                        preview:
+                          text:
+                            - key: label
+                            - 'Untitled field'
+                          subtext:
+                            - key: type
+                          icon:
+                            - input
+                        value:
+                          name: ''
+                          label: ''
+                          email_label: ''
+                          type: text
+                          placeholder: ''
+                          autocomplete: ''
+                          pattern: ''
+                          required: true
+                          choices: []
+                        _inputs:
+                          label:
+                            type: text
+                            label: Label
+                            comment: Shown above the box, and used as the heading for this answer in the email.
+                          name:
+                            type: text
+                            label: Field name
+                            comment: >-
+                              The internal name for this field. Lower-case letters,
+                              numbers and underscores, no spaces — for example
+                              firstname. It is never shown to the visitor. Changing
+                              it on an existing field is safe, but if it is named in
+                              "Which field finishes the subject line" above, change
+                              that too.
+                            options:
+                              pattern: '^[a-z][a-z0-9_]*$'
+                              pattern_message: >-
+                                Lower-case letters, numbers and underscores,
+                                starting with a letter — for example firstname.
+                          type:
+                            type: select
+                            label: Kind of field
+                            comment: >-
+                              "Email" and "Phone" bring up the right keyboard on a
+                              phone and check the format. "Dropdown" uses the list
+                              of choices below. "Long message" is the tall box, and
+                              always goes at the end of the email.
+                            options:
+                              values:
+                                - value: text
+                                  label: Short text
+                                - value: email
+                                  label: Email
+                                - value: tel
+                                  label: Phone
+                                - value: select
+                                  label: Dropdown
+                                - value: textarea
+                                  label: Long message
+                          placeholder:
+                            type: text
+                            label: Grey hint inside the box
+                            comment: >-
+                              Optional. For a dropdown this is the first, unselected
+                              line of the list.
+                          required:
+                            type: switch
+                            label: Visitor must fill this in
+                          email_label:
+                            type: text
+                            label: Name for this answer in the email
+                            comment: >-
+                              Optional. Leave empty to use the Label above. Set it
+                              when the label is a long question but the email reads
+                              better with a short word.
+                          autocomplete:
+                            type: text
+                            label: Autofill hint
+                            comment: >-
+                              Optional, and best left alone. Lets the browser fill
+                              the box from the visitor's saved details — for example
+                              given-name, family-name, email, tel-national.
+                          pattern:
+                            type: text
+                            label: Format check
+                            comment: >-
+                              Optional, for experts. A regular expression the answer
+                              must match. The phone field uses ^\d{10}$ to require
+                              exactly ten digits. Leave empty for no check.
+                          choices:
+                            type: array
+                            label: Dropdown choices
+                            comment: Only used when the kind of field is "Dropdown".
+                            options:
+                              structures:
+                                values:
+                                  - label: Choice
+                                    picker_preview:
+                                      text: Choice
+                                      subtext: Another line in the dropdown
+                                      icon: arrow_drop_down
+                                    preview:
+                                      text:
+                                        - key: label
+                                        - 'Untitled choice'
+                                      icon:
+                                        - arrow_drop_down
+                                    value:
+                                      label: ''
+                                    _inputs:
+                                      label:
+                                        type: text
+                                        label: Choice
+
+  # ── consent and submit ──────────────────────────────────────────────
+  consent_text:
+    type: html
+    label: Tick-box wording
+    comment: >-
+      The sentence beside the tick box, usually with a link to the privacy
+      policy. Leave empty to drop the tick box entirely.
+    options:
+      bold: true
+      italic: true
+      link: true
+      undo: true
+      redo: true
+      remove_format: true
+  consent_required:
+    type: switch
+    label: Visitor must tick the box
+  submit_label:
+    type: text
+    label: Button text
+
+  # ── what appears after Submit ───────────────────────────────────────
+  send_heading:
+    type: textarea
+    label: Line shown after Submit
+    comment: >-
+      Submitting opens Gmail in a new tab. This panel then appears under the
+      button with the other ways to send, for visitors who do not use Gmail.
+  gmail_label:
+    type: text
+    label: Gmail button
+  outlook_label:
+    type: text
+    label: Outlook button
+  default_mail_label:
+    type: text
+    label: Default mail app button
+  send_note:
+    type: html
+    label: Small print under those buttons
+    comment: Optional. Usually the address again, as a plain link.
+    options:
+      bold: true
+      italic: true
+      link: true
+      undo: true
+      redo: true
+      remove_format: true
+
+  # ── the panel on the right ──────────────────────────────────────────
+  support_label:
+    type: text
+    label: Right-hand panel name for screen readers
+  support_rows:
+    type: array
+    label: Office details
+    comment: >-
+      The stacked blocks on the right, above the map. Leave the list empty, with
+      no map and no directions link, to drop the right-hand column and let the
+      form run full width.
+    options:
+      structures:
+        values:
+          - label: Detail block
+            picker_preview:
+              text: Detail block
+              subtext: A small heading and a paragraph
+              icon: place
+            preview:
+              text:
+                - key: heading
+                - 'Untitled block'
+              subtext:
+                - key: body
+              icon:
+                - place
+            value:
+              heading: ''
+              body: ''
+            _inputs:
+              heading:
+                type: text
+                label: Small heading
+              body:
+                type: html
+                label: Text
+                comment: >-
+                  Links are allowed. Use Shift+Enter for a line break inside an
+                  address so it stays one block.
+                options:
+                  bold: true
+                  italic: true
+                  link: true
+                  undo: true
+                  redo: true
+                  remove_format: true
+  map_embed_url:
+    type: url
+    label: Map
+    comment: >-
+      The embed address for the map. In Google Maps open the place, choose
+      Share, then "Embed a map", then Copy HTML, and paste only the part
+      between src=" and the next quote. Leave empty to hide the map.
+  map_title:
+    type: text
+    label: Map description for screen readers
+  directions_label:
+    type: text
+    label: Directions button
+  directions_url:
+    type: url
+    label: Directions link
+    comment: >-
+      Where the button goes — the normal Google Maps link for the place, not
+      the embed address. Leave empty to hide the button.

@@ -1,0 +1,2002 @@
+/* ────────────────────────────────────────────────────────────
+   ONDC site FX — shared motion & decoration layer
+   Loaded by index.html and every category page.
+   All effects are decorative: pointer-events none, low opacity,
+   and disabled under prefers-reduced-motion.
+   ──────────────────────────────────────────────────────────── */
+
+.fx-overlay {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden; z-index: 0;
+}
+.fx-overlay svg { width: 100%; height: 100%; display: block; }
+
+/* India map watermark */
+.fx-map {
+  position: absolute; pointer-events: none;
+  opacity: 0; transition: opacity 1.6s ease;
+}
+.fx-map.fx-in { opacity: 1; }
+
+/* Glowing network nodes */
+.fx-node { transform-origin: center; }
+.fx-in .fx-node { animation: fxPulse 4.2s ease-in-out infinite; }
+.fx-link {
+  stroke-dasharray: 340; stroke-dashoffset: 340;
+}
+.fx-in .fx-link { animation: fxDraw 2.4s ease forwards; }
+.fx-halo { opacity: 0; }
+.fx-in .fx-halo { animation: fxHalo 4.2s ease-in-out infinite; }
+
+@keyframes fxPulse {
+  0%, 100% { opacity: .55; }
+  50%      { opacity: 1; }
+}
+@keyframes fxHalo {
+  0%, 100% { opacity: 0;   transform: scale(.6); }
+  50%      { opacity: .5;  transform: scale(1); }
+}
+@keyframes fxDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Generic reveal (used by homepage; category pages have .reveal already) */
+.fx-reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+.fx-reveal.fx-in { opacity: 1; transform: none; }
+
+/* Drive-by strip (truck / bus / scooter) */
+.fx-driveby {
+  position: relative; height: 74px; overflow: hidden;
+  pointer-events: none;
+}
+.fx-driveby .fx-road {
+  position: absolute; left: 6%; right: 6%; bottom: 18px;
+  border-bottom: 2px dashed rgba(23,105,167,.28);
+}
+.fx-driveby .fx-vehicle {
+  position: absolute; bottom: 14px; left: 0;
+  transform: translateX(-140px);
+}
+.fx-driveby.fx-go .fx-vehicle {
+  animation: fxDrive 5.5s cubic-bezier(.33,.1,.35,1) forwards;
+}
+.fx-driveby .fx-wheel { transform-origin: center; transform-box: fill-box; }
+.fx-driveby.fx-go .fx-wheel { animation: fxSpin 1s linear infinite; }
+@keyframes fxDrive {
+  from { transform: translateX(-140px); }
+  to   { transform: translateX(calc(100vw + 40px)); }
+}
+@keyframes fxSpin { to { transform: rotate(360deg); } }
+
+/* Corner motif — gentle float */
+.fx-corner {
+  position: absolute; pointer-events: none; z-index: 1;
+  opacity: 0; transition: opacity 1.2s ease .3s;
+}
+.fx-corner.fx-in { opacity: 1; }
+.fx-corner .fx-bob { animation: fxBob 6s ease-in-out infinite; }
+@keyframes fxBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+
+/* Steam wisps (F&B) */
+.fx-steam path {
+  opacity: 0;
+  animation: fxSteam 3.6s ease-in-out infinite;
+}
+.fx-steam path:nth-child(2) { animation-delay: 1.2s; }
+.fx-steam path:nth-child(3) { animation-delay: 2.4s; }
+@keyframes fxSteam {
+  0%   { opacity: 0; transform: translateY(6px); }
+  35%  { opacity: .8; }
+  100% { opacity: 0; transform: translateY(-14px); }
+}
+
+/* Paper-plane arc (Tourism) */
+.fx-plane-path { stroke-dasharray: 6 8; }
+.fx-corner.fx-in .fx-plane { animation: fxPlane 7s ease-in-out infinite; }
+@keyframes fxPlane {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50%      { transform: translate(10px, -12px) rotate(6deg); }
+}
+
+/* Sparkles (impact / stories) */
+.fx-spark { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.fx-in .fx-spark { animation: fxSpark 3.8s ease-in-out infinite; }
+@keyframes fxSpark {
+  0%, 100% { opacity: 0; transform: scale(.4) rotate(0deg); }
+  50%      { opacity: .9; transform: scale(1) rotate(45deg); }
+}
+
+/* Soft parallax drift for hero backgrounds */
+.fx-drift { animation: fxDriftK 18s ease-in-out infinite alternate; }
+@keyframes fxDriftK {
+  from { transform: translate3d(0,0,0) scale(1.02); }
+  to   { transform: translate3d(0,-14px,0) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-node, .fx-halo, .fx-link, .fx-vehicle, .fx-wheel, .fx-bob,
+  .fx-steam path, .fx-plane, .fx-spark, .fx-drift { animation: none !important; }
+  .fx-link { stroke-dashoffset: 0; }
+  .fx-reveal { opacity: 1; transform: none; transition: none; }
+  .fx-driveby { display: none; }
+}
+
+/* Category-page carousel controls: initCarousel() relocates each section's
+   prev/next arrows and its position dots into one centered bar directly below
+   the scroll strip. This lays them out together and normalises the arrow to
+   the one rail-arrow shape used site-wide (see .doors-arrow / .dpi-arrow);
+   the per-page inline CSS still owns the dots. */
+.carousel-nav {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; margin-top: 22px; flex-wrap: wrap;
+}
+.carousel-nav .dots { margin-top: 0; }
+
+.arr-btn {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+.arr-btn:hover {
+  color: #fff;
+  background: var(--blue);
+  border-color: var(--blue);
+  box-shadow: none;
+}
+.arr-btn:disabled { opacity: .3; pointer-events: none; }
+/* Focusable scroll strip (keyboard Left/Right navigation) */
+.htrack:focus-visible { outline: 2px solid #00AEEF; outline-offset: 4px; border-radius: 10px; }
+
+/* ────────────────────────────────────────────────────────────
+   Shared finish layer
+   One restrained, editorial system across marketing, category,
+   resources, legal, and utility pages.
+   ──────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/space-grotesk-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/space-grotesk-latin-600-normal.woff2") format("woff2");
+}
+/* Declared as a 700-900 range, not a bare 700: headings across the site ask for
+   800, and Space Grotesk ships no 800 face. Without this the browser
+   synthesises one by smearing the 700 glyphs. */
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+  src: url("/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+}
+
+/* Inter, self-hosted. These are the exact faces every page used to pull from
+   Google Fonts (400/500/600/700/800 upright, 400/500/700 italic, latin +
+   latin-ext), from @fontsource/inter which mirrors the Google Fonts builds.
+   Self-hosting removes a render-blocking third-party stylesheet and two
+   DNS/TLS handshakes from every page load; the glyphs are the same. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/inter-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/inter-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/inter-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/inter-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/inter-latin-800-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/inter-latin-400-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/inter-latin-500-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/inter-latin-700-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext-500-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext-600-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext-700-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext-800-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext-400-italic.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext-500-italic.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext-700-italic.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Metric-matched fallbacks. These lived in hero.css, which only index.html
+   loads, so every content page swapped from an unadjusted Arial and shifted
+   layout on font load. */
+@font-face {
+  font-family: "Space Grotesk Fallback";
+  src: local("Arial");
+  size-adjust: 110.75%;
+  ascent-override: 88.85%;
+  descent-override: 26.37%;
+  line-gap-override: 0%;
+}
+
+:root {
+  --blue: #1769a7;
+  --cyan: #20b8ec;
+  --navy: #061b2b;
+  --footer-bg: #061b2b;
+  --cta-dark: #0a3555;
+  --blue-tint: #eaf4fa;
+  --cream: #fcfdfd;
+  --cream-2: #f4f7f9;
+  --cream-3: #eaf0f4;
+  --border: #dbe4e9;
+  --border-cream: #dbe4e9;
+  --text-muted: #56656f;
+  --text-body: #293841;
+  --ink: #10242f;
+  --grad-btn: #1769a7;
+  --shadow-md: 0 8px 24px -16px rgba(4, 32, 51, .38);
+  --shadow-lg: 0 22px 52px -30px rgba(4, 32, 51, .46);
+  --radius: 10px;
+  --radius-lg: 14px;
+  --max-w: 1240px;
+}
+
+html {
+  scroll-padding-top: 104px;
+  scrollbar-color: rgba(23, 105, 167, .55) var(--cream-2);
+  scrollbar-width: thin;
+}
+
+body {
+  color: var(--ink);
+  background: var(--cream);
+  text-rendering: optimizeLegibility;
+}
+
+body::selection,
+body *::selection {
+  color: #fff;
+  background: var(--blue);
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--cream-2); }
+::-webkit-scrollbar-thumb {
+  background: rgba(23, 105, 167, .48);
+  border: 3px solid var(--cream-2);
+  border-radius: 999px;
+}
+
+h1, h2, h3,
+.hero-h1, .cta-h2, .sec-head-l h2, .stats-head h2,
+.contact-intro h2, .infra-name {
+  font-family: "Space Grotesk", "Space Grotesk Fallback", "Inter", system-ui, sans-serif;
+}
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid rgba(32, 184, 236, .9);
+  outline-offset: 3px;
+}
+
+a { text-underline-offset: .18em; }
+
+.container { width: 100%; }
+
+.scroll-progress { height: 3px; background: rgba(6, 27, 43, .1); }
+.scroll-progress span { background: var(--cyan); }
+
+.navbar {
+  min-height: 78px;
+  height: auto;
+  background: rgba(6, 27, 43, .97);
+  border-bottom-color: rgba(255, 255, 255, .1);
+  box-shadow: 0 12px 34px -28px rgba(0, 0, 0, .9);
+}
+
+.navbar .container { min-height: 78px; }
+.nav-logo-img { height: 48px; }
+
+.nav-link {
+  position: relative;
+  padding: 28px 0 26px;
+  color: rgba(255, 255, 255, .74);
+  letter-spacing: -.01em;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 18px;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .32s cubic-bezier(.16, 1, .3, 1);
+}
+
+.nav-link:hover,
+.nav-link.active { color: #fff; }
+.nav-link:hover::after,
+.nav-link.active::after { transform: scaleX(1); transform-origin: left; }
+
+.nav-back { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; }
+
+.nav-cta,
+.btn-primary {
+  color: #fff;
+  background: var(--blue);
+  box-shadow: 0 10px 24px -16px rgba(0, 174, 239, .8);
+}
+
+.nav-cta {
+  min-height: 44px;
+  height: 44px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.btn {
+  min-height: 48px;
+  height: auto;
+  padding-block: 12px;
+  border-radius: 10px;
+  transition: transform .24s cubic-bezier(.16, 1, .3, 1),
+              background-color .2s ease, border-color .2s ease,
+              color .2s ease, box-shadow .24s ease;
+}
+
+.nav-cta:hover,
+.btn-primary:hover {
+  filter: none;
+  background: #0f568b;
+  box-shadow: 0 16px 32px -20px rgba(0, 102, 166, .75);
+  transform: translateY(-2px);
+}
+
+.btn:active,
+.nav-cta:active { transform: translateY(0); }
+
+.btn:disabled,
+button:disabled {
+  cursor: not-allowed;
+  opacity: .48;
+  transform: none;
+  box-shadow: none;
+}
+
+.hero {
+  background: #071d2e;
+}
+
+.hero-inner { padding: 88px 0 82px; }
+
+.hero-tag {
+  position: absolute;
+  top: 30px;
+  right: var(--px);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  color: rgba(255, 255, 255, .62);
+}
+
+.hero-tag .dot { box-shadow: none; }
+
+.hero-h1 {
+  max-width: 17ch;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  line-height: 1.02;
+  letter-spacing: -.035em;
+  text-shadow: none;
+}
+
+.hero-sub {
+  max-width: 62ch;
+  color: rgba(237, 245, 249, .76);
+  line-height: 1.72;
+}
+
+.reveal,
+.fx-reveal {
+  transform: translateY(14px);
+  transition-duration: .64s;
+  transition-timing-function: cubic-bezier(.16, 1, .3, 1);
+}
+
+.contact-card,
+.info-card,
+.stat-tile,
+.faq-item,
+.rfp-table-wrap,
+.buyerapps-gridwrap {
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+.contact-card { padding: clamp(24px, 3vw, 40px); }
+.info-card { background: var(--cream-2); }
+
+.field input,
+.field select,
+.field textarea,
+.rfp-search input,
+.buyerapps-perpage select {
+  min-height: 48px;
+  background: #fff;
+  border-color: #cfdbe2;
+}
+
+.field input::placeholder,
+.field textarea::placeholder,
+.rfp-search input::placeholder { color: #73838d; opacity: 1; }
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover,
+.rfp-search input:hover { border-color: #9eb5c2; }
+
+.faq-question { min-height: 58px; }
+.faq-item[open] { border-color: #b8cfdb; background: #fff; }
+
+.doc-body { max-width: 72ch; }
+.doc-body h2 { letter-spacing: -.025em; }
+
+footer {
+  background: #061b2b;
+  padding-top: clamp(52px, 7vw, 80px);
+}
+
+.footer-inner { gap: clamp(28px, 4vw, 56px); padding-bottom: 56px; }
+.footer-col-head { color: #fff; letter-spacing: .04em; }
+.footer-link { color: rgba(235, 244, 248, .66); line-height: 1.55; padding: 6px 0; }
+.footer-link:hover { color: #fff; }
+.footer-brand p { color: rgba(235, 244, 248, .66); }
+.footer-copy,
+.footer-bottom-link { color: rgba(235, 244, 248, .52); }
+
+@media (max-width: 900px) {
+  .navbar .container {
+    flex-wrap: wrap;
+    gap: 0 14px;
+    padding-top: 8px;
+  }
+
+  .nav-links {
+    order: 3;
+    display: flex;
+    flex: 1 0 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 0 0 4px;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+
+  .nav-link {
+    min-height: 44px;
+    padding: 13px 0 12px;
+    /* Without these the flex items shrink and wrap their labels into
+       stacked columns instead of staying on one scrollable line. */
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .nav-link::after { bottom: 7px; }
+  .nav-back { display: none; }
+  .hero-inner { padding: 72px 0 68px; }
+  .footer-inner { gap: 36px 28px; }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 130px; }
+  .navbar .container { padding-inline: 18px; }
+  .nav-logo-img { height: 42px; }
+  .nav-cta { padding-inline: 14px; }
+  .hero-tag { display: none; }
+  .hero-h1 { font-size: clamp(2.35rem, 12vw, 3.5rem); }
+  .hero-sub { font-size: 1rem; }
+  .btn { white-space: normal; text-align: center; justify-content: center; }
+  .contact-grid { gap: 24px; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ── Navbar: "ONDC Participants" dropdown ────────────────────
+   <details>/<summary>, the same zero-JS accordion idiom the FAQ
+   accordions use (legal.css .faq-question). The panel is fixed,
+   not absolute, because .nav-links sets overflow-x:auto both at
+   desktop (legal.css) and again below 900px (above) — either one
+   would clip an absolutely-positioned child. fx.js places it. */
+.nav-drop { display: flex; align-items: center; }
+
+.nav-drop > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.nav-drop > summary::-webkit-details-marker { display: none; }
+
+.nav-drop-chev { flex-shrink: 0; transition: transform .18s ease; }
+.nav-drop[open] > summary .nav-drop-chev { transform: rotate(180deg); }
+
+.nav-drop-menu {
+  position: fixed;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  min-width: 216px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 12px;
+  background: rgba(6, 27, 43, .98);
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, .85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* A native <details> reveals its contents before its deferred `toggle` event.
+   Desktop positioning happens in that event, so an uninitialised fixed panel
+   can otherwise paint once at its static position on first open. Keep it
+   invisible until fx.js has applied coordinates, then reveal it gently. The
+   mobile drawer uses an inline panel and does not need this positioning gate. */
+@media (min-width: 901px) {
+  .navbar .nav-drop-menu {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    clip-path: inset(0 0 8px 0 round 16px);
+    transition:
+      opacity .14s ease,
+      clip-path .14s ease,
+      visibility 0s linear .14s;
+  }
+
+  .navbar .nav-drop[data-nav-drop-positioned] > .nav-drop-menu {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    clip-path: inset(0 round 16px);
+    transition-delay: 0s;
+  }
+}
+
+.nav-drop-menu a {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, .78);
+  transition: background .15s, color .15s;
+}
+
+.nav-drop-menu a:hover,
+.nav-drop-menu a:focus-visible {
+  background: rgba(255, 255, 255, .08);
+  color: var(--cyan);
+}
+
+.nav-drop-menu { max-width: calc(100vw - 24px); }
+
+/* -- "Explore other sectors" rail ----------------------------
+   Twelve peers with nothing to lead, so the chips give way to plain
+   labels and Life@ONDC keeps the only filled mark. Dropping that chrome
+   is also what lets the row hold a single line; where twelve labels
+   still outrun the column it slides, using the same nowrap-and-scroll
+   idiom as the homepage sector rail rather than stacking. Scoped under
+   .more-sectors so it outranks the per-page .pill rules. */
+.more-sectors {
+  background: #F5F7FA;
+  border-top: 1px solid #E5E7EB;
+  padding: 34px 0 30px;
+}
+
+/* A label for the row, not a decorative eyebrow over it. */
+.more-sectors .more-lbl {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #606161;
+  margin-bottom: 13px;
+}
+
+.more-sectors .pill-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: clamp(8px, .7vw, 14px);
+  /* The fade needs a gutter of its own, or it eats the first and last
+     label whenever the row happens to fill the column exactly. */
+  margin-inline: -20px;
+  padding-inline: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* a clipped label at either end should read as "more", not as breakage */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+}
+
+.more-sectors .pill-row::-webkit-scrollbar { display: none; }
+
+.more-sectors .pill {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 7px 2px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+  color: #1769a7;
+}
+
+.more-sectors .pill::after {
+  content: "";
+  position: absolute; left: 2px; right: 2px; bottom: 1px;
+  height: 2px; border-radius: 2px;
+  background: currentColor;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .22s cubic-bezier(.22,1,.36,1);
+}
+
+.more-sectors .pill:hover { color: #0B4F7F; }
+.more-sectors .pill:hover::after { transform: scaleX(1); }
+
+.more-sectors .pill:focus-visible {
+  outline: 2px solid #1769a7;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Life@ONDC is not a sector, so it carries the one filled mark. */
+.more-sectors .pill.pill-life {
+  padding: 7px 14px;
+  border-radius: 20px;
+  background: #DFF3FC;
+  color: #0B4F7F;
+}
+
+.more-sectors .pill.pill-life::after { content: none; }
+
+/* ── Floating glass navbar (Apple-style), shared by every page ──────────
+ * The <nav> stays in flow as the sticky rail and goes fully transparent;
+ * its .container becomes the floating pill. Higher specificity than the
+ * per-page inline `.navbar` blocks so one rule covers the whole site. */
+html body .navbar {
+  height: 88px;
+  padding: 14px 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* the gap around the pill stays click-through */
+}
+
+html body .navbar .container {
+  pointer-events: auto;
+  height: 60px;
+  width: min(100% - 32px, var(--max-w));
+  /* The right inset matches the CTA pill's own radius so the two curves nest. */
+  padding: 0 10px 0 24px;
+  gap: 16px;
+  border-radius: 999px;
+  background: rgba(8, 26, 46, .55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, .16);
+  box-shadow:
+    0 10px 34px rgba(0, 0, 0, .34),
+    0 2px 8px rgba(0, 0, 0, .18),
+    inset 0 1px 0 rgba(255, 255, 255, .16);
+}
+
+html body .navbar .nav-logo-img,
+html body .navbar .logo-mark { height: 38px; width: auto; }
+html body .navbar .nav-cta {
+  height: 40px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+/* Dropdown panels hang off the pill, so they need the rounded treatment too. */
+html body .navbar .nav-drop-menu { border-radius: 16px; }
+
+@media (max-width: 900px) {
+  html body .navbar { height: 76px; padding: 10px 0; }
+  html body .navbar .container { height: 56px; padding: 0 8px 0 18px; }
+  html body .navbar .nav-cta { height: 40px; padding: 0 18px; }
+}
+
+/* ── One nav scale for the whole site ─────────────────────────────────────
+ * The nav chrome used to be redefined per page — category-chrome.css shipped
+ * an `11px !important` block for its 24 pages and about-us.html carried a
+ * private inline copy of the whole nav stylesheet — so the type size and the
+ * link row's position visibly changed as you moved between pages. Both
+ * pockets are gone; this is the single source of truth. Scoped above the
+ * 900px drawer breakpoint so mobile.css keeps ownership of the burger panel. */
+@media (min-width: 901px) {
+  html body .navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  html body .navbar .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  /* flex:1 + centred keeps the link row stable beside the right-side CTA. */
+  html body .navbar .nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  html body .navbar .nav-links::-webkit-scrollbar { display: none; }
+
+  html body .navbar .nav-link,
+  html body .navbar .nav-back {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  html body .navbar .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Nine top-level items no longer clear the logo and the CTA on a narrow
+     desktop, so tighten the band that is actually tight. 1200px up is roomy. */
+  @media (max-width: 1200px) {
+    html body .navbar .nav-links { gap: 11px; }
+    html body .navbar .nav-link,
+    html body .navbar .nav-back { font-size: 12px; }
+    html body .navbar .nav-cta { padding: 0 16px; font-size: 13px; }
+  }
+}
+
+/* ── Skip-intro affordance for the scroll-scrubbed intros ─────────────── */
+.intro-skip {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 500;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  font: 700 15px/1 Inter, system-ui, sans-serif;
+  letter-spacing: -.01em;
+  color: #001D33;
+  background: #00AEEF;
+  cursor: pointer;
+  box-shadow: 0 8px 26px rgba(0, 174, 239, .45), 0 2px 6px rgba(0, 0, 0, .3);
+  transition: transform .18s, filter .18s;
+}
+
+.intro-skip[data-visible="true"] { display: flex; }
+.intro-skip:hover,
+.intro-skip:focus-visible { filter: brightness(1.08); transform: translateY(-2px); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * BECKN CHROME — the site frame in the Beckn world
+ *
+ * One light chrome for all 45 documents. This file is the only stylesheet
+ * every page loads, and it always loads AFTER whichever navy chrome that page
+ * carries (category-chrome.css, legal.css, an inline <style>, or styles.css),
+ * so this block supersedes all four without a single markup edit. Selectors
+ * mirror the specificity of the floating-pill block above where they must
+ * outrank a per-page inline rule.
+ *
+ * Deliberately scoped to chrome only: the --blue/--cyan tokens are left alone
+ * because 24 legal/resource pages still colour their BODY copy from them.
+ * Chrome colours are therefore named separately below.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  --bkc-canvas: #f7f8f8;
+  --bkc-surface: #ffffff;
+  --bkc-ink: #1b1b1b;
+  --bkc-muted: #55595e;
+  --bkc-quiet: #8a8f95;
+  --bkc-blue: #2151F5;
+  --bkc-line: #e6e7e9;
+  --bkc-line-soft: #ececec;
+  --bkc-figure: #0d1b2e;
+  --bkc-ease-out: cubic-bezier(.16, 1, .3, 1);
+}
+
+html body .navbar,
+html body footer,
+.more-sectors,
+.intro-skip {
+  font-family: "Space Grotesk", "Space Grotesk Fallback", Inter, system-ui, sans-serif;
+}
+
+/* ── The floating pill, in paper ─────────────────────────────────────────── */
+html body .navbar .container {
+  background: rgba(255, 255, 255, .82);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(27, 27, 27, .07);
+  box-shadow:
+    0 10px 34px rgba(0, 0, 0, .07),
+    0 2px 8px rgba(0, 0, 0, .04);
+}
+
+html body .navbar .nav-link {
+  color: var(--bkc-muted);
+  font-weight: 600;
+}
+
+html body .navbar .nav-link:hover,
+html body .navbar .nav-link.active { color: var(--bkc-ink); }
+html body .navbar .nav-link::after { background: var(--bkc-blue); }
+
+html body .navbar .nav-back { color: var(--bkc-muted); }
+html body .navbar .nav-back:hover { color: var(--bkc-blue); }
+
+/* The one solid mark in the bar — ink at rest, blue on hover, as .bk-btn. */
+html body .navbar .nav-cta {
+  color: #fff;
+  background: var(--bkc-ink);
+  border: 0;
+  box-shadow: none;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  transition: background .22s var(--bkc-ease-out), transform .22s var(--bkc-ease-out);
+}
+
+html body .navbar .nav-cta:hover {
+  background: var(--bkc-blue);
+  box-shadow: none;
+  filter: none;
+  transform: translateY(1px);
+}
+
+/* ── Dropdown: a white panel hanging off the pill ────────────────────────── */
+html body .navbar .nav-drop > summary { color: var(--bkc-muted); }
+html body .navbar .nav-drop[open] > summary { color: var(--bkc-ink); }
+
+html body .nav-drop-menu {
+  border: 1px solid var(--bkc-line);
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, .22);
+}
+
+html body .nav-drop-menu a { color: var(--bkc-muted); }
+
+html body .nav-drop-menu a:hover,
+html body .nav-drop-menu a:focus-visible {
+  background: #f1f3f4;
+  color: var(--bkc-blue);
+}
+
+/* ── Progress + selection + focus ────────────────────────────────────────── */
+html body .scroll-progress { background: var(--bkc-line); }
+html body .scroll-progress span { background: var(--bkc-blue); }
+
+body::selection,
+body *::selection { background: var(--bkc-blue); color: #fff; }
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--bkc-blue);
+  outline-offset: 3px;
+}
+
+/* ── Footer: the page ends on paper, not in a navy block ─────────────────── */
+/* The watercolor sheet lives on a ::before whose top edge is mask-faded to
+   transparent, so whatever sits behind the footer — the homepage's fixed
+   node canvas, or a page's own paper background — bleeds through and the
+   network appears to sink into the ink. No hard seam, no border-top. */
+html body footer {
+  position: relative;
+  background: transparent;
+  border-top: 0;
+  color: var(--bkc-ink);
+  /* clears the illustration strip along the image's bottom third */
+  padding-bottom: clamp(150px, 19vw, 310px);
+}
+
+html body footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--bkc-canvas) var(--footer-image, url(/images/footer-image.webp)) center bottom / cover no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 clamp(90px, 12vw, 170px));
+  mask-image: linear-gradient(to bottom, transparent 0, #000 clamp(90px, 12vw, 170px));
+}
+
+html body footer .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Narrow screens: cover-cropping the artwork blows the illustrations up under
+   the text, so fit the sheet to width instead — the strip sits at the very
+   bottom and a canvas-toned veil blends its top edge away. */
+@media (max-width: 720px) {
+  html body footer { padding-bottom: clamp(120px, 40vw, 220px); }
+  html body footer::before {
+    background-color: var(--bkc-canvas);
+    background-image:
+      linear-gradient(to bottom, var(--bkc-canvas) calc(100% - 57vw), transparent calc(100% - 32vw)),
+      var(--footer-image, url(/images/footer-image.webp));
+    background-size: 100% 100%, 100% auto;
+    background-position: top, center bottom;
+    background-repeat: no-repeat;
+  }
+}
+
+/* The mark is a colour gradient by nature and needs no silhouette here. */
+html body footer .footer-logo-img { filter: none; opacity: 1; }
+
+html body footer .footer-inner { border-bottom-color: var(--bkc-line); }
+html body footer .footer-col-head { color: var(--bkc-ink); letter-spacing: .16em; }
+html body footer .footer-brand p { color: var(--bkc-muted); }
+
+html body footer .footer-link {
+  color: var(--bkc-muted);
+  transition: color .18s var(--bkc-ease-out);
+}
+
+html body footer .footer-link:hover { color: var(--bkc-blue); }
+
+html body footer .footer-bottom {
+  border-top: 1px solid var(--bkc-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Social marks — right side of the footer bottom bar. */
+html body footer .footer-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+html body footer .footer-social-link {
+  display: inline-flex;
+  color: var(--bkc-quiet);
+  transition: color .18s var(--bkc-ease-out), transform .18s var(--bkc-ease-out);
+}
+
+html body footer .footer-social-link svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+html body footer .footer-social-link:hover { color: var(--bkc-blue); transform: translateY(-2px); }
+
+html body footer .footer-social-link:focus-visible {
+  outline: 2px solid var(--bkc-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body footer .footer-social-link { transition: color .18s; }
+  html body footer .footer-social-link:hover { transform: none; }
+}
+
+html body footer .footer-copy,
+html body footer .footer-bottom-link { color: var(--bkc-quiet); }
+html body footer .footer-bottom-link:hover { color: var(--bkc-blue); }
+
+/* ── "Explore other sectors" rail ────────────────────────────────────────── */
+.more-sectors {
+  background: var(--bkc-canvas);
+  border-top: 1px solid var(--bkc-line);
+}
+
+.more-sectors .more-lbl {
+  color: var(--bkc-quiet);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.more-sectors .pill { color: var(--bkc-blue); }
+.more-sectors .pill:hover { color: var(--bkc-ink); }
+.more-sectors .pill:focus-visible { outline-color: var(--bkc-blue); }
+
+.more-sectors .pill.pill-life {
+  background: #e4eefc;
+  color: var(--bkc-blue);
+}
+
+/* ── Skip-intro: the system's ghost pill ─────────────────────────────────── */
+.intro-skip {
+  color: var(--bkc-ink);
+  background: rgba(255, 255, 255, .86);
+  border: 1.4px solid var(--bkc-line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-weight: 600;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .10);
+  transition: background .22s var(--bkc-ease-out), color .22s var(--bkc-ease-out),
+              transform .22s var(--bkc-ease-out);
+}
+
+.intro-skip:hover,
+.intro-skip:focus-visible {
+  filter: none;
+  color: #fff;
+  background: var(--bkc-ink);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-skip { transition: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * HOMEPAGE SECTIONS — the Beckn canvas below the hero
+ *
+ * Scoped under `body.home` (index.html only) so none of it reaches the 44
+ * static pages that also load this file, and so it outranks both styles.css
+ * (earlier file) and this file's own older `.hero` rules. The hero itself is
+ * excluded: it is the page's one dark surface and owns its own stylesheet.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+body.home {
+  background: var(--bkc-canvas);
+  background-image: radial-gradient(circle, rgba(27, 27, 27, .05) 1.1px, transparent 1.1px);
+  background-size: 32px 32px;
+  color: var(--bkc-ink);
+  font-family: "Space Grotesk", "Space Grotesk Fallback", Inter, system-ui, sans-serif;
+}
+
+body.home h1, body.home h2, body.home h3,
+body.home .slide-h1, body.home .metrics-h2, body.home .dpi-h2, body.home .infra-name {
+  font-family: "Space Grotesk", "Space Grotesk Fallback", Inter, system-ui, sans-serif;
+  letter-spacing: -.035em;
+  color: var(--bkc-ink);
+}
+
+/* Emphasis inside a heading drops to 400 — lighter, never bolder. */
+body.home h1 em, body.home h2 em, body.home .slide-h1 em {
+  font-style: normal;
+  font-weight: 400;
+}
+
+body.home .section-header p,
+body.home .metrics-tagline,
+body.home .dpi-sub { color: var(--bkc-muted); }
+
+/* ── Sections that used to be dark bands ─────────────────────────────────── */
+body.home .tagline-strip,
+body.home .metrics-bar,
+body.home .infra,
+body.home .news { background: transparent; }
+
+body.home .dpi,
+body.home .testimonials {
+  background: transparent;
+  color: var(--bkc-ink);
+}
+
+body.home .dpi-bg,
+body.home .testimonials::before,
+body.home .net-wire { display: none; }
+
+body.home .dpi-h2,
+body.home .testimonials h2,
+body.home .testimonials .section-header p { color: inherit; }
+
+body.home .testimonials .section-header p { color: var(--bkc-muted); }
+
+/* ── The sector carousel: photography dissolved into the canvas ──────────── */
+body.home .hero {
+  background: var(--bkc-canvas);
+  border-radius: 28px;
+  margin: 30px 32px;
+  overflow: clip;
+}
+
+/* Fade to paper, never to shadow: the slide photograph melts into the canvas
+ * rather than sitting under a black scrim. Two layers rather than one ramp
+ * ending in navy — the paper ramp clears the headline column and runs out at
+ * 82%, and a separate navy seat picks up the right edge so the photo has
+ * somewhere to land. Light on the LEFT, where the type is.
+ *
+ * This targets .slide, not .hero: .hero::after has no `content` anywhere and
+ * never painted. The base .slide::after in styles.css is left alone — 44 other
+ * pages share that stylesheet. */
+body.home .slide::after {
+  background:
+    linear-gradient(100deg, rgba(247, 248, 248, .97) 0%, rgba(247, 248, 248, .95) 28%,
+      rgba(247, 248, 248, .70) 48%, rgba(247, 248, 248, .22) 68%, rgba(247, 248, 248, 0) 82%),
+    linear-gradient(90deg, rgba(10, 20, 48, 0) 58%, rgba(10, 20, 48, .18) 80%, rgba(10, 20, 48, .34) 100%);
+}
+
+/* Sit the subject in the part of the frame the paper ramp does not cover. */
+body.home .slide-photo { object-position: 68% center; }
+
+/* A one-shot entrance on the incoming slide. Slides toggle display, which
+ * cannot transition, and stacking all 11 absolutely to cross-fade them would
+ * put the pill rail, the arrows and the hero's own overflow:clip at risk for a
+ * quarter-second of polish. */
+@media (prefers-reduced-motion: no-preference) {
+  body.home .slide.active { animation: slideIn .55s cubic-bezier(.16, 1, .3, 1) both; }
+}
+@keyframes slideIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+body.home .slide-h1 { color: var(--bkc-ink); text-shadow: none; }
+
+body.home .slide-sector-tag {
+  background: rgba(255, 255, 255, .82);
+  border: 1px solid var(--bkc-line);
+  color: var(--bkc-muted);
+  backdrop-filter: blur(8px);
+}
+
+body.home .slide-sector-tag .dot { background: var(--bkc-blue); box-shadow: none; }
+
+/* The glass stats panel becomes hairline-ruled rows on white. */
+body.home .slide-stats {
+  background: rgba(255, 255, 255, .92);
+  border: 1px solid var(--bkc-line);
+  border-radius: 22px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+}
+
+body.home .stats-header { border-bottom: 1px solid var(--bkc-line); }
+
+body.home .slide-stats .stats-title {
+  color: var(--bkc-quiet);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+/* ── The three figures ───────────────────────────────────────────────────
+ * The card leads with numerals, not with a list. Same numeral treatment the
+ * rest of the site uses — restated here rather than linked, because
+ * beckn.css is not loaded on the homepage. */
+body.home .stats-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(110px, 100%), 1fr));
+  gap: 14px;
+  padding: 20px 0 18px;
+  border-bottom: 1px solid var(--bkc-line);
+  margin-bottom: 16px;
+}
+
+body.home .stats-fig-num {
+  font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(26px, 2.6vw, 38px);
+  line-height: 1;
+  letter-spacing: -.036em;
+  color: var(--bkc-figure);
+}
+
+/* A word-statistic drops one step so it sits level with the numerals rather
+ * than overrunning its column. */
+body.home .stats-fig-num.is-word { font-size: clamp(20px, 1.9vw, 27px); }
+
+body.home .stats-fig-label {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--bkc-muted);
+  margin-top: 6px;
+}
+
+body.home .stats-pill {
+  background: #e4eefc;
+  color: var(--bkc-blue);
+  border: 0;
+}
+
+body.home .stats-list li { color: var(--bkc-muted); border-top-color: var(--bkc-line); }
+body.home .stats-list li strong { color: var(--bkc-ink); }
+body.home .stats-list .stat-ico,
+body.home .stats-list li svg { color: var(--bkc-blue); }
+
+body.home .hero-arrow {
+  background: rgba(255, 255, 255, .9);
+  border: 1px solid var(--bkc-line);
+  color: var(--bkc-ink);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .06);
+}
+
+body.home .hero-arrow:hover { background: #fff; color: var(--bkc-blue); }
+
+/* The pill rail reads as links, the way the sector rail does site-wide. */
+body.home .hero-pills { background: transparent; }
+
+body.home .sector-pill {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: var(--bkc-muted);
+  font-weight: 600;
+}
+
+body.home .sector-pill:hover { color: var(--bkc-ink); }
+
+body.home .sector-pill.active,
+body.home .sector-pill[aria-current] {
+  background: none;
+  color: var(--bkc-blue);
+}
+
+/* The light skin's `background: none` above kills the fill that carried the
+ * auto-advance on the dark hero, so the countdown moves to the underline the
+ * active pill already wears — the same 2px blue mark, drawn over the 6s dwell
+ * instead of appearing whole. It holds while the hero is hovered or holds
+ * focus, in step with the JS timer. */
+body.home .sector-rail .sector-pill.active::after {
+  content: "";
+  background: var(--bkc-blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: none;
+  animation: sectorUnderline 6s linear forwards;
+}
+
+@keyframes sectorUnderline {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+body.home .hero:hover .sector-pill.active::after,
+body.home .hero:focus-within .sector-pill.active::after {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home .sector-rail .sector-pill.active::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
+/* ── Figures ─────────────────────────────────────────────────────────────── */
+body.home .metric-num,
+body.home .stat-num { color: #0d1b2e; letter-spacing: -.036em; }
+body.home .metric-label { color: var(--bkc-muted); }
+body.home .metric-sep { background: var(--bkc-line); }
+
+/* ── Cards: white, hairline, soft shadow, dissolving media ───────────────── */
+body.home .dpi-card,
+body.home .door-card,
+body.home .net-card,
+body.home .news-card {
+  background: #fff;
+  border: 1px solid #e9eaec;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+  color: var(--bkc-ink);
+  transition: box-shadow .3s var(--bkc-ease-out), transform .3s var(--bkc-ease-out);
+}
+
+/* .dpi-card is deliberately absent: the scrubbed deck owns its transform, and a
+ * competing hover lift on the same property fights it for the whole pinned
+ * scroll (the pointer rests over the deck the entire time). */
+body.home .door-card:hover,
+body.home .net-card:hover,
+body.home .news-card:hover {
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .10);
+  transform: translateY(-3px);
+}
+
+body.home .dpi-name,
+body.home .news-headline,
+body.home .infra-name { color: var(--bkc-ink); }
+
+body.home .dpi-desc,
+body.home .dpi-tagline,
+body.home .news-dek,
+body.home .infra-desc,
+body.home .infra-bullets li { color: var(--bkc-muted); }
+
+body.home .dpi-eyebrow,
+body.home .news-slug,
+body.home .net-tag,
+body.home .news-thumb-tag,
+body.home .dpi-media-tag,
+body.home .door-media-tag {
+  color: var(--bkc-quiet);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  background: none;
+  border: 0;
+}
+
+/* A concept that needs an icon needs better words. */
+body.home .dpi-eyebrow svg,
+body.home .door-media-tag svg,
+body.home .dpi-media-tag svg,
+body.home .news-thumb-tag svg { display: none; }
+
+body.home .news-cta,
+body.home .net-open { color: var(--bkc-blue); font-weight: 600; }
+
+body.home .dpi-dot { background: var(--bkc-line); }
+body.home .dpi-dot.active,
+body.home .dpi-dot[aria-current="true"] { background: var(--bkc-blue); }
+
+body.home .dpi-arrow,
+body.home .doors-arrow {
+  background: #fff;
+  border: 1px solid var(--bkc-line);
+  color: var(--bkc-ink);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+}
+
+body.home .dpi-arrow:hover,
+body.home .doors-arrow:hover { color: var(--bkc-blue); }
+
+body.home .doors-progress { background: var(--bkc-line); }
+body.home .doors-progress-bar { background: var(--bkc-blue); }
+
+/* The news rail's edge fades feather into the canvas, not into navy. */
+body.home .news-rail-wrap::before,
+body.home .news-rail-wrap::after {
+  background: linear-gradient(90deg, var(--bkc-canvas), rgba(247, 248, 248, 0));
+}
+
+body.home .news-rail-wrap::after { transform: scaleX(-1); }
+
+/* The doors rail gets the same right-edge feather: the 4th card sits fully
+ * off-screen at rest, and without this cue readers assume the row ends at 3.
+ * Fades out once the rail is scrolled to its end (data-end from React). */
+body.home .doors-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 90px;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(247, 248, 248, 0), var(--bkc-canvas));
+  transition: opacity .3s var(--bkc-ease-out);
+}
+
+body.home .doors-wrap[data-end="true"]::after { opacity: 0; }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+body.home .btn-primary,
+body.home .btn-light {
+  background: var(--bkc-ink);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+  font-weight: 600;
+}
+
+body.home .btn-primary:hover,
+body.home .btn-light:hover {
+  background: var(--bkc-blue);
+  color: #fff;
+  filter: none;
+  box-shadow: none;
+  transform: translateY(1px);
+}
+
+body.home .btn-ghost,
+body.home .btn-outline {
+  background: rgba(255, 255, 255, .7);
+  border: 1.4px solid #d7d9db;
+  color: var(--bkc-ink);
+  border-radius: 999px;
+}
+
+body.home .btn-ghost:hover,
+body.home .btn-outline:hover { border-color: var(--bkc-ink); background: #fff; }
+
+/* ═══ ROUND 5: motion + structure ══════════════════════════════════════════ */
+
+/* The strip after the hero doubles as the opaque cover styles.css always
+ * intended it to be (styles.css:986-999 explains why): it must paint paper,
+ * not transparency, over the hero's clipped edge. */
+body.home .tagline-strip {
+  background: var(--bkc-canvas);
+  background-image: radial-gradient(circle, rgba(27, 27, 27, .05) 1.1px, transparent 1.1px);
+  background-size: 32px 32px;
+}
+
+/* ── The expanding node field ────────────────────────────────────────────
+ * Fixed behind the light sections; every section that should sit above it is
+ * already position:relative, so tree order paints content over the network.
+ * Restrained alpha — the hubs, glow and pulses carry the life, not raw
+ * opacity, which would only cost legibility. It fades in with data-on (set
+ * by HomeAmbient when the loop starts) so the field materialises as the
+ * hero's dark act releases the viewport instead of popping in. */
+body.home .home-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .8s var(--bkc-ease-out, ease);
+}
+
+body.home .home-ambient[data-on] { opacity: .42; }
+
+/* Sections paint over the ambient canvas; the two that lost their positioning
+ * context get it back. */
+body.home .infra,
+body.home .tagline-strip { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.home .home-ambient { display: none; }
+}
+
+/* ── Shared reveal (real, replacing the dead inline stagger) ─────────────── */
+body.home .hv-rv {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s var(--bkc-ease-out), transform .7s var(--bkc-ease-out);
+}
+
+body.home .hv-in .hv-rv,
+body.home .hv-rv.hv-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Once the entrance has played, the stagger delays retire so they cannot
+ * postpone hover transitions; !important beats the inline delay through any
+ * React re-render. */
+body.home .hv-done .hv-rv { transition-delay: 0s !important; }
+
+/* ── Metrics: the rise-from-below wash + a living header ─────────────────── */
+body.home .metric {
+  position: relative;
+  overflow: clip;
+}
+
+body.home .metric-fill {
+  position: absolute;
+  inset: 0;
+  background: #e4eefc;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform .45s cubic-bezier(0, 0, .2, 1);
+  pointer-events: none;
+}
+
+body.home .metric:hover .metric-fill { transform: scaleY(1); }
+
+body.home .metric-num,
+body.home .metric-label { position: relative; }
+
+/* ── Building Blocks: the scrubbed deck ──────────────────────────────────
+ * The stacking-cards pattern: the section is a tall runway, a viewport-height
+ * stage pins inside it, all nine cards sit in ONE grid cell, and the page's
+ * own vertical scroll slides each card in over the pile — linear, reversible,
+ * nothing hijacked. The component writes each card's transform per frame;
+ * this layer owns everything else. */
+body.home .dpi {
+  /* Pace knob: how much runway each card gets. */
+  height: calc(100vh + (var(--dpi-n, 9) - 1) * 52vh);
+  overflow: visible;
+  padding: 0;
+}
+
+body.home .dpi-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  padding-top: clamp(44px, 7vh, 88px);
+}
+
+body.home .dpi-deck {
+  flex: 1;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: 8px var(--px) 8px;
+  min-height: 0;
+}
+
+/* The card FITS its slot — height comes from the deck row, never from
+ * content, so it can never grow over the header above or the controls
+ * below, whatever the window height. */
+body.home .dpi-card {
+  grid-area: 1 / 1;
+  width: min(900px, 100%);
+  height: min(100%, 620px);
+  min-height: 0;
+  will-change: transform;
+  /* Off to the right until the choreography places it; card 0 is set to rest
+   * on the first frame. Flat layouts below override this away. */
+  transform: translateX(106vw);
+  box-shadow: 0 24px 60px -28px rgba(13, 27, 46, .28);
+  /* The scrubber owns this transform and rewrites it every scroll event
+   * (DPISection.jsx:170). The grouped `transition: transform .3s` above restarts
+   * a fresh eased tween on every one of those writes, so the card can never
+   * reach its target: it lags the scroll (the jitter), and the outgoing card is
+   * still on the pile when the next one lands (the cards clubbing into each
+   * other). The component states the contract at DPISection.jsx:129 — linear
+   * with the scroll, no easing. Keep the box-shadow tween, drop transform. */
+  transition: box-shadow .3s var(--bkc-ease-out);
+  /* styles.css:478 blurs what fx.css:1274 already paints opaque #fff — nine
+   * promoted, shadowed layers recompositing every frame for nothing. Invisible
+   * on a desktop GPU, dropped frames on a fanless Air. */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* The base rule's 340px media floor would force the card taller than its
+ * slot on short windows; the media pane takes whatever the row gives it. */
+body.home .dpi-media { min-height: 0; }
+body.home .dpi-card { min-height: 280px; }
+
+body.home .dpi-card.is-behind { box-shadow: 0 4px 16px rgba(0, 0, 0, .04); }
+
+/* The controls own their slot at the stage's foot and always paint above the
+ * pile — never across the card's copy. */
+body.home .dpi-controls {
+  position: relative;
+  z-index: 30;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 12px 0 22px;
+}
+
+body.home .dpi-controls .dpi-arrow { position: static; transform: none; }
+
+/* Short windows give the card the room the intro copy was taking. */
+@media (max-height: 720px) {
+  body.home .dpi-sub { display: none; }
+  body.home .dpi-stage { padding-top: clamp(32px, 5vh, 56px); }
+}
+
+/* Narrow screens and reduced motion take a plain vertical list — no runway,
+ * no pin, every block readable in flow. The !important frees the cards from
+ * any transform the choreography wrote before the media state flipped. */
+@media (max-width: 820px), (prefers-reduced-motion: reduce) {
+  body.home .dpi { height: auto; }
+
+  body.home .dpi-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding-top: clamp(64px, 9vw, 96px);
+  }
+
+  body.home .dpi-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  body.home .dpi-card {
+    grid-area: auto;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    transform: none !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+  }
+
+  body.home .dpi-media { min-height: 220px; }
+
+  body.home .dpi-controls { display: none; }
+}
+
+body.home .dpi-card-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(100deg,
+      rgba(228, 238, 252, 0) 0%,
+      rgba(228, 238, 252, .55) 40%,
+      rgba(33, 81, 245, .12) 50%,
+      rgba(228, 238, 252, .55) 60%,
+      rgba(228, 238, 252, 0) 100%);
+  opacity: 0;
+  transform: translateX(-118%);
+}
+
+@keyframes homeCardSwish {
+  0% { opacity: 0; transform: translateX(-118%); }
+  16% { opacity: 1; }
+  84% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(118%); }
+}
+
+body.home .dpi-card.is-front .dpi-card-wash {
+  animation: homeCardSwish .7s var(--bkc-ease-out) forwards;
+}
+
+/* Playful, not templatized: a ghost step numeral behind the copy, and the
+ * media dissolving into the card instead of butting against it. Odd cards
+ * carry media right, even cards left. */
+body.home .dpi-card-ghost {
+  position: absolute;
+  right: 18px;
+  bottom: -18px;
+  font-size: clamp(90px, 11vw, 160px);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: 1;
+  color: #eef0f3;
+  pointer-events: none;
+  user-select: none;
+}
+
+body.home .dpi-card-body { position: relative; }
+
+body.home .dpi-card:nth-child(even) .dpi-media { order: -1; }
+
+body.home .dpi-media::before {
+  background: linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, .35) 18%, rgba(255, 255, 255, 0) 45%);
+}
+
+body.home .dpi-card:nth-child(even) .dpi-media::before {
+  background: linear-gradient(270deg, #fff 0%, rgba(255, 255, 255, .35) 18%, rgba(255, 255, 255, 0) 45%);
+}
+
+/* The two blocks without photography sit on the dotted ghost surface instead
+ * of a leftover cyan gradient. */
+body.home .dpi-media.dpi-media-ghost {
+  background-color: var(--bkc-canvas);
+  background-image: radial-gradient(circle, rgba(33, 81, 245, .14) 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+}
+
+/* ── Find Your Place: door cards recomposed ──────────────────────────────── */
+/* Content-driven height: the fixed 590px was clipping the CTA once the ruled
+ * bullets grew the body. And a narrower basis lets the fourth card visibly
+ * peek past the third — the row must read as four, not three. */
+body.home .door-card {
+  flex-basis: min(330px, 84vw);
+  height: auto;
+  min-height: 590px;
+}
+
+body.home .door-media { position: relative; }
+
+body.home .door-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, .92) 0%, rgba(255, 255, 255, 0) 26%,
+      rgba(255, 255, 255, 0) 55%, #fff 100%);
+}
+
+body.home .door-media img { transition: transform .55s var(--bkc-ease-out); }
+body.home .door-card:hover .door-media img { transform: scale(1.03); }
+
+body.home .door-media-tag {
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  /* The base rule anchors this chip with `bottom`; without releasing it the
+   * pill stretched the photo's full height — the same giant-oval bug the
+   * news chip had. */
+  bottom: auto;
+  backdrop-filter: none;
+  z-index: 1;
+  width: fit-content;
+  background: rgba(255, 255, 255, .92);
+  border: 1px solid var(--bkc-line);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+body.home .infra-name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  border-bottom: 1px solid var(--bkc-line);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+body.home .infra-desc { font-size: 14px; line-height: 1.65; }
+
+body.home .infra-bullets { margin-top: 4px; }
+
+body.home .infra-bullets li {
+  padding: 10px 0 10px 2px;
+  border-top: 1px solid var(--bkc-line);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+body.home .infra-bullets li::before { display: none; }
+
+/* ── The Network in Action: a chapter, not a stray band ──────────────────── */
+body.home .testimonials { position: relative; }
+
+/* The hue crossover: a soft blue radial at the section's opening edge, so
+ * scrolling into the stories reads as arriving somewhere new. */
+body.home .testimonials::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(160%, 1900px);
+  height: 62%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(ellipse 50% 55% at 50% 0%,
+      rgba(33, 81, 245, .08), rgba(228, 238, 252, .35) 38%, transparent 68%);
+}
+
+body.home .testimonials > .container { position: relative; }
+
+/* The drop-lines hang from the radial now, deliberately: a blue node and a
+ * hairline stem above each story. */
+body.home .net-wire { display: none; }
+
+body.home .net-card::before {
+  background: var(--bkc-line);
+  opacity: 1;
+}
+
+body.home .net-node {
+  background: var(--bkc-blue);
+  box-shadow: 0 0 0 5px rgba(33, 81, 245, .12);
+}
+
+body.home .net-poster {
+  overflow: clip;
+  /* The declared aspect-ratio never actually applied: .net-poster is a column
+   * flex item, so its min-height:auto floor is the loaded image's own 3:4 height
+   * (366px), which beat the 4:5 frame (339px) the moment the JPEG decoded — the
+   * section grew under the reader on load. Releasing the floor lets styles.css:754
+   * govern, which is what its own comment always claimed: top-anchored, so the
+   * crop takes the poster's decorative bottom bar and never the ONDC mark. */
+  min-height: 0;
+  /* styles.css:755-757 is tuned for the old #03172A field: an rgba(255,255,255,.14)
+   * border that is invisible on white, and a 75%-black drop shadow that reads as a
+   * smudge between the poster and the white card. The card (fx.css:1276) already
+   * supplies the border and the outer radius. */
+  border-color: var(--bkc-line);
+  border-radius: 12px;
+  box-shadow: none;
+}
+body.home .net-poster img { transition: transform .55s var(--bkc-ease-out); }
+body.home .net-card:hover .net-poster img { transform: scale(1.03); }
+
+body.home .net-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--bkc-line);
+  margin: 0 18px;
+  padding: 14px 0 16px;
+}
+
+body.home .net-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  letter-spacing: .04em;
+  text-transform: none;
+  background: linear-gradient(var(--bkc-blue), var(--bkc-blue)) left 100% / 0% 1.5px no-repeat;
+  padding-bottom: 2px;
+  transition: background-size .3s var(--bkc-ease-out);
+}
+
+body.home .net-card:hover .net-open { background-size: 100% 1.5px; }
+
+/* ── News: labels legible again, headlines on the family ─────────────────── */
+body.home .news-headline,
+body.home .news-more-headline {
+  font-family: "Space Grotesk", "Space Grotesk Fallback", Inter, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+body.home .news-thumb-tag {
+  left: 10px;
+  top: 10px;
+  /* The base rule anchors this chip with `bottom`; without releasing it the
+   * pill stretched the card's full height — the giant white ovals. */
+  bottom: auto;
+  width: fit-content;
+  background: rgba(255, 255, 255, .92);
+  border: 1px solid var(--bkc-line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: var(--bkc-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home .hv-rv,
+  body.home .metric-fill,
+  body.home .door-media img,
+  body.home .net-poster img { transition: none; }
+
+  body.home .hv-rv { opacity: 1; transform: none; }
+  body.home .dpi-card-wash { animation: none !important; }
+  body.home .dpi-card.is-behind { transform: none; }
+}
+
+/* Blocks not live yet: a status word in the eyebrow line, same type as the
+   eyebrow, divided by a hairline. No pill — the eyebrow row is already a label. */
+body.home .dpi-soon {
+  color: var(--bkc-blue);
+  padding-left: 10px;
+  border-left: 1px solid var(--bkc-line);
+}

@@ -1,0 +1,16 @@
+{%- comment -%}
+  One big statement with a line under it. "Network page" is the same pair set
+  as the two-column band the Gateway page uses mid-page — the heading on the
+  left, the sentence on the right.
+{%- endcomment -%}
+{% if variant == "bk" %}<section class="bk-role-context bk-rv"{% if anchor_id %} id="{{ anchor_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Context" }}"{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %}>
+  <h2{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ title }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+  <p>{{ subtitle }}</p>
+</section>
+{%- else %}<section class="tagline-strip">
+  <div class="container">
+    <h2>{{ title }}</h2>
+    <p>{{ subtitle }}</p>
+  </div>
+</section>
+{%- endif %}

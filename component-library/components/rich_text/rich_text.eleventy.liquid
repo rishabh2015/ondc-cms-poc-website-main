@@ -1,0 +1,20 @@
+<section class="block block-text block--{{ background | default: "light" }}">
+  <div class="container">
+    <div class="block-inner{% if full_width %} is-wide{% endif %}">
+      {% if eyebrow %}
+        <div class="block-eyebrow">{{ eyebrow }}</div>
+      {% endif %}
+      {% if heading %}
+        <h2 class="block-h2">{{ heading }}</h2>
+      {% endif %}
+      <div class="block-body">{{ body }}</div>
+      {% if buttons.size > 0 %}
+        <div class="block-actions">
+          {% for button in buttons %}<a
+              class="btn {% if button.style == "secondary" %}btn-light{% else %}btn-primary{% endif %}"
+              href="{{ button.url }}">{{ button.label }}</a>{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

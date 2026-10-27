@@ -1,0 +1,19 @@
+spec:
+  structures:
+  - sections
+  label: Image or video
+  description: One picture, an uploaded video, or a YouTube / Vimeo video.
+  icon: perm_media
+blueprint:
+  background: light
+  heading: ''
+  media:
+    kind: image
+    image: ''
+    alt: ''
+    video: ''
+    poster: ''
+    embed_url: ''
+  caption: ''
+  full_width: false
+_inputs: {}

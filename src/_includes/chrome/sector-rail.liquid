@@ -1,0 +1,14 @@
+{% comment %}Sector pill row above the footer. Content comes from
+   src/_data/site.json. Shown when a page sets show_sector_rail.{% endcomment %}
+{% assign rail_label = site.sectors.label %}{% assign rail_links = site.sectors.links %}
+<nav class="more-sectors" aria-label="{{ rail_label }}">
+  <div class="container">
+    <div class="more-lbl">{{ rail_label }}</div>
+    <div class="pill-row">
+      {% for link in rail_links %}        <a
+          class="pill{% if link.variant %} {{ link.variant }}{% endif %}"
+          href="{{ link.url }}"{% if link.new_tab %} rel="noopener"
+          target="_blank"{% endif %}>{{ link.label }}</a>
+      {% endfor %}      </div>
+  </div>
+</nav>

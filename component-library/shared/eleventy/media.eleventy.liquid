@@ -1,0 +1,13 @@
+{% if media.kind == "video_embed" and media.embed_url %}<div class="block-embed">
+    <iframe
+      src="{{ media.embed_url | embedUrl }}"
+      title="{{ media.alt }}"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>{% elsif media.kind == "video_file" and media.video %}<video
+    class="block-video"
+    src="{{ media.video }}"{% if media.poster %} poster="{{ media.poster }}"{% endif %} controls
+    playsinline
+    preload="metadata"></video>{% elsif media.image %}<img class="block-image" src="{{ media.image }}" alt="{{ media.alt }}" loading="lazy"/>{% endif %}

@@ -1,0 +1,92 @@
+name: Availability check
+
+# The ONLY monitoring layer for this site. Checks per-IP reachability,
+# TLS expiry per IP, DNS drift, ACME TXT presence, HTTP->HTTPS redirect
+# and build freshness. On failure it opens (or comments on) a GitHub
+# Issue, which emails everyone watching the repo.
+#
+# ALERTING DEPENDS ON A GITHUB SETTING, NOT ON THIS FILE. The issue is
+# created by github-actions[bot] and does not @mention anyone, so the
+# repo's Watch setting must be "All Activity" — "Participating and
+# @mentions" will NOT email you. Verify before relying on this.
+#
+# NOTE ON TIMING: GitHub delays scheduled runs under load, sometimes by
+# 10-30 minutes, and skips slots entirely; it also disables schedules
+# after 60 days of repository inactivity. Treat "every 2 hours" as
+# "several times a day, best effort". Since this is now the only layer,
+# an outage may go unnoticed for a few hours.
+#
+# BUILD FAILURES are caught by check 6 (build freshness), which reads
+# build-info.json from the live site. Set the ONDC_MAX_BUILD_AGE_HOURS
+# repo variable to a little more than your longest expected gap between
+# publishes — the 168h default is too loose to catch a broken pipeline.
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'      # every 2 hrs (best effort)
+  workflow_dispatch:             # and on demand, from the Actions tab
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run availability checks
+        id: checks
+        env:
+          ONDC_DOMAIN: ${{ vars.ONDC_DOMAIN || 'ondc.org' }}
+          # Set this repo variable once DNS is cut over, to the two A
+          # records CloudCannon issued. Leaving it empty skips the
+          # drift check and probes whatever is currently live.
+          ONDC_EXPECTED_IPS: ${{ vars.ONDC_EXPECTED_IPS }}
+          ONDC_KEYWORD: ${{ vars.ONDC_KEYWORD || 'Network Participants' }}
+          ONDC_CERT_WARN_DAYS: ${{ vars.ONDC_CERT_WARN_DAYS || '21' }}
+          ONDC_MAX_BUILD_AGE_HOURS: ${{ vars.ONDC_MAX_BUILD_AGE_HOURS || '168' }}
+        run: |
+          chmod +x scripts/monitoring/check-availability.sh
+          set -o pipefail
+          ./scripts/monitoring/check-availability.sh 2>&1 | tee /tmp/report.txt
+
+      - name: Open or update alert issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Strip ANSI colour so the issue body is readable.
+          sed -e 's/\x1b\[[0-9;]*m//g' /tmp/report.txt > /tmp/clean.txt
+          BODY="Availability check failed on $(date -u '+%Y-%m-%d %H:%M UTC').
+
+          \`\`\`
+          $(cat /tmp/clean.txt)
+          \`\`\`
+
+          [View run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+
+          EXISTING=$(gh issue list --label availability --state open \
+                      --json number --jq '.[0].number' 2>/dev/null || true)
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh label create availability --color B60205 \
+              --description "Automated availability alerts" 2>/dev/null || true
+            gh issue create --title "🔴 ondc.org availability check failed" \
+              --label availability --body "$BODY"
+          fi
+
+      - name: Close alert issue on recovery
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          EXISTING=$(gh issue list --label availability --state open \
+                      --json number --jq '.[0].number' 2>/dev/null || true)
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "✅ Recovered — all checks passed at $(date -u '+%Y-%m-%d %H:%M UTC')."
+            gh issue close "$EXISTING"
+          fi

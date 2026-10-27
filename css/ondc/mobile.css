@@ -1,0 +1,821 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * MOBILE LAYER — phones and small tablets only.
+ *
+ * THE ONE RULE: every selector in this file must sit inside a
+ * `@media (max-width: …)` or `@media (hover: none)` block. Nothing here may
+ * match at desktop widths. The laptop rendering is signed off and must stay
+ * byte-identical, so this file adds a mobile layer rather than editing the
+ * desktop stylesheets it sits on top of.
+ *
+ * Loaded LAST on all 46 pages. That ordering is deliberate and load-bearing:
+ *  - it beats fx.css's ≤900px nav rail (which is what we replace with a drawer)
+ *  - it beats legal.css's ≤760px `.nav-links{display:none}`, which otherwise
+ *    leaves contact-us.html with no navigation at all on a phone
+ *  - it beats about-us.html's 270-line inline copy of category-chrome.css
+ *
+ * Breakpoints are reused from the existing stylesheets, not invented:
+ *   900px — fx.css's own navbar breakpoint (drawer boundary)
+ *   700px — beckn.css's dominant collapse floor
+ *   480px — category-chrome.css / legal.css's small-phone floor
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+
+/* ═══ 1. GLOBAL ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  /* `clip`, not `hidden`: hidden would make these a scroll container and kill
+     every `position:sticky` descendant (the resources sidebar, the legal TOC,
+     the navbar itself). */
+  html, body { overflow-x: clip; }
+
+  /* fx.css only sets this at ≤640px, so anchor jumps between 641 and 900px
+     land underneath the fixed header. */
+  html { scroll-padding-top: 110px; }
+}
+
+
+/* ═══ 2. NAVIGATION — hamburger drawer ═══════════════════════════════════
+ * Below 900px the nine nav links stop being a horizontal scroll rail (which
+ * overflowed the 56px glass pill it lived in) and become a drawer hanging
+ * below the pill. The drawer IS the existing `.nav-links` element restyled —
+ * no duplicate menu markup, so the React navbar and the 45 static copies are
+ * driven by exactly the same rules. The toggle button is injected by fx.js and
+ * only ever exists below 900px.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .nav-burger {
+    /* The pill is space-between: without the auto margin a third child would
+       float to the centre, stranding the CTA between logo and burger. */
+    order: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    padding: 0;
+    border: 1px solid rgba(27, 27, 27, .10);
+    border-radius: 999px;
+    background: rgba(27, 27, 27, .04);
+    /* The pill is paper, not navy — the bars take the nav links' own ink. */
+    color: var(--bkc-muted);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .navbar.nav-open .nav-burger { color: var(--bkc-ink); }
+
+  /* Three bars from one element: the middle is the span, the outer two are its
+     pseudo-elements. Collapses to an X when open. */
+  .nav-burger span,
+  .nav-burger span::before,
+  .nav-burger span::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    transition: transform .22s cubic-bezier(.16, 1, .3, 1), opacity .16s linear;
+  }
+
+  .nav-burger span { position: relative; }
+  .nav-burger span::before,
+  .nav-burger span::after { content: ""; position: absolute; left: 0; }
+  .nav-burger span::before { top: -6px; }
+  .nav-burger span::after { top: 6px; }
+
+  .navbar.nav-open .nav-burger span { transform: rotate(45deg); }
+  .navbar.nav-open .nav-burger span::before { transform: translateY(6px) rotate(-90deg); }
+  .navbar.nav-open .nav-burger span::after { opacity: 0; }
+
+  /* The pill goes back to one row: logo · burger · CTA. */
+  .navbar .container { flex-wrap: nowrap; padding-top: 0; }
+
+  /* ---- the drawer ---- */
+  /* `.navbar .container` has backdrop-filter, which makes it the containing
+     block for absolutely positioned descendants — so this anchors to the pill,
+     not the viewport, and needs no JS placement. */
+  .navbar .nav-links {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0;
+    order: 0;
+    max-height: calc(100vh - 96px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 8px;
+    /* Same paper panel the dropdown already hangs off the pill (fx.css:800). */
+    border: 1px solid var(--bkc-line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .97);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    box-shadow: 0 18px 44px -18px rgba(0, 0, 0, .22);
+    overscroll-behavior: contain;
+  }
+
+  .navbar.nav-open .nav-links { display: flex; }
+
+  .navbar .nav-links > * + * { border-top: 1px solid var(--bkc-line); }
+
+  .navbar .nav-links .nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 12px;
+    border-radius: 12px;
+    font-size: 15px;
+    white-space: normal;
+  }
+
+  /* The sliding underline reads as a stray rule in a vertical list; the drawer
+     marks the current page with colour alone (fx.css already gives .active #fff). */
+  .navbar .nav-links .nav-link::after { display: none; }
+
+  /* The "ONDC Participants" dropdown expands inline inside the drawer instead
+     of being a floating fixed panel. fx.js skips its placement pass here. */
+  .navbar .nav-links .nav-drop { display: block; width: 100%; }
+
+  .navbar .nav-links .nav-drop-menu {
+    position: static;
+    min-width: 0;
+    max-width: none;
+    margin: 0 0 6px;
+    padding: 0 0 0 12px;
+    border: 0;
+    border-left: 1px solid var(--bkc-line);
+    border-radius: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  .navbar .nav-links .nav-drop-menu a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    white-space: normal;
+  }
+}
+
+
+/* ═══ 3. HOMEPAGE ════════════════════════════════════════════════════════
+ * The scroll-scrubbed story hero (WebGL India formation, 420vh of scrub, four
+ * absolutely-stacked beats in a 100vh overflow:hidden stage) is a desktop
+ * set-piece. On phones the homepage opens on the sector carousel instead.
+ * Hero.jsx stops rendering it below 900px; the rule below is the CSS backstop.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  body.home .ondc-hero { display: none; }
+
+  /* #site-header is position:fixed (the hero used to own the space beneath it),
+     so without the hero the first section would start underneath the navbar. */
+  body.home .tagline-strip { padding-top: calc(84px + clamp(34px, 5vw, 58px)); }
+}
+
+@media (max-width: 700px) {
+  /* Vertically centred, the 44px arrows sit on top of the stacked slide copy. */
+  body.home .hero-arrow { top: auto; bottom: 16px; transform: none; }
+  body.home .hero-arrow:hover { transform: none; }
+}
+
+/* styles.css:974 turns .slide .container into a column here — headline on top,
+   stats card below. A horizontal light-left veil would then put the card over
+   the light end and the headline over nothing, so the ramp rotates to vertical
+   and the navy seat moves to the bottom edge. */
+@media (max-width: 900px) {
+  body.home .slide::after {
+    background:
+      linear-gradient(178deg, rgba(247, 248, 248, .96) 0%, rgba(247, 248, 248, .90) 30%,
+        rgba(247, 248, 248, .40) 58%, rgba(247, 248, 248, 0) 76%),
+      linear-gradient(180deg, rgba(10, 20, 48, 0) 52%, rgba(10, 20, 48, .30) 100%);
+  }
+  body.home .slide-photo { object-position: center 35%; }
+}
+
+/* The "By the numbers" card is the first thing a phone visitor sees — the
+   scroll-scrubbed hero above is hidden below 900px, so the carousel opens the
+   page. fx.css:1104 lays its three figures out as `repeat(3, 1fr)` with no
+   floor beneath it, and styles.css:1004 only widens the CARD at 900px, never
+   the row inside it. Measured at 390px the three tracks came out 68/75/58px,
+   so every 12px label broke one word per line (7 lines for 8 words) — on all
+   33 figures, across all 11 slides.
+
+   Not a 2-up step first, and not a numeral-in-a-left-gutter layout either.
+   Both were measured against the worst label on the site — "Sellers across
+   electronics, beauty, grocery, health & wellness" — and both starve it: the
+   card is only 276px wide (24px padding, 227px inner), so a 96px numeral
+   gutter leaves the label 119px and FOUR lines, in a 281px row. Dropping
+   straight to one column gives the label the full 227px: two lines, 260px.
+   Fewer rules, shorter row, better read.
+
+   That also means the figure keeps its own stacked num-over-label shape, which
+   is simply what it does everywhere else — so this is one declaration, not a
+   re-layout. Slides carry two or three figures (HeroCarousel.jsx); this
+   collapses either count to one column, so there is nothing to special-case.
+
+   560px is beckn.css:3623's floor, reused rather than invented; the 3-up still
+   reads down to about 500px of card width. */
+@media (max-width: 560px) {
+  body.home .stats-figures { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 480px) {
+  body.home .hero,
+  body.home .slide { min-height: 560px; }
+}
+
+
+/* ═══ 4. CATEGORY PAGES (beckn.css) ══════════════════════════════════════
+ * beckn.css collapses well down to 700px and then stops. These are the
+ * sub-700px floors it never got.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  /* THE WORST DEFECT ON THE SITE, and it never showed up in a stylesheet read
+     because the rule that breaks it looks like a desktop rule.
+
+     beckn.css:2347 already collapses this hero to one column at this exact
+     breakpoint. It never applied. beckn.css:2391 declares, unconditionally and
+     44 lines later:
+
+         .bk-role-page .bk-role-hero { grid-template-columns:
+             minmax(0, 1.15fr) minmax(250px, .85fr); }
+
+     That is (0,2,0) against the reset's (0,1,0), and a media query contributes
+     nothing to specificity — so the two-column grid won at every width on all
+     seven pages whose <main> carries `bk-role-page`: buyer-network-
+     participants, ecosystem-participants, gateway, network-participants, rfp,
+     seller-network-participants, technology-service-provider.
+
+     Measured at 390px the tracks came out `48px 250px` — the 250px floor plus
+     a 42px gap plus padding left 48px for the copy. At 320px the content track
+     measured ZERO. The hero paragraph wrapped 30 words onto 30 lines, and the
+     .bk-btn pills (beckn.css:186, border-radius 999px, no width) shrank to
+     min-content and wrapped their labels, so they rendered as circles.
+
+     Matching the (0,2,0) is the whole fix; mobile.css loads last, so equal
+     specificity is enough. minmax(0,1fr) rather than 1fr for the reason this
+     file already records for .res-shell and .bk-legal-body — `1fr` means
+     `minmax(auto,1fr)`, and that `auto` floors the track at min-content.
+
+     Nothing else here needs a companion rule: `min-height: 0` is already in
+     beckn.css:2347's block and uncontested, .bk-role-tally's 340px cap is not
+     binding inside a 280-350px content box, and .bk-role-hero::before is
+     absolutely positioned with pointer-events:none. The buttons need no width
+     floor either — they collapsed BECAUSE the flex line was 48px, and a floor
+     would risk fresh overflow on the long labels. */
+  .bk-role-page .bk-role-hero { grid-template-columns: minmax(0, 1fr); }
+
+  /* The marquee rails are decorative and expensive: beckn.js doubles their DOM
+     to make the loop seamless, and skips that below 700px (its own comment
+     documents the single-copy state as supported). The animation has to stop
+     with it, or the row visibly runs out of cards.
+
+     Keyed to the class beckn.js sets, not to the width: a phone rotated into
+     landscape leaves a 700px query but cannot re-double the DOM, which would
+     restart the loop over a single copy. The class only ever exists below
+     700px, so this can never reach a desktop. */
+  .bk-loop-static { animation: none !important; transform: none !important; }
+}
+
+@media (max-width: 700px) {
+  /* beckn.css:2632 pairs a fluid column with a `minmax(160px, .42fr)` one and
+     never collapses it. Measured `140px 160px` at 390px on gateway and
+     technology-service-provider — headings taking three lines for three words.
+     The same shape as the .bk-role-hero defect above, one severity down. */
+  .bk-outcome-row { grid-template-columns: minmax(0, 1fr); }
+
+  /* Escalation spine: the 14% editorial indent on alternating steps and the
+     oversized ghost numerals (top:-46px) both come from beckn.css with no
+     narrow-width reset — steps drifted right and numerals overlapped the
+     previous step's text on phones. */
+  .bk-step-body.bk-indent { margin-left: 0; }
+  .bk-step-ghost { font-size: clamp(56px, 16vw, 90px); top: -20px; }
+}
+
+@media (max-width: 480px) {
+  /* Final step of the gutter token beckn.css steps to 16px at 700px. Every
+     panel narrows together — the trio this used to name did not cover
+     .bk-directory or .bk-escalate-panel, which is why the complaints page
+     showed mismatched section edges on a phone. */
+  .bk { --bk-gutter: 12px; }
+
+  .bk-hero { padding-left: 16px; padding-right: 16px; }
+  .bk-hero-card { width: 170px; min-height: 260px; }
+
+  /* One column here turned every buyer app into a full-width tile carrying a
+     40px logo — five screens of scrolling for a 19-app group and a wall of
+     whitespace. beckn.css:3623's own 2-up floor reads correctly at 320px. */
+}
+
+
+/* ═══ 5. PARTICIPANT DIRECTORY TABLES ════════════════════════════════════
+ * The two participant directories used to stay a horizontal scroller here: a
+ * 7-column table with a pinned name column, 880px wide inside a 322px screen.
+ * Panning sideways to read one organisation is not reading a list. With the
+ * ledger down to five columns, each row becomes a record instead — name and
+ * role keys, then labelled lines for the rest — and nothing moves sideways.
+ *
+ * payment-assurance-program-approved.html still borrows .bk-np-table for its
+ * two registers, and those are genuinely numeric S.No. tables, so the pinned
+ * scroller stays scoped to them.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/* The 900px block that used to live here re-stacked the hero, which paired the
+   live count with the actions on one row above that width. The count is gone
+   from all three directories and beckn.css stacks the hero at every width, so
+   there is nothing left for this layer to undo. */
+
+@media (max-width: 1000px) {
+  /* beckn.css turns the sidebar into a wrapping row here and gives each group a
+     240px floor; below ~380px of usable width that alone overflows. Stacking
+     them also has to cancel the grow, or each group stretches to share the
+     column's height and leaves a gap under the short list. */
+  .bk-np-filters { flex-direction: column; }
+  .bk-np-filter-group { flex: none; min-width: 0; width: 100%; }
+}
+
+@media (max-width: 700px) {
+  .bk-np-table-wrap { -webkit-overflow-scrolling: touch; }
+  .bk-np-table { font-size: 13px; }
+
+  .bk-np-table th,
+  .bk-np-table td { padding: 12px 10px; }
+
+  /* ── the registers keep the scroller ─────────────────────────────────── */
+  /* Brand/participant name is column 2 there. A pinned S.No. tells you nothing
+     mid-scroll, so column 1 steps aside and the name keeps the pin. */
+  .bk-pap-register .bk-np-table th:nth-child(1),
+  .bk-pap-register .bk-np-table td:nth-child(1) { display: none; }
+
+  .bk-pap-register .bk-np-table th:nth-child(2),
+  .bk-pap-register .bk-np-table td:nth-child(2) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: #fff;
+    box-shadow: 1px 0 0 var(--bk-line);
+  }
+
+  /* The pinned cell has its own background, so it needs the row tint too or it
+     stays white while the rest of the row highlights. */
+  .bk-pap-register .bk-np-table tbody tr:hover td:nth-child(2) { background: var(--bk-canvas); }
+
+  /* ── the directories become records ──────────────────────────────────── */
+  .bk-np-page .bk-np-table-wrap { overflow-x: visible; }
+
+  .bk-np-page .bk-np-table,
+  .bk-np-page .bk-np-table tbody,
+  .bk-np-page .bk-np-table tr,
+  .bk-np-page .bk-np-table td { display: block; }
+
+  .bk-np-page .bk-np-table colgroup { display: none; }
+
+  /* The header still names the columns for a screen reader; it just has
+     nothing to sit above once the row is a record. */
+  .bk-np-page .bk-np-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .bk-np-page .bk-np-table tbody tr {
+    padding: 16px 2px;
+    border-bottom: 1px solid var(--bk-line);
+  }
+
+  .bk-np-page .bk-np-table td {
+    padding: 0;
+    border: 0;
+  }
+
+  .bk-np-page .bk-np-table td + td { margin-top: 8px; }
+
+  /* Participant and Role need no label: a name is a name, and the role keys
+     sit directly under it where the filter above has just explained them. */
+  .bk-np-page .bk-np-table td[data-label]:not([data-label="Participant"]):not([data-label="Role"])::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 3px;
+    color: var(--bk-quiet, #8a8f95);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .bk-np-page .bk-np-table td[data-label="Role"] { margin-top: 6px; }
+  .bk-np-page .bk-np-whoin img { height: 24px; max-width: 64px; }
+  .bk-np-page .bk-np-name { font-size: 15px; }
+  .bk-np-page .bk-np-table .np-empty { padding: 40px 0; }
+
+  /* A record is already one column, so a category list has room for all of it
+     and the +N would be a click for nothing. */
+  .bk-np-page .bk-np-cat-rest[hidden] { display: inline; }
+  .bk-np-page .bk-np-more { display: none; }
+
+  /* Search and the list switch share a row on a desktop column; at 390px the
+     search would be left with about 120px, so they stack again. */
+  .bk-np-page .bk-np-results { display: block; }
+  .bk-np-listdrop { margin-top: 14px; }
+
+  .bk-np-filterbar { gap: 10px; }
+}
+
+
+/* ═══ 6. LEGAL PAGES (.bk-legal-*) ═══════════════════════════════════════
+ * These collapse to one column at 900px and then have nothing below it.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 700px) {
+  .bk-legal-body { padding-left: 20px; padding-right: 20px; }
+  .bk-clause { padding-top: 32px; padding-bottom: 32px; }
+  .bk-clause-num { font-size: 56px; }
+}
+
+
+/* ═══ 7. TOUCH TARGETS ═══════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .bk-np-pagenums button { min-width: 44px; height: 44px; }
+  .bk-np-rpp select { min-height: 44px; }
+
+  /* 15px checkboxes in the filter tree, and a chevron button that is only as
+     tall as its label. Both rows get a real tap height. */
+  .bk-np-chk,
+  .bk-np-cat-row { min-height: 44px; padding-block: 8px; }
+  .bk-np-chk input,
+  .bk-np-cat-row input { width: 20px; height: 20px; }
+
+  /* Role toggles and the collapsed-category disclosure are new controls in
+     the same column; they take the same floor. The role key inside a toggle
+     is the only place an abbr title carries meaning, and a tap never shows
+     one — which is why the toggle prints the words beside the key. */
+  .bk-np-role { min-height: 44px; }
+
+  /* `padding: 7px 3px` gave these roughly a 30px tap height. */
+  body.home .sector-rail .sector-pill { min-height: 44px; padding-block: 12px; }
+}
+
+
+/* ═══ 8. TOUCH / NO-HOVER PARITY ═════════════════════════════════════════
+ * Several of the site's signature moves live entirely in :hover, and
+ * :focus-visible does not fire on a tap — so on a touch device the information
+ * simply never appears. These give the resting state the hover payload.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (hover: none) {
+  /* The news thumbnails develop from grayscale to colour on hover. On a phone
+     that means a wall of grey photographs. */
+  body.home .news-thumb img { filter: grayscale(0) contrast(1) sepia(0); }
+  body.home .news-thumb::before { opacity: 0; }
+
+  /* The metric cell's fill wash is its entire visual response. */
+  body.home .metric .metric-fill { transform: scaleY(1); }
+
+  /* Ten of the eleven sector pills carry no chrome at all — the underline on
+     hover is the only affordance that they are tappable. */
+  body.home .sector-rail .sector-pill::after { transform: scaleX(1); opacity: .3; }
+  body.home .sector-rail .sector-pill.active::after { opacity: 1; }
+
+  /* Decorative hover shifts that a tap would leave stuck mid-transform. */
+  .bk-seat-row:hover > * { transform: none; }
+  .bk-doc-index a:hover { transform: none; }
+}
+
+
+/* ═══ 9. OVERFLOW FLOORS ═════════════════════════════════════════════════
+ * Found by measuring all 45 routes at 320px and 360px in a width-pinned
+ * viewport, not by reading the stylesheets. Each rule closes a case where
+ * section 1's `overflow-x: clip` sheared content off instead of it reflowing —
+ * the clip keeps the page from scrolling sideways, but silently eats whatever
+ * overhangs, so these read as "the sentence just stops" rather than as a
+ * broken layout.
+ *
+ * Widest query here is 1000px, so the signed-off desktop is untouched.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  /* The pill is logo · burger · CTA. Both category-chrome.css:184 and
+     legal.css:313 pin `.nav-right` at `flex-shrink: 0`, so a long CTA label
+     ("Join as transport authority" renders 178px wide) could not give ground
+     and pushed the button past the right edge — 10 of the 45 pages, losing up
+     to 52px at 320px. Letting the group shrink and the label wrap holds the
+     pill at its existing 78px height, so nothing below it moves. */
+  .navbar .nav-right { flex-shrink: 1; min-width: 0; }
+
+  .navbar .nav-cta {
+    white-space: normal;
+    height: auto;
+    min-height: 40px;
+    padding-block: 6px;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  /* fx.css:469 already hides this below 900px. contact-us.html is the single
+     page that links legal.css AFTER fx.css, and legal.css:316's
+     `.nav-back { display: inline-flex }` carries equal specificity — so source
+     order won and the button survived, eating 92px of a 320px bar. A media
+     query adds no specificity, which is why the ≤900px rule lost. mobile.css
+     loads last on all 46 pages, so this settles it for every ordering. */
+  .navbar .nav-back { display: none; }
+
+  /* beckn.css:1285 sets `white-space: nowrap` here, fixing the line's
+     min-content at ~442px — wider than any phone. This one clipped at EVERY
+     phone width, not just the narrow end (52px lost at 390, 122px at 320).
+     Above 900px the sentence fits on one row, so the nowrap stays desktop-side. */
+  .bk-inst-count { white-space: normal; }
+}
+
+@media (max-width: 1000px) {
+  /* resources.css:703 collapses the shell to `1fr` at this width. `1fr` means
+     `minmax(auto, 1fr)`, and that `auto` floors the track at the widest child's
+     min-content — measured at 359px inside a 270px shell, so the sidebar and
+     every paragraph on all 18 resources pages overhung the viewport while the
+     shell itself looked fine. Pinning the floor to 0 lets the track match its
+     container and the content wrap. */
+  .res-shell { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* ═══ 10. TOUCH TARGETS, SECOND PASS ═════════════════════════════════════
+ * Section 7 covered the participant directory and the sector rail. These are
+ * the ones the full-site sweep turned up afterwards, all in shared chrome —
+ * so each is a defect on all 45 pages at once.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  /* fx.css:899 wraps a bare 20x20 SVG with no padding — at 20px square this was
+     the smallest tap target on the site. Growing the box rather than the mark
+     keeps the icon itself at 20px; `gap: 0` on the row absorbs the extra width
+     so five marks still measure 220px and cannot re-introduce an overflow. */
+  html body footer .footer-social-link {
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  html body footer .footer-social { gap: 0; }
+
+  /* fx.css:433's `padding: 6px 0` gave these a 32px row. */
+  html body footer .footer-link { padding-block: 12px; }
+
+  /* fx.css:594's `padding: 7px 2px` gave these a 29px row. The row is already a
+     horizontal scroller (fx.css:575), so a taller chip costs no width. */
+  .more-sectors .pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* The resources sidebar, on all 18 resources pages: resources.css:88 gives
+     the document links `padding: 7px 10px` on 13px/1.45 text (33px rows), and
+     resources.css:118 gives the on-page table of contents `padding: 5px 10px`
+     on 12.5px (28px rows) — 19 to 31 undersized targets per page.
+
+     Both halves must be named. `.res-nav a` alone is (0,1,1) and loses to
+     resources.css:119's (0,2,1), which would leave the TOC at 5px — each half
+     of a grouped selector carries its own specificity, so listing both settles
+     it in one rule. 14px rather than the footer's 12px because 13x1.45 rounds
+     to a 19px line box: 12px lands on 43px, one short of the target. */
+  .res-nav .res-nav-toc a,
+  .res-nav a { padding-block: 14px; }
+
+  /* The legal pages' document index (privacy-policy, cookie-policy,
+     terms-and-conditions), 12 links each. beckn.css:3309 gives them
+     `padding: 4px 10px` on 13.5px/1.4 text — 27px rows.
+
+     This takes the .more-sectors .pill treatment above rather than the
+     .footer-link padding treatment: beckn.css:3308 already makes the row
+     `flex-wrap: wrap`, so it is the same shape — a row of chips where a taller
+     chip costs no width. `align-items: center` keeps the label centred so the
+     active state's 2px border-bottom still sits under the chip, not the text. */
+  .bk-doc-index-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Same failure as .res-shell above, different stylesheet: beckn.css:3317
+     collapses the legal body to `1fr`, and that `auto` min floor let the clause
+     column and the document index overhang by 16px at 320px on privacy-policy,
+     cookie-policy and terms-and-conditions. */
+  .bk-legal-body { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* ═══ 11. CARD COLLECTIONS BECOME RAILS ══════════════════════════════════
+ * The site's mobile strategy so far has been "stack it vertically". That is
+ * right for prose and wrong for a set of peer cards: nine building blocks and
+ * three seller posters each became eight-plus screens of scrolling with no way
+ * to see that a set existed at all.
+ *
+ * Both sections below become horizontal snap rails instead — the pattern the
+ * newsroom band (.news-rail) already uses on this same page, so this is the
+ * existing idiom applied consistently, not a new one. Card widths are set so
+ * the NEXT card visibly peeks past the container's right edge; that peek is
+ * the entire affordance, so it must never be tuned away.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---- 11a. Building Blocks (nine cards) ---- */
+/* 820px, not 900px: that is where fx.css:1494 stops running the scrubbed deck
+ * and DPISection.jsx flips `flat`. Both must agree or the rail would inherit a
+ * mid-scrub translateX. */
+@media (max-width: 820px) {
+  body.home .dpi-deck {
+    flex-direction: row;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Cards sit level at their own heights rather than all stretching to the
+       tallest — an expanded card must not inflate its eight neighbours. */
+    align-items: start;
+  }
+
+  body.home .dpi-deck::-webkit-scrollbar { display: none; }
+
+  body.home .dpi-card {
+    flex: 0 0 min(320px, 78vw);
+    scroll-snap-align: start;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Collapsed: eyebrow · name · tagline. Enough to scan nine blocks in two
+     swipes; the photo and the paragraph are what made this eight screens. */
+  body.home .dpi-card .dpi-media,
+  body.home .dpi-card .dpi-desc { display: none; }
+
+  body.home .dpi-card.is-open .dpi-desc { display: block; }
+
+  /* `order: 0` beats fx.css:1568, which floats the media above the copy on
+     even cards. Opening must never push the name the user just tapped down
+     the screen — the photo arrives underneath it. */
+  body.home .dpi-card.is-open .dpi-media {
+    display: block;
+    order: 0;
+    min-height: 180px;
+  }
+
+  /* The affordance. Ten of the eleven collapsed cards carry no other chrome
+     saying they open, and :hover cannot supply it on a phone. */
+  body.home .dpi-card .dpi-card-body { padding-right: 46px; }
+
+  body.home .dpi-card .dpi-card-body::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 18px;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--bkc-line);
+    border-radius: 999px;
+    /* Two 9px bars from one box: the horizontal is the background, the
+       vertical is the same gradient turned — no extra element, and the
+       vertical is what disappears when the card opens. */
+    background:
+      linear-gradient(currentColor, currentColor) center / 9px 1px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 1px 9px no-repeat;
+    opacity: .5;
+    transition: opacity .18s linear, background-size .18s linear;
+  }
+
+  body.home .dpi-card.is-open .dpi-card-body::after {
+    background-size: 9px 1px, 0 9px;
+    opacity: .85;
+  }
+
+  body.home .dpi-card:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+  /* The ghost numeral is sized off the desktop card; at 78vw it swamped a
+     collapsed card whose whole height is ~140px. */
+  body.home .dpi-card-ghost { font-size: 64px; right: 12px; bottom: -12px; }
+}
+
+/* ---- 11b. The Network in Action (three seller posters) ---- */
+/* The posters are 4:5 creatives, so one per screen stacked = three screens for
+ * three quotes. Same rail; the section keeps its dark field and its bloom. */
+@media (max-width: 900px) {
+  body.home .net-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    /* styles.css:788 centres the stacked column in a 420px box. A rail must
+       start at the container's left edge or the first card is already inset. */
+    max-width: none;
+    margin: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* The cards lift 6px on hover/active and the posters carry a 40px drop
+       shadow; without the padding both are clipped by the scroll box. */
+    padding-bottom: 10px;
+  }
+
+  body.home .net-grid::-webkit-scrollbar { display: none; }
+
+  body.home .net-card {
+    flex: 0 0 min(300px, 76vw);
+    scroll-snap-align: start;
+  }
+}
+
+
+/* ---- 11c. Sector rails (.bk-rail-cols, 11 pages) ---- */
+/* beckn.css:429 makes this a 640px window onto two vertically scrolling
+ * marquee columns. At 700px beckn.css:891 narrows it to ONE column and
+ * beckn.css:892 hides .bk-rail-dn, but beckn.js does not double the DOM below
+ * 700px — so the marquee has nothing to loop and the window simply clips most
+ * of the set.
+ *
+ * The rail turns horizontal rather than becoming a vertical grid, because ten
+ * of the eleven pages carry an inline `style="height:270-315px"` on each
+ * .bk-card (credit, d2c-retail, digidukaan, food-and-beverages,
+ * hyperlocal-logistics, impact-retail, investments, public-transport,
+ * shared-mobility, tourism). An inline attribute outranks every stylesheet, so
+ * a vertical grid can only ever produce 160x300 slabs. A horizontal rail WANTS
+ * a 300px card — the inline height stops being an obstacle and becomes the
+ * design, and nothing here needs `!important`.
+ *
+ * 700px, not 900px: beckn.js:35 gates its DOM doubling on `min-width: 701px`
+ * and beckn.css:892 hides the second track at the same edge. All three have to
+ * agree or the rail gets a half-looped copy it cannot complete.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 700px) {
+  .bk-rail-cols {
+    display: flex;
+    height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* .bk-card lifts 3px on press and carries a 38px shadow; without this the
+       scroll box clips both. Same reason as 11b. */
+    padding-bottom: 10px;
+  }
+
+  .bk-rail-cols::-webkit-scrollbar { display: none; }
+
+  /* A vertical top-and-bottom fade sold the marquee's endlessness. On a
+     horizontal rail it greys the top and bottom edge of every card instead of
+     the ends of the row — and being absolutely positioned inside a scroll
+     container, it would scroll away from the edges it exists to feather. */
+  .bk-rail-cols::after { display: none; }
+
+  /* Both tracks, not just .bk-rail-up: beckn.css:892 hides the second one to
+     buy back vertical height, which a horizontal rail never spends — leaving
+     it hidden shows half the set (5 of 10 cards on how-to-shop). `contents`
+     drops the cards straight into the flex line, so no markup moves.
+     The marquee animation is already handled: beckn.js:36 tags every
+     [data-bk-loop] with .bk-loop-static below 700px and section 4 kills the
+     animation off that class rather than off a width. */
+  .bk-rail-up,
+  .bk-rail-dn { display: contents; }
+
+  /* Scoped: .bk-card is a generic beckn class used at full size elsewhere.
+     220px inside a ~350px content box leaves half the next card showing, and
+     that peek is the whole affordance — see 11a/11b. */
+  .bk-rail-cols .bk-card {
+    flex: 0 0 min(220px, 62vw);
+    scroll-snap-align: start;
+    margin-bottom: 0;
+  }
+}
+
+/* ---- 11d. Find Your Place doors ---- */
+@media (max-width: 700px) {
+  /* Already a horizontal rail, but at 84vw the next card cleared the viewport
+     by 4vw — less than the container's own 20px gutter, so nothing peeked and
+     the rail read as a single stacked card. 80vw puts about 28px of the next
+     card on screen at 390px. */
+  body.home .door-card { flex-basis: 80vw; }
+}

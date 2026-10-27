@@ -1,0 +1,220 @@
+spec:
+  structures: [sections]
+  label: Numbered lists
+  description: >-
+    A heading and an intro above a list of points. Five layouts: the panel
+    used on sector pages, the plainer "Our people" band on Careers, the
+    requirements list on the role pages, and the Gateway's relay and outcome
+    rows.
+  icon: format_list_numbered
+
+blueprint:
+  screen_label: ''
+  variant: ''
+  anchor_id: ''
+  eyebrow: ''
+  heading: A heading for this section
+  heading_accent: ''
+  heading_suffix: ''
+  heading_id: ''
+  list_style: ''
+  lead: ''
+  aria_label: ''
+  paragraphs: []
+  lead_link:
+    label: ''
+    url: ''
+    new_tab: false
+  groups:
+    - heading: First group
+      intro: ''
+      items:
+        - text: First point
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  variant:
+    type: select
+    label: Layout
+    comment: >-
+      "Panel" is the boxed two-column layout on the sector pages, where each
+      group gets its own sub-heading. "Our people" is the plainer full-width
+      band used on Careers: the group sub-headings are not shown and the points
+      are numbered straight through. "Requirements" is the role-page layout —
+      the intro sits above a grid of cards, and each point shows its own
+      heading.
+    options:
+      values:
+        - value: ''
+          label: Panel
+        - value: culture
+          label: Our people
+        - value: role
+          label: Requirements
+        - value: relay
+          label: Relay
+        - value: service
+          label: Service lanes
+        - value: outcomes
+          label: Outcome rows
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: >-
+      Lets menu links jump to this section. On Careers this is bk-mech, which
+      is also what switches on the word-by-word colour effect in the lead
+      paragraph — changing it there turns that effect off.
+  eyebrow:
+    type: text
+    label: Small label above the heading
+  heading:
+    type: text
+    label: Heading
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+    comment: Shown in the accent style at the end of the heading. Leave empty for a plain heading.
+  heading_id:
+    type: text
+    hidden: true
+  list_style:
+    type: select
+    label: How the points are shown
+    comment: >-
+      Only used by the "Requirements" layout. "Numbered cards" counts the
+      points and flows them in a grid — the Buyer page. "Node types" is a
+      two-up ledger where each point shows its own code instead of a number —
+      the Seller page's MSN and ISN.
+    options:
+      values:
+        - value: ''
+          label: Numbered cards
+        - value: nodes
+          label: Node types
+  lead:
+    type: textarea
+    label: Lead paragraph
+    comment: Not used by the "Requirements" layout, which uses the paragraphs below.
+  aria_label:
+    type: text
+    label: Name of the list, for screen readers
+    comment: Only used by the "Requirements" layout.
+  heading_suffix:
+    type: text
+    label: Plain tail of the heading
+    comment: >-
+      Comes after the highlighted part — the full stop in "The discovery
+      *relay*." Include the leading space if one is needed.
+  paragraphs:
+    type: array
+    label: Intro paragraphs
+    comment: >-
+      Used by the "Requirements", "Relay" and "Service lanes" layouts, which
+      need more than the one lead paragraph the others take.
+    options:
+      structures:
+        values:
+          - label: Paragraph
+            icon: notes
+            preview:
+              text:
+                - key: text
+              icon: notes
+            value:
+              text: ''
+            _inputs:
+              text:
+                type: textarea
+                label: Paragraph
+  lead_link:
+    type: object
+    label: Link under the intro
+    comment: >-
+      Only used by the "Requirements" layout — the underlined link below the
+      intro paragraphs. Leave the text empty for no link.
+    options:
+      preview:
+        text:
+          - key: label
+  groups:
+    type: array
+    label: Groups
+    comment: >-
+      Each group has a heading and its own list of points. Numbering is
+      automatic. The "Our people" layout hides the group headings and numbers
+      every point straight through, so one group is usually enough there.
+    options:
+      structures:
+        values:
+          - label: Group
+            picker_preview:
+              text: Group
+              subtext: Another group of numbered points
+              icon: format_list_numbered
+            preview:
+              text:
+                - key: heading
+                - 'Untitled group'
+              icon:
+                - format_list_numbered
+            value:
+              heading: ''
+              intro: ''
+              items:
+                - text: ''
+            _inputs:
+              heading:
+                type: text
+                label: Group heading
+                comment: Not shown by the "Our people" layout.
+              intro:
+                type: textarea
+                label: Line under the group heading
+                comment: Optional. Not shown by the "Our people" layout.
+              items:
+                type: array
+                label: Points
+                comment: Numbered automatically. Use + to add one and drag to reorder.
+                options:
+                  structures:
+                    values:
+                      - label: Point
+                        picker_preview:
+                          text: Point
+                          subtext: Another numbered point
+                          icon: looks_one
+                        preview:
+                          text:
+                            - key: point_title
+                            - key: text
+                            - 'Empty point'
+                          subtext:
+                            - key: text
+                          icon:
+                            - looks_one
+                        value:
+                          point_title: ''
+                          code: ''
+                          text: ''
+                        _inputs:
+                          code:
+                            type: text
+                            label: Code
+                            comment: >-
+                              Only shown by the "Node types" style — a short
+                              code such as MSN, standing where the number goes.
+                          point_title:
+                            type: text
+                            label: Point heading
+                            comment: >-
+                              Only shown by the "Requirements" layout. Leave
+                              empty on the other two.
+                          text:
+                            type: textarea
+                            label: Point

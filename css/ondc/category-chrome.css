@@ -1,0 +1,315 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Category page chrome — navbar, footer and the frame around them.
+ *
+ * Shared by every ONDC category page. This file owns ONLY what sits outside the
+ * Beckn canvas: design tokens, the reset, the container, the scroll progress
+ * bar, the navbar and the footer. The page body between them is styled by
+ * beckn.css and is never touched from here.
+ *
+ * Load order matters: link this BEFORE fx.css. fx.css layers the site finish on
+ * top — the floating pill navbar, the sector rail, the Space Grotesk @font-face
+ * declarations — and has to win.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+/* ── Tokens ──────────────────────────────────────────────────────────────── */
+:root {
+  --blue: #1769a7;
+  --cyan: #00AEEF;
+  --navy: #001D33;
+  --footer-bg: #033356;
+  --cta-dark: #044273;
+  --blue-tint: #E5F0FF;
+  --cream: #FFFFFF;
+  --cream-2: #F5F7FA;
+  --cream-3: #EEF2F7;
+  --border: #E5E7EB;
+  --border-cream: #E5E7EB;
+  --text-muted: #606161;
+  --text-body: #3B3B3B;
+  --ink: #1A1A2E;
+  --grad-btn: linear-gradient(rgba(23, 105, 167, .9) 0%, rgba(4, 66, 115, .9) 100%);
+  --shadow-md: 0 4px 6px -4px rgba(0, 0, 0, .1), 0 10px 15px -3px rgba(0, 0, 0, .1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, .14);
+  --radius: 10px;
+  --radius-lg: 16px;
+  --max-w: 1216px;
+  --px: clamp(20px, 4vw, 64px);
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1F1F1F;
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--px);
+}
+
+/* ── Scroll progress ─────────────────────────────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(23, 105, 167, .1);
+  z-index: 200;
+  pointer-events: none;
+}
+
+/* Scales on the X axis rather than animating `width`: this updates on every
+ * scroll event, so it must stay off the layout path. */
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+}
+
+/* ── Navbar ──────────────────────────────────────────────────────────────── */
+.navbar {
+  background: rgba(0, 29, 51, .94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  height: 76px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+}
+
+.navbar .container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.nav-logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+
+.footer-logo-img {
+  height: 42px;
+  width: auto;
+  display: block;
+  margin-bottom: 18px;
+  filter: brightness(0) invert(1);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .72);
+  white-space: nowrap;
+  transition: color .15s;
+}
+
+.nav-link:hover {
+  color: var(--cyan);
+}
+
+.nav-link.active {
+  color: var(--cyan);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .75);
+  transition: color .15s;
+}
+
+.nav-back:hover {
+  color: var(--cyan);
+}
+
+.nav-cta {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 8px;
+  background: var(--cyan);
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2), 0 4px 12px rgba(0, 174, 239, .28);
+  transition: filter .15s, transform .15s;
+}
+
+.nav-cta:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+
+footer {
+  background: var(--footer-bg);
+  color: #fff;
+  padding: 56px 0 0;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(4, 1fr);
+  gap: 32px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.footer-brand p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, .55);
+  line-height: 1.7;
+  max-width: 220px;
+  margin-top: 10px;
+}
+
+.footer-col-head {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .9);
+  margin-bottom: 16px;
+}
+
+.footer-link {
+  font-size: 13px;
+  color: var(--blue);
+  line-height: 2.2;
+  display: block;
+  transition: color .15s;
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: rgba(255, 255, 255, .4);
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom-link {
+  font-size: 12px;
+  color: rgba(255, 255, 255, .38);
+  transition: color .15s;
+}
+
+.footer-bottom-link:hover {
+  color: #fff;
+}
+
+/* ── Chrome responsive ───────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .footer-inner {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .nav-links {
+    display: none;
+  }
+
+  .footer-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+}
+

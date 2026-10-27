@@ -1,0 +1,59 @@
+<section class="bk-role-hero"{% if anchor_id %} id="{{ anchor_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Hero" }}"{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %}>
+  <div>
+    <h1{% if heading_id %} id="{{ heading_id }}"{% endif %} data-bk-intro>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h1>
+    {% if copy %}
+      <p class="bk-role-hero-copy" data-bk-intro>{{ copy }}</p>
+    {% endif %}
+    {% if buttons.size > 0 %}
+      <div class="bk-role-hero-actions" data-bk-intro>
+        {% for button in buttons %}          <a
+              class="bk-btn {% if button.style == "solid" %}bk-btn-solid{% else %}bk-btn-ghost{% endif %}"
+              href="{{ button.url }}"{% if button.new_tab %} target="_blank"
+              rel="noopener"{% endif %}>{{ button.label }}</a>
+          {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{%- comment -%}
+      The number is counted HERE, at build time, from the same
+      src/_data/network_participants.json the directory page lists — so an
+      editor who deletes a participant changes this figure too, and there is
+      no second place holding a hand-typed total that quietly goes stale.
+
+      One organisation can hold several roles and can appear in both the key
+      and the integrated list, so the count is of distinct NAMES, not of rows.
+      Liquid has no set, hence `uniq`.
+
+      ondc.org fetches the registry in the browser and ships "—" with a
+      "Loading registry" note, which is what its page still shows. Leave the
+      role empty to reproduce that.
+{%- endcomment -%}
+{%- assign tally_text = tally.placeholder | default: "—" -%}
+{%- if tally.count_role != blank -%}
+  {%- assign counted = "" | split: "" -%}
+  {%- for person in network_participants.key -%}
+    {%- if person.roles contains tally.count_role -%}{%- assign counted = counted | push: person.name -%}{%- endif -%}
+  {%- endfor -%}
+  {%- for person in network_participants.integrated -%}
+    {%- if person.roles contains tally.count_role -%}{%- assign counted = counted | push: person.name -%}{%- endif -%}
+  {%- endfor -%}
+  {%- assign tally_text = counted | uniq | size -%}
+{%- endif %}
+  {%- comment -%}
+    Two things can sit beside the heading, and a page has one or the other: a
+    counter, or a wordmark. The Gateway page has no number to show — what it
+    has is a word for what the role does, which is why `.bk-role-mark` is
+    aria-hidden: the sentence beside it already says the same thing.
+  {%- endcomment -%}
+  {% if mark.show %}
+    <div class="bk-role-mark" aria-hidden="true">{{ mark.word }}{% if mark.caption != blank %}<span>{{ mark.caption }}</span>{% endif %}</div>
+  {% endif %}
+  {% if tally.show %}
+    <div class="bk-role-tally"{% if tally.animate %} data-bk-intro{% endif %}{% if tally.aria_label %} aria-label="{{ tally.aria_label }}"{% endif %}>
+      <strong class="bk-role-tally-value"{% if tally.value_id %} id="{{ tally.value_id }}"{% endif %}>{{ tally_text }}</strong>
+      <span class="bk-role-tally-label">{{ tally.label }}</span>
+      {% if tally.source_note %}        <span class="bk-role-tally-source">{{ tally.source_note }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>

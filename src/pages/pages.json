@@ -1,0 +1,8 @@
+{
+  "layout": "base.liquid",
+  "permalink": "/{{ page.fileSlug }}.html",
+  "wrapper_tag": "div",
+  "wrapper_id": "root",
+  "default_styles": ["styles", "fx", "scale", "mobile"],
+  "default_scripts": ["/js/ondc/fx.js"]
+}

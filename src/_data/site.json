@@ -1,0 +1,302 @@
+{
+  "logo": "/images/ondc-logo.svg",
+  "logo_alt": "ONDC — Open Network for Digital Commerce",
+  "home_url": "/",
+  "nav": [
+    {
+      "label": "Home",
+      "url": "#site-top",
+      "new_tab": false
+    },
+    {
+      "label": "About",
+      "url": "/about-us.html",
+      "new_tab": false
+    },
+    {
+      "label": "Roles You Can Play",
+      "url": "#find-your-place",
+      "new_tab": false
+    },
+    {
+      "label": "How To Join",
+      "url": "https://portal.ondc.org/",
+      "new_tab": true
+    },
+    {
+      "label": "Resources",
+      "url": "/resources.html",
+      "new_tab": false
+    },
+    {
+      "label": "Complaints",
+      "url": "/complaint.html",
+      "new_tab": false
+    },
+    {
+      "label": "ONDC Participants",
+      "url": "",
+      "children": [
+        {
+          "label": "Network Participants",
+          "url": "/network-participants.html"
+        },
+        {
+          "label": "Ecosystem Participants",
+          "url": "/ecosystem-participants.html"
+        }
+      ]
+    },
+    {
+      "label": "RFPs/RFQs",
+      "url": "/rfp.html",
+      "new_tab": false
+    },
+    {
+      "label": "Contact",
+      "url": "/contact-us.html",
+      "new_tab": false
+    },
+    {
+      "label": "Careers",
+      "url": "/careers.html",
+      "new_tab": false
+    }
+  ],
+  "cta_label": "Sign Up",
+  "cta_url": "https://portal.ondc.org/",
+  "sectors": {
+    "label": "Explore other sectors",
+    "links": [
+      {
+        "label": "D2C Retail",
+        "url": "/d2c-retail.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "DigiDukaan",
+        "url": "/digidukaan.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Food & Beverages",
+        "url": "/food-and-beverages.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Amazing India",
+        "url": "/impact-retail.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Hyperlocal Logistics",
+        "url": "/hyperlocal-logistics.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Public Transport",
+        "url": "/public-transport.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Shared Mobility",
+        "url": "/shared-mobility.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Tourism",
+        "url": "/tourism.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Credit",
+        "url": "/credit.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Investments",
+        "url": "/investments.html",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Insurance",
+        "url": "/coming-soon.html#insurance",
+        "variant": "",
+        "new_tab": false
+      },
+      {
+        "label": "Life@ONDC",
+        "url": "/careers.html",
+        "variant": "pill-life",
+        "new_tab": false
+      }
+    ]
+  },
+  "footer": {
+    "logo": "/images/ondc-logo.svg",
+    "logo_alt": "ONDC — Open Network for Digital Commerce",
+    "blurb": "India's open network for commerce — not an app, not a platform. Infrastructure for everyone.",
+    "link_columns": [
+      {
+        "heading": "About ONDC",
+        "links": [
+          {
+            "label": "Overview",
+            "url": "/about-us.html",
+            "new_tab": false
+          },
+          {
+            "label": "Board Of Directors",
+            "url": "/about-us.html#board-of-directors",
+            "new_tab": false
+          },
+          {
+            "label": "Careers",
+            "url": "/careers.html",
+            "new_tab": false
+          },
+          {
+            "label": "Download the Strategy Paper",
+            "url": "https://ondc-static-web-bucket.s3.ap-south-1.amazonaws.com/res/daea2fs3n/image/upload/ondc-website/files/ONDCStrategyPaper_ucvfjm/1659889490.pdf",
+            "new_tab": true
+          },
+          {
+            "label": "Download the Public Consultation Paper",
+            "url": "https://ondc-static-web-bucket.s3.ap-south-1.amazonaws.com/res/daea2fs3n/image/upload/ondc-website/files/ONDC_Building_Trust_Consultation_Vf_utbodw/1664541553.pdf",
+            "new_tab": true
+          },
+          {
+            "label": "Annual Newsletter — FY25-26 in Focus",
+            "url": "https://ondc.org/public/assets/newsletters/ondc-fy25-26-in-focus.pdf",
+            "new_tab": true
+          },
+          {
+            "label": "Quarterly Newsletter — ONDC Pulse FY26-27 Q1",
+            "url": "https://ondc.org/public/assets/newsletters/ondc-pulse-2026-27-q1.pdf",
+            "new_tab": true
+          }
+        ]
+      },
+      {
+        "heading": "Roles you can play",
+        "links": [
+          {
+            "label": "Buyer Network Participant",
+            "url": "/buyer-network-participants.html",
+            "new_tab": false
+          },
+          {
+            "label": "Seller Network Participant",
+            "url": "/seller-network-participants.html",
+            "new_tab": false
+          },
+          {
+            "label": "Gateway",
+            "url": "/gateway.html",
+            "new_tab": false
+          },
+          {
+            "label": "Technology Service Provider",
+            "url": "/technology-service-provider.html",
+            "new_tab": false
+          }
+        ]
+      },
+      {
+        "heading": "Help & Support",
+        "links": [
+          {
+            "label": "Resources",
+            "url": "/resources.html",
+            "new_tab": false
+          },
+          {
+            "label": "Contact Us",
+            "url": "/contact-us.html",
+            "new_tab": false
+          },
+          {
+            "label": "Complaint",
+            "url": "/complaint.html",
+            "new_tab": false
+          },
+          {
+            "label": "Network Participants",
+            "url": "/network-participants.html",
+            "new_tab": false
+          },
+          {
+            "label": "Ecosystem Participants",
+            "url": "/ecosystem-participants.html",
+            "new_tab": false
+          },
+          {
+            "label": "Payment Assurance Program",
+            "url": "/payment-assurance-program.html",
+            "new_tab": false
+          },
+          {
+            "label": "RFPs/RFQs",
+            "url": "/rfp.html",
+            "new_tab": false
+          },
+          {
+            "label": "Privacy Policy",
+            "url": "/privacy-policy.html",
+            "new_tab": false
+          },
+          {
+            "label": "Cookie Policy",
+            "url": "/cookie-policy.html",
+            "new_tab": false
+          },
+          {
+            "label": "Terms and Conditions",
+            "url": "/terms-and-conditions.html",
+            "new_tab": false
+          }
+        ]
+      }
+    ],
+    "copyright": "© 2026 ONDC",
+    "social": [
+      {
+        "label": "ONDC on LinkedIn",
+        "url": "https://www.linkedin.com/company/open-network-for-digital-commerce",
+        "platform": "linkedin"
+      },
+      {
+        "label": "ONDC on Instagram",
+        "url": "https://www.instagram.com/ondc_official/",
+        "platform": "instagram"
+      },
+      {
+        "label": "ONDC on YouTube",
+        "url": "https://www.youtube.com/@ondc1300",
+        "platform": "youtube"
+      },
+      {
+        "label": "ONDC on Facebook",
+        "url": "https://www.facebook.com/profile.php?id=100076520217598",
+        "platform": "facebook"
+      },
+      {
+        "label": "ONDC on X",
+        "url": "https://x.com/ONDC_Official",
+        "platform": "x"
+      }
+    ],
+    "background_image": "/images/footer-image.webp"
+  },
+  "title": "ONDC"
+}

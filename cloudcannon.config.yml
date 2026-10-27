@@ -1,0 +1,1182 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# ONDC site — CloudCannon configuration
+#
+# The site is built with Eleventy. In CloudCannon, Site Settings → Build must be:
+#     Site generator : Eleventy
+#     Install command: npm install
+#     Build command  : npx @11ty/eleventy --config=eleventy.config.js
+#     Output path    : _site
+#
+# Every page is a file in src/pages with a `sections` list in its front matter.
+# Editors add, duplicate, reorder and delete those sections; developers only get
+# involved when a brand new KIND of section is needed.
+# ─────────────────────────────────────────────────────────────────────────────
+
+source: ''
+paths:
+  static: ''
+  uploads: images
+timezone: Asia/Calcutta
+# Exposes src/_data/site.json to Bookshop's live rendering in the Visual Editor.
+# Without this, components that read site.* render empty while editing.
+data_config:
+  site:
+    path: src/_data/site.json               # ← exposes it to live rendering
+  # The Buyer App directory behind the Complaints page. It is a snapshot of the
+  # published ONDC directory, not page copy, so it lives here rather than in a
+  # section's fields: 143 entries would be unworkable in the sidebar. Listed
+  # here for the same reason as site.json — it is what makes the data reach
+  # Bookshop's live rendering, so the directory still shows while editing.
+  buyer_apps:
+    path: src/_data/buyer_apps.json
+  # The Network Participant directory behind /network-participants.html. Same
+  # reasoning as the Buyer Apps above, and the same two jobs: it is what lets
+  # CloudCannon edit these files, and it is what makes the entries reach
+  # Bookshop's live rendering so the ledger still draws while editing.
+  #
+  # Deleting a participant here deletes it from the site: every row on the page
+  # is rendered from this file at build time, so the next build simply does not
+  # draw it. Adding one is the same in reverse — the list is sorted by name at
+  # build time, so a new entry lands in its alphabetical place by itself.
+  network_participants:
+    path: src/_data/network_participants.json
+  # The Ecosystem Participant directory behind /ecosystem-participants.html.
+  # A file of its own rather than a third list inside the one above: the two
+  # directories are maintained by different people, so deleting an ecosystem
+  # participant never rewrites the network file.
+  ecosystem_participants:
+    path: src/_data/ecosystem_participants.json
+  # The official ONDC category taxonomy. It draws the filter tree on the left of
+  # the directory AND fills the category picker on a participant, so a category
+  # added here is immediately offered to every entry. A category a participant
+  # carries that is missing here still shows and still filters — it is grouped
+  # under "Other".
+  np_categories:
+    path: src/_data/np_categories.json
+  # The participant roles, with the short key the table prints and the full
+  # wording behind it.
+  np_roles:
+    path: src/_data/np_roles.json
+  # The Resources knowledge base — every area, group and document behind
+  # /resources.html and its eighteen sub-pages. One file drives all nineteen:
+  # the hub cards and their counts, the global search, the sidebar tree, the
+  # breadcrumbs and each page's document list. Delete a document here and it
+  # leaves all of them on the next publish.
+  resources:
+    path: src/_data/resources.json
+markdown:
+  engine: commonmark
+  options: {}
+
+collections_config:
+  # The home page is its own collection, and that is not tidiness — it is the
+  # only way CloudCannon can work out its address.
+  #
+  # `[slug]` is the filename without its extension, and CloudCannon documents
+  # that **for a file named `index` the slug is an empty string**. So the
+  # pattern below, `/[slug].html`, renders as `/.html` for `index.liquid`: the
+  # Pages list showed that address and the preview pane 404'd on it. One
+  # slug-based pattern cannot produce both `/about-us.html` and `/`, so the
+  # home page gets a literal `url` of its own.
+  #
+  # It stays in `src/pages` so that `src/pages/pages.json` — the Eleventy
+  # directory data file carrying the layout, wrapper and default assets — still
+  # applies to it. The `pages` collection below excludes it by glob.
+  home:
+    path: src/pages
+    url: /
+    glob:
+      - index.liquid
+    name: Home page
+    singular_name: Home page
+    icon: home
+    description: >-
+      The front page, served at the site root. It is here rather than in Pages
+      because it is the one page whose address is "/" instead of a file name —
+      see the note in Pages below.
+    disable_add: true
+    disable_add_folder: true
+
+  pages:
+    path: src/pages
+    url: /[slug].html
+    glob:
+      - '*.liquid'
+      - '!index.liquid'
+    name: Pages
+    singular_name: Page
+    icon: wysiwyg
+    description: >-
+      Every page except the home page, which has its own item above. Open one
+      to edit its text and images, or to add, duplicate, reorder and remove
+      whole sections.
+    create:
+      path: '[relative_base_path]/{title|slugify}.liquid'
+    # Schema files must NOT live in src/pages: CloudCannon treats a file used as a
+    # schema as a template and hides it from the Pages list. Keep them in schemas/.
+    schemas:
+      blank:
+        name: Blank page
+        path: schemas/page.liquid
+        icon: note_add
+      landing:
+        name: Landing page starter
+        path: schemas/landing-page.liquid
+        icon: article
+
+  network_participants:
+    path: src/_data
+    url: /network-participants.html
+    glob:
+      - 'network_participants.json'
+    name: Network Participants
+    singular_name: Network Participant list
+    icon: groups
+    description: >-
+      Every participant listed on the Network Participants page. Open it to add,
+      edit or delete an entry — deleting one here removes it from the site on the
+      next publish. The page sorts by name, so a new entry finds its own place.
+    disable_add: true
+    disable_add_folder: true
+    disable_file_actions: true
+    _enabled_editors:
+      - data
+
+  ecosystem_participants:
+    path: src/_data
+    url: /ecosystem-participants.html
+    glob:
+      - 'ecosystem_participants.json'
+    name: Ecosystem Participants
+    singular_name: Ecosystem Participant list
+    icon: hub
+    description: >-
+      Every participant listed on the Ecosystem Participants page — the
+      technology service providers the buyer and seller apps are built on. Open
+      it to add, edit or delete an entry; deleting one here removes it from the
+      site on the next publish. The page sorts by name, so a new entry finds
+      its own place.
+    disable_add: true
+    disable_add_folder: true
+    disable_file_actions: true
+    _enabled_editors:
+      - data
+
+  resources:
+    path: src/_data
+    url: /resources.html
+    glob:
+      - 'resources.json'
+    name: Resources library
+    singular_name: Knowledge base
+    icon: menu_book
+    description: >-
+      Every document in the Resources knowledge base, grouped into areas. One
+      file drives the hub, the search and all eighteen sub-pages — add a
+      document to an area and it appears on that area's page, in the search and
+      in the hub's count.
+    disable_add: true
+    disable_add_folder: true
+    disable_file_actions: true
+    _enabled_editors:
+      - data
+
+  np_taxonomy:
+    path: src/_data
+    glob:
+      - 'np_categories.json'
+      - 'np_roles.json'
+    name: Participant categories & roles
+    singular_name: List
+    icon: category
+    description: >-
+      The categories and roles a participant can be given. These fill the filter
+      panel on the directory and the pickers on each participant, so add a
+      category here before tagging participants with it.
+    disable_add: true
+    disable_add_folder: true
+    disable_file_actions: true
+    _enabled_editors:
+      - data
+
+  site:
+    path: src/_data
+    glob:
+      - 'site.json'
+    name: Header & Footer
+    singular_name: Header & Footer
+    icon: settings
+    description: The logo, the top navigation and the footer. These appear on every page.
+    disable_add: true
+    disable_add_folder: true
+    disable_file_actions: true
+    _enabled_editors:
+      - data
+
+# ─────────────────────────────────────────────────────────────────────────────
+# The section library: everything an editor can add to a page.
+# ─────────────────────────────────────────────────────────────────────────────
+
+_structures:
+  # Small repeating pieces. The section library itself is generated by
+  # Bookshop from component-library/components/*/*.bookshop.yml
+  buttons:
+    style: select
+    values:
+      - label: Button
+        icon: smart_button
+        value:
+          label: Button text
+          url: '#'
+          style: primary
+          new_tab: false
+  bullets:
+    style: select
+    values:
+      - label: Bullet
+        icon: check
+        value:
+          text: ''
+  link_columns:
+    style: select
+    values:
+      - label: Link column
+        icon: view_column
+        value:
+          heading: New column
+          links: []
+  links:
+    style: select
+    values:
+      - label: Link
+        icon: link
+        value:
+          label: ''
+          url: ''
+          new_tab: false
+  social:
+    style: select
+    values:
+      - label: Social link
+        icon: share
+        value:
+          label: ''
+          url: ''
+          platform: linkedin
+  figures:
+    style: select
+    values:
+      - label: Number
+        icon: pin
+        value:
+          value: '0'
+          label: ''
+          word_style: false
+  # The Resources knowledge base, three levels deep. Per-field labels are in
+  # `_inputs` below, which a data file DOES reach — unlike a Bookshop
+  # component's fields. The field names are deliberately unlike upstream's
+  # (areas/doc_groups/documents rather than categories/sections/items) because
+  # a global `_inputs` key is global: see ADDING_PAGES.md, rule 9.
+  resource_documents:
+    style: select
+    values:
+      - label: Document
+        icon: description
+        preview:
+          text:
+            - key: title
+          subtext:
+            - key: type
+            - key: href
+          icon: description
+        value:
+          title: ''
+          doc_type: pdf
+          href: ''
+          lang: ''
+          doc_note: ''
+          updated: ''
+          doc_ref: ''
+  resource_groups:
+    style: select
+    values:
+      - label: Group of documents
+        icon: folder
+        preview:
+          text:
+            - key: title
+          icon: folder
+        value:
+          title: New group
+          group_note: ''
+          prose: ''
+          documents: []
+  resource_areas:
+    style: select
+    values:
+      - label: Area
+        icon: topic
+        preview:
+          text:
+            - key: title
+          subtext:
+            - key: summary
+          icon: topic
+        value:
+          id: ''
+          title: New area
+          summary: ''
+          icon: book-open
+          page: ''
+          parent_area: ''
+          hub: false
+          external: false
+          hide_type_chip: false
+          label_chips: false
+          doc_groups: []
+
+  # One entry in the Network Participant directory. Its per-field labels come
+  # from `_inputs` below rather than from here: a data file IS reached by the
+  # top-level `_inputs`, unlike a Bookshop component's fields, so writing them
+  # once there covers both arrays in the file.
+  participants:
+    style: select
+    values:
+      - label: Participant
+        icon: storefront
+        # Without this, CloudCannon labels every collapsed row of a 344-entry
+        # array with an auto-generated title, and finding the one to edit or
+        # delete means opening them. Previewing the logo and the name makes the
+        # list scannable at the speed the page itself is.
+        preview:
+          text:
+            - key: name
+          subtext:
+            - key: spoc
+            - key: email
+          image:
+            - key: logo
+          icon: storefront
+        value:
+          name: ''
+          logo: ''
+          initials: ''
+          roles: []
+          categories: []
+          enabled_by: ''
+          spoc: ''
+          email: ''
+          phone: ''
+          website: ''
+  # NOTE: the RFP ledger's structures used to live here and are now written
+  # inline in component-library/components/rfp_ledger/rfp_ledger.bookshop.yml.
+  # A `structures: _structures.<name>` reference from a Bookshop component
+  # brings the values across but drops their `_inputs`, which left every field
+  # inside a tender with an auto-generated label and the wrong input type.
+
+_inputs:
+  sections:
+    type: array
+    label: Page sections
+    comment: The blocks this page is made of. Use + to add one, the ⋮ menu to duplicate or delete, and drag to reorder.
+    options:
+      structures: _structures.sections
+      empty_type: array
+
+  # --- page settings ---
+  title:
+    type: text
+    label: Title
+  details:
+    type: textarea
+    label: Description
+  description:
+    type: textarea
+    label: Search engine description
+    comment: One or two sentences. Shown in Google results and when the page is shared.
+  permalink:
+    type: text
+    label: Page address
+    comment: The address this page lives at, for example /contact.html — keep it unique.
+  preload_image:
+    type: image
+    label: First image to load
+    comment: Optional. The one large image at the very top of the page, loaded early so it appears faster.
+  layout:
+    type: text
+    hidden: true
+  nav_active:
+    type: text
+    label: Menu item to highlight
+    comment: >-
+      Optional. The address of the menu item that should look selected while
+      this page is open — used by the Resources sub-pages so the "Resources"
+      menu item stays lit. Leave empty and the page highlights its own menu
+      item, which is what almost every page wants.
+
+  # --- shared text ---
+  heading:
+    type: text
+    label: Heading
+  subtitle:
+    type: text
+    label: Sub heading
+  eyebrow:
+    type: text
+    label: Small label above the heading
+  intro:
+    type: textarea
+    label: Intro text
+  tagline:
+    type: textarea
+    label: Closing line
+  lead:
+    type: textarea
+    label: Summary
+  body:
+    type: html
+    label: Text
+    options:
+      bold: true
+      italic: true
+      link: true
+      bulletedlist: true
+      numberedlist: true
+      subheading: true
+      removeformat: true
+      undo: true
+      redo: true
+  text:
+    type: html
+    label: Text
+    options:
+      bold: true
+      italic: true
+      link: true
+      removeformat: true
+      undo: true
+      redo: true
+  subtext:
+    type: textarea
+    label: Supporting line
+  note:
+    type: textarea
+    label: Note for editors
+    comment: Only shown inside the CMS, never on the live site.
+  caption:
+    type: textarea
+    label: Caption
+
+  # --- layout choices ---
+  background:
+    type: select
+    label: Background
+    options:
+      values:
+        - light
+        - white
+        - tint
+        - dark
+  full_width:
+    type: checkbox
+    label: Use the full width
+  columns:
+    type: select
+    label: Cards per row
+    options:
+      values:
+        - 2
+        - 3
+        - 4
+  anchor_id:
+    type: text
+    label: Link anchor
+    comment: Lets menu links jump to this section, for example find-your-place. Change only if you know a link points here.
+
+  # --- links and buttons ---
+  buttons:
+    type: array
+    label: Buttons
+    options:
+      structures: _structures.buttons
+  label:
+    type: text
+    label: Label
+  url:
+    type: url
+    label: Link address
+    comment: >-
+      Where this link or button goes. Every button on the site has one — a page
+      of this site such as /careers.html, a spot on the current page such as
+      #buyer-role, or a full web address. The sign-up buttons go to
+      https://portal.ondc.org/.
+  link:
+    type: url
+    label: Link address
+  link_url:
+    type: url
+    label: Link address
+  link_label:
+    type: text
+    label: Link text
+  cta_label:
+    type: text
+    label: Button text
+  cta_url:
+    type: url
+    label: Button link
+  post_link:
+    type: url
+    label: Link to the post
+  new_tab:
+    type: checkbox
+    label: Open in a new tab
+  style:
+    type: select
+    label: Button style
+    options:
+      values:
+        - primary
+        - secondary
+
+  # --- pictures and video ---
+  image:
+    type: image
+    label: Image
+    comment: Upload a new picture or pick one already on the site. Use the crop tool to change the framing.
+  poster:
+    type: image
+    label: Image
+  logo:
+    type: image
+    label: Logo
+  alt:
+    type: text
+    label: Image description
+    comment: Describes the picture for screen readers and when the image cannot load.
+  image_alt:
+    type: text
+    label: Image description
+  media:
+    type: object
+    label: Picture or video
+    comment: Choose a picture, upload a video file, or paste a YouTube / Vimeo link.
+  kind:
+    type: select
+    label: What to show
+    options:
+      values:
+        - value: image
+          label: A picture
+        - value: video_file
+          label: A video file I upload
+        - value: video_embed
+          label: A YouTube or Vimeo link
+  video:
+    type: file
+    label: Video file
+    comment: An .mp4 works everywhere. Keep it under about 20 MB so the page stays fast.
+  embed_url:
+    type: url
+    label: YouTube or Vimeo link
+    comment: Paste the normal address of the video, for example https://www.youtube.com/watch?v=…
+
+  # --- lists inside sections ---
+  cards:
+    type: array
+    label: Cards
+    comment: Use + to add a card, the ⋮ menu to duplicate or delete one, and drag to reorder.
+  items:
+    type: array
+    label: Items
+    comment: Use + to add, the ⋮ menu to duplicate or delete, and drag to reorder.
+  slides:
+    type: array
+    label: Slides
+    comment: Use + to add a slide, the ⋮ menu to duplicate or delete one, and drag to reorder.
+  beats:
+    type: array
+    label: Story beats
+    comment: Four beats work best. Each one fades in as the reader scrolls.
+  bullets:
+    type: array
+    label: Bullet points
+    options:
+      structures: _structures.bullets
+  points:
+    type: array
+    label: Bullet points
+    options:
+      structures: _structures.bullets
+  figures:
+    type: array
+    label: Numbers
+    options:
+      structures: _structures.figures
+  nav:
+    type: array
+    label: Menu
+  children:
+    type: array
+    label: Drop-down links
+  links:
+    type: array
+    label: Links
+    comment: Use + to add a link, the item menu to duplicate or delete, and drag to reorder.
+    options:
+      structures: _structures.links
+  link_columns:
+    type: array
+    label: Footer link columns
+    comment: Each column has a heading and its own list of links.
+    options:
+      structures: _structures.link_columns
+  social:
+    type: array
+    label: Social links
+    options:
+      structures: _structures.social
+  use_site_settings:
+    type: checkbox
+    label: Use the shared footer from Site settings
+    comment: Leave ticked so every page shows the same footer. Untick only to give this one page its own footer.
+  background_image:
+    type: image
+    label: Footer background artwork
+    comment: The wide illustration behind the footer. A long, low image works best (about 2400 x 900).
+
+
+  # --- individual list fields ---
+  line1:
+    type: text
+    label: First line
+  line2:
+    type: text
+    label: Second line
+  impact_line1:
+    type: text
+    label: Closing line 1
+  impact_line2:
+    type: text
+    label: Closing line 2
+  sub_line:
+    type: text
+    label: Line under the closing lines
+  wordmark:
+    type: text
+    label: Wordmark
+  pill:
+    type: text
+    label: Tab name
+    comment: The short name shown in the row of buttons under the slide.
+  sector:
+    type: text
+    label: Sector label
+  badge:
+    type: text
+    label: Status badge
+    comment: For example Live or Upcoming.
+  value:
+    type: text
+    label: Number
+  word_style:
+    type: checkbox
+    label: This is a word, not a number
+    comment: Tick when the value is a word such as "Marine" so it is sized for text.
+  name:
+    type: text
+    label: Name
+  role:
+    type: text
+    label: Role and company
+  quote:
+    type: textarea
+    label: Quote
+    comment: The same words that appear on the poster. Used by screen readers.
+  tag:
+    type: text
+    label: Small label on the picture
+  image_tag:
+    type: text
+    label: Small label on the picture
+  source:
+    type: text
+    label: Publication
+    comment: The button reads "Read on …" followed by this.
+  headline:
+    type: text
+    label: Headline
+  dek:
+    type: textarea
+    label: Short summary
+  coming_soon:
+    type: checkbox
+    label: Mark as coming soon
+  show:
+    type: checkbox
+    label: Show this card
+  more:
+    type: object
+    label: Last card ("View more")
+  footer:
+    type: object
+    label: Footer
+  platform:
+    type: select
+    label: Network
+    options:
+      values:
+        - linkedin
+        - instagram
+        - youtube
+        - facebook
+        - x
+  blurb:
+    type: textarea
+    label: Footer blurb
+  copyright:
+    type: text
+    label: Copyright line
+  logo_alt:
+    type: text
+    label: Logo description
+  home_url:
+    type: text
+    label: Address of the home page
+    comment: >-
+      Where the logo links to, and what menu items that point at a spot on the
+      home page (those starting with #) are prefixed with when viewed from any
+      other page. Change this only if the home page moves.
+
+  # --- fields used by the page-archetype components (About and later pages) ---
+  heading_accent:
+    type: text
+    label: Highlighted tail of the heading
+    comment: Shown in the accent style at the end of the heading. Leave empty for a plain heading.
+  screen_label:
+    type: text
+    label: Section name for screen readers
+    comment: Optional. Describes this section to assistive technology.
+  paragraphs:
+    type: array
+    label: Paragraphs
+    comment: Use + to add a paragraph, the item menu to duplicate or delete, and drag to reorder.
+  groups:
+    type: array
+    label: Groups
+    comment: Each group has a heading and its own numbered list. Numbering is automatic.
+  rows:
+    type: array
+    label: Organisations
+  people:
+    type: array
+    label: People
+    comment: Use + to add a person, the item menu to duplicate or delete, and drag to reorder.
+  photo:
+    type: image
+    label: Photo
+    comment: A square portrait works best.
+  org:
+    type: text
+    label: Organisation
+  logos:
+    type: object
+    label: Logo strip
+  count:
+    type: text
+    label: Number
+    comment: Counts up as the reader scrolls into view.
+  count_label:
+    type: text
+    label: What the number counts
+  featured:
+    type: object
+    label: Featured item
+  awards:
+    type: array
+    label: Awards
+  years:
+    type: array
+    label: Years
+    comment: Use + to add a year, the item menu to duplicate or delete, and drag to reorder.
+  year:
+    type: text
+    label: Year
+  entries:
+    type: array
+    label: Entries
+  meta:
+    type: text
+    label: Date or label
+  is_milestone:
+    type: checkbox
+    label: Show as a highlighted milestone
+  milestone_title:
+    type: text
+    label: Milestone headline
+    comment: Used when the milestone has no number.
+  milestone_number:
+    type: text
+    label: Milestone number
+    comment: Optional. Shown large, and counts up. Leave empty to use the headline instead.
+  milestone_suffix:
+    type: text
+    label: Milestone number suffix
+    comment: For example M+ or %.
+  finale:
+    type: object
+    label: Closing figure
+  number:
+    type: text
+    label: Number
+  suffix:
+    type: text
+    label: Suffix
+  sectors:
+    type: object
+    label: Sector links
+
+  # --- fields used by the role / directory pages (RFPs, Gateway, Buyer NP …) ---
+  variant:
+    type: select
+    label: Layout
+    comment: >-
+      "Plain" is the wide band used at the bottom of the About page. "Panel" is
+      the white rounded card used at the bottom of the role pages — it is the
+      one that can also carry a paragraph.
+    options:
+      values:
+        - value: ''
+          label: Plain
+        - value: role
+          label: Panel
+  heading_suffix:
+    type: text
+    label: Text after the highlighted part
+    comment: >-
+      Usually just a full stop. The heading reads "Unlock business
+      opportunities." — "opportunities" is the highlighted part and "." is this.
+  copy:
+    type: textarea
+    label: Intro paragraph
+  tally:
+    type: object
+    label: Counter on the right
+  source_note:
+    type: text
+    label: Where the number comes from
+    comment: The small grey line under the counter, for example "Refreshed from the live tender feed".
+  aria_label:
+    type: text
+    label: Section description for screen readers
+
+  # --- the Network Participant directory (src/_data/network_participants.json)
+  #
+  # These reach the DATA FILE, not the directory component: `_inputs` at the top
+  # of this file covers page front matter and data files, while a Bookshop
+  # component's own fields are configured in its .bookshop.yml. See
+  # ADDING_PAGES.md, rule 5.
+  #
+  # `name` and `logo` are deliberately not repeated here — the shared
+  # definitions above already give a participant the right text box and the
+  # right image picker, crop tool included.
+  key:
+    type: array
+    label: Key Network Participants
+    comment: >-
+      The participants shown on the first tab of the directory. Use + to add
+      one, the item menu to duplicate or delete. The page sorts by name, so
+      where an entry sits in this list does not matter.
+    options:
+      structures: _structures.participants
+  integrated:
+    type: array
+    label: Integrated Network Participants
+    comment: >-
+      Every participant live on the network. Use + to add one, the item menu to
+      duplicate or delete. The page sorts by name, so where an entry sits in
+      this list does not matter.
+    options:
+      structures: _structures.participants
+  participants:
+    type: array
+    label: Ecosystem Participants
+    comment: >-
+      Every participant on the Ecosystem Participants page. Use + to add one,
+      the item menu to duplicate or delete. The page sorts by name, so where an
+      entry sits in this list does not matter.
+    options:
+      structures: _structures.participants
+  initials:
+    type: text
+    label: Initials
+    comment: >-
+      The two letters shown in a grey circle when this participant has no logo,
+      or when the logo file is missing. Leave empty to use the first two
+      letters of the name.
+  roles:
+    type: multiselect
+    label: Roles
+    comment: Pick every role this participant is live in. The table prints the short key for each.
+    options:
+      values: data.np_roles
+      value_key: role_value
+      allow_create: false
+  categories:
+    type: multiselect
+    label: Live categories
+    comment: >-
+      The categories this participant is live in. These drive the filter panel.
+      A category missing from the list is added under "Participant categories
+      & roles".
+    options:
+      values: data.np_categories
+      value_key: name
+      allow_create: false
+  enabled_by:
+    type: text
+    label: Technology Service Provider
+    comment: >-
+      Optional. Printed under the participant's name as "Enabled by …" on the
+      rows that have one.
+  spoc:
+    type: text
+    label: Business contact
+    comment: The person's name. Shown above the Email / Call / Website links.
+  email:
+    type: text
+    label: Contact email
+    comment: Becomes the "Email" link on the row. Leave empty to drop it.
+  phone:
+    type: text
+    label: Contact phone
+    comment: Becomes the "Call" link on the row. Leave empty to drop it.
+  website:
+    type: url
+    label: Website
+    comment: Becomes the "Website" link on the row. Include https://
+
+  # --- the Resources knowledge base (src/_data/resources.json) ---
+  areas:
+    type: array
+    label: Areas of the knowledge base
+    comment: >-
+      Each area is one page of the Resources section. Use + to add one, the
+      item menu to duplicate or delete, and drag to reorder — the order here is
+      the order of the hub cards and the sidebar.
+    options:
+      structures: _structures.resource_areas
+  doc_groups:
+    type: array
+    label: Groups of documents
+    comment: >-
+      Each group is one headed block on the area's page. Use + to add one, the
+      item menu to duplicate or delete, and drag to reorder.
+    options:
+      structures: _structures.resource_groups
+  documents:
+    type: array
+    label: Documents
+    comment: >-
+      Use + to add one, the item menu to duplicate or delete, and drag to
+      reorder. Deleting one here removes it from the page, from the search and
+      from the count on the hub card.
+    options:
+      structures: _structures.resource_documents
+  doc_type:
+    type: select
+    label: Kind of document
+    comment: >-
+      Picks the icon and the tag on the row, and whether the link downloads or
+      opens in a new tab. "Page on this site" is the one that opens in the same
+      tab and shows no tag.
+    options:
+      values:
+        - value: pdf
+          label: PDF
+        - value: doc
+          label: Word document
+        - value: xlsx
+          label: Spreadsheet
+        - value: zip
+          label: ZIP archive
+        - value: video
+          label: Video
+        - value: link
+          label: Link to another site
+        - value: page
+          label: Page on this site
+  summary:
+    type: textarea
+    label: Short description
+    comment: The line under the title on the hub card and the sub-area cards.
+  parent_area:
+    type: text
+    label: Sits under
+    comment: >-
+      The id of the area this one belongs to — for example "governance". Leave
+      empty for a top-level area. This drives the sidebar tree, the breadcrumbs
+      and the sub-area cards all at once.
+  hub:
+    type: checkbox
+    label: Show a card on the Resources hub
+  external:
+    type: checkbox
+    label: This area lives on another site
+    comment: >-
+      Tick for an area whose "Page address" is a full web address. Its card
+      opens in a new tab and shows "External" instead of a count.
+  page:
+    type: text
+    label: Page address
+    comment: >-
+      Where this area's card and sidebar entry link to, for example
+      /resources-tech.html — or a full web address for an external area. There
+      must be a page at that address.
+  provenance:
+    type: text
+    label: Where this area's list came from
+    comment: Only shown inside the CMS. A note for whoever refreshes it next.
+  group_note:
+    type: textarea
+    label: Note under the group heading
+    comment: Shown on the live page, under the heading of this group.
+  prose:
+    type: html
+    label: Explanatory text
+    comment: Shown above the documents in this group. Leave empty for none.
+    options:
+      bold: true
+      italic: true
+      link: true
+      bulletedlist: true
+      numberedlist: true
+      removeformat: true
+      undo: true
+      redo: true
+  doc_note:
+    type: text
+    label: Note beside the title
+    comment: A short line shown after the tags on this document's row.
+  href:
+    type: text
+    label: Link address
+    comment: >-
+      A web address, a page of this site such as /resources-tech.html, or a
+      mailto: address. Leave empty for a document that is announced but not
+      published yet — the row shows without a link.
+  lang:
+    type: text
+    label: Language
+    comment: Shown as a tag, for example Hindi. Leave empty for English.
+  updated:
+    type: text
+    label: Date tag
+    comment: Shown as a tag on the row, for example "Jan 2026". Free text.
+  doc_ref:
+    type: text
+    label: Reference number
+    comment: >-
+      The notification number, shown as a second tag beside the date — for
+      example 2026/07/14/01. Leave empty on a document that has none.
+  hide_type_chip:
+    type: checkbox
+    label: Hide the file-type tag on every row
+    comment: >-
+      Tick on an area whose documents are all the same kind of file. A "PDF"
+      tag on every row of the page says nothing, and the room is better spent
+      on the date.
+  label_chips:
+    type: checkbox
+    label: Name each tag on a row
+    comment: >-
+      Tick on an area whose rows carry both a date and a reference number — the
+      tags then read "Date 14/07/2026" and "Notification No. 2026/07/14/01",
+      because two bare numbers side by side read as a puzzle. The words come
+      from the page's own "Wording around the documents".
+  icon:
+    type: select
+    label: Icon
+    comment: Shown on this area's card.
+    options:
+      values:
+        - award
+        - bell
+        - book
+        - book-open
+        - check-circle
+        - check-square
+        - code
+        - compass
+        - dollar
+        - eye
+        - file-text
+        - grid
+        - monitor
+        - navigation
+        - pen
+        - percent
+        - shield
+        - trending-up
+        - volume
+
+  # --- the category taxonomy (src/_data/np_categories.json) ---
+  parent:
+    type: select
+    label: Sits under
+    comment: >-
+      Leave empty to make this a top-level category in the filter panel.
+      Otherwise pick the top-level category it belongs to. The panel is two
+      levels deep, so pick one that is itself top-level.
+    options:
+      values: data.np_categories
+      value_key: name
+      allow_empty: true
+
+  # --- the role list (src/_data/np_roles.json) ---
+  role_value:
+    type: text
+    label: Role
+    comment: >-
+      Exactly as it is written on a participant. Changing it here does not
+      change it on the participants that already use it.
+  role_key:
+    type: text
+    label: Short key
+    comment: What the table prints, for example BNP. Keep it to a few characters.
+  role_label:
+    type: text
+    label: Name on the filter button
+  role_full:
+    type: text
+    label: Full name
+    comment: Shown as a tooltip on the short key in the table.
+
+# Toolbar for the click-to-edit regions in the visual editor.
+_editables:
+  content:
+    format: p h2 h3 h4
+    bold: true
+    italic: true
+    link: true
+    bulletedlist: true
+    numberedlist: true
+    removeformat: true
+    undo: true
+    redo: true
+  block:
+    format: p h3 h4
+    bold: true
+    italic: true
+    link: true
+    bulletedlist: true
+    numberedlist: true
+    removeformat: true
+  text:
+    bold: true
+    italic: true
+    link: true
+    removeformat: true
+
+
+

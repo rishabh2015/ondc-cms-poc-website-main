@@ -1,0 +1,30 @@
+spec:
+  structures: [sections]
+  label: Timeline
+  description: A year-by-year story. On the live site a network spreads across a map of India as the reader scrolls.
+  icon: timeline
+
+blueprint:
+  anchor_id: our-journey
+  screen_label: ''
+  eyebrow: ''
+  heading: A heading for this section
+  heading_accent: ''
+  lead: ''
+  years:
+    - year: '2021'
+      label: The beginning
+      entries:
+        - meta: Month 2021
+          text: What happened.
+          is_milestone: false
+          milestone_title: ''
+          milestone_number: ''
+          milestone_suffix: ''
+  finale:
+    number: ''
+    suffix: ''
+    label: ''
+    text: ''
+
+_inputs: {}

@@ -1,0 +1,22 @@
+{%- assign hid = heading_id | default: "page-title" -%}
+{%- comment -%}
+  "Library" is the masthead on the Resources hub: same heading-plus-one-line
+  model as the Contact band, wider measure and the knowledge-base spacing.
+{%- endcomment -%}
+{% if variant == "library" %}<section
+    class="bk-library-head"
+    aria-labelledby="{{ hid }}"
+    data-screen-label="{{ screen_label | default: "Page title" }}">
+    <h1 id="{{ hid }}" data-bk-intro>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h1>
+    {% if intro %}<p data-bk-intro>{{ intro }}</p>{% endif %}
+  </section>
+{% else %}<section
+  class="bk-contact-head"
+  aria-labelledby="{{ hid }}"
+  data-screen-label="{{ screen_label | default: "Page title" }}">
+  <h1 id="{{ hid }}" data-bk-intro>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h1>
+  {% if intro %}
+    <p data-bk-intro>{{ intro }}</p>
+  {% endif %}
+</section>
+{% endif %}

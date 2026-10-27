@@ -1,0 +1,67 @@
+{%- comment -%}
+  Global search across the whole knowledge base.
+  ==========================================================================
+  EVERY RESULT ROW IS RENDERED HERE, AT BUILD TIME — all 485 documents plus a
+  row per area — and js/ondc/resources.js only sets `hidden` on them. It never
+  creates a row.
+
+  That is the same rule the participant directories follow, and the reason is
+  the same: Bookshop replaces the section's DOM while an editor types, so a row
+  the script created would vanish on the next keystroke. Here it also costs
+  nothing, because the search index has to be in the page either way — as HTML
+  it is barely larger than the JSON blob the alternative would need.
+
+  Relevance ordering survives without moving a node: the results box is a flex
+  column, and the script sets `order` on each row so a title match floats above
+  a match found only in the blurb. See css/ondc/resources-search.css.
+{%- endcomment -%}
+<section class="bk-search" data-res-search data-res-limit="{{ result_limit | default: 30 }}" aria-label="{{ search_label | default: "Search all ONDC resources" }}">
+  <input type="search" data-res-search-input placeholder="{{ search_placeholder | default: "Search every guide, policy and document" }}" aria-label="{{ search_label | default: "Search all resources" }}" autocomplete="off">
+  <span class="bk-search-kbd">{{ shortcut_hint | default: "Ctrl / ⌘ K" }}</span>
+</section>
+<div class="res-results" data-res-results hidden aria-live="polite">
+  <div class="res-results-head" data-res-results-head></div>
+
+  {%- comment -%}
+    One row per area, then one per document. `hay` is everything the original
+    searched against — title, language, note, section name, area name — folded
+    into one lower-cased string so the script compares once per row instead of
+    walking the DOM.
+  {%- endcomment -%}
+  {% for cat in resources.areas %}
+    {%- unless cat.external -%}
+      {%- capture hay -%}{{ cat.title }} {{ cat.summary }}{%- endcapture -%}
+      <a class="res-row" data-res-hit data-res-title="{{ cat.title | downcase | escape }}" data-res-hay="{{ hay | downcase | escape }}" href="{{ cat.page }}" hidden>
+        <span class="res-row-body"><span class="res-row-title">{{ cat.title }}</span><span class="res-row-meta"><span class="res-chip is-cat">{{ section_chip | default: "Section" }}</span></span></span>
+        <span class="res-row-go">{{ open_label | default: "Open" }}</span>
+      </a>
+    {%- endunless -%}
+  {% endfor %}
+
+  {% for cat in resources.areas %}
+    {% for sec in cat.doc_groups %}
+      {% for item in sec.documents %}
+        {%- capture hay -%}{{ item.title }} {{ item.lang }} {{ item.doc_note }} {{ item.doc_ref }} {{ sec.title }} {{ cat.title }}{%- endcapture -%}
+        {%- assign internal = false -%}{%- if item.doc_type == "page" -%}{%- assign internal = true -%}{%- endif -%}
+        {%- case item.doc_type -%}
+          {%- when "pdf" -%}{%- assign chip = "PDF" -%}
+          {%- when "zip" -%}{%- assign chip = "ZIP" -%}
+          {%- when "doc" -%}{%- assign chip = "DOC" -%}
+          {%- when "xlsx" -%}{%- assign chip = "XLSX" -%}
+          {%- when "video" -%}{%- assign chip = "Video" -%}
+          {%- when "page" -%}{%- assign chip = "" -%}
+          {%- else -%}{%- assign chip = "Link" -%}
+        {%- endcase -%}
+        {%- capture meta -%}<span class="res-chip is-cat">{{ cat.title }}</span>{% if item.lang %}<span class="res-chip is-lang">{{ item.lang }}</span>{% endif %}{% if chip != "" %}<span class="res-chip">{{ chip }}</span>{% endif %}{% if item.updated %}<span class="res-chip">{{ item.updated }}</span>{% endif %}{% if item.doc_note %}<span class="res-row-note">{{ item.doc_note }}</span>{% endif %}{%- endcapture -%}
+        {%- capture body -%}<span class="res-row-body"><span class="res-row-title">{{ item.title }}</span><span class="res-row-meta">{{ meta }}</span></span>{%- endcapture -%}
+        {% if item.href == blank %}
+          <span class="res-row is-static" data-res-hit data-res-title="{{ item.title | downcase | escape }}" data-res-hay="{{ hay | downcase | escape }}" hidden>{{ body }}</span>
+        {% else %}
+          <a class="res-row" data-res-hit data-res-title="{{ item.title | downcase | escape }}" data-res-hay="{{ hay | downcase | escape }}" href="{{ item.href }}"{% unless internal %} target="_blank" rel="noopener"{% endunless %} hidden>{{ body }}<span class="res-row-go">{{ open_label | default: "Open" }}</span></a>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  {% endfor %}
+
+  <div class="res-empty" data-res-no-results hidden>{{ empty_text | default: "Nothing found. Try a different term." }}</div>
+</div>

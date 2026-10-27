@@ -1,0 +1,36 @@
+{
+  "name": "ondc-cms",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ONDC site built with Eleventy, edited with TinaCMS: editors add, remove, duplicate and reorder page sections.",
+  "scripts": {
+    "dev": "tinacms dev -c \"eleventy --serve\"",
+    "build": "tinacms build && eleventy",
+    "postbuild": "bash scripts/postbuild.sh",
+    "build:site": "eleventy",
+    "start": "eleventy --serve",
+    "tina:schema": "node scripts/tina-schema.js",
+    "browser": "bookshop-browser"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "2.0.1",
+    "@bookshop/browser": "3.19.0",
+    "@bookshop/eleventy-engine": "3.19.0",
+    "@bookshop/generate": "3.19.0",
+    "@tinacms/cli": "4.0.1"
+  },
+  "dependencies": {
+    "@bookshop/eleventy-bookshop": "3.19.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tinacms": "3.14.3"
+  },
+  "overrides": {
+    "tinacms": "$tinacms",
+    "@tinacms/app": "2.5.14",
+    "@tinacms/graphql": "3.0.0",
+    "@tinacms/schema-tools": "2.10.1",
+    "@tinacms/search": "1.2.25",
+    "@tinacms/mdx": "2.3.0"
+  }
+}

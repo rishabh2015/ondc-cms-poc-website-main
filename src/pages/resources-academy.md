@@ -1,0 +1,77 @@
+---
+title: "ONDC Academy · Resources · ONDC Network"
+description: "Certification-driven learning for ONDC network participants — free on YouTube."
+permalink: /resources-academy.html
+nav_active: /resources.html
+wrapper_tag: main
+wrapper_class: ''
+wrapper_id: ''
+show_progress: true
+styles:
+  - fx
+  - scale
+  - legal
+  - resources
+  - resources-search
+  - mobile
+scripts:
+  - /js/ondc/fx.js
+  - /js/ondc/beckn.js
+  - /js/ondc/reveal.js
+  - /js/ondc/scroll-progress.js
+  - /js/ondc/resources.js
+sections:
+  - _template: page_hero
+    variant: compact
+    screen_label: Hero
+    heading_id: academy-hero-title
+    animation: reveal
+    eyebrow: "ONDC Academy"
+    heading: "Learn the network,"
+    heading_accent: "get certified"
+    heading_suffix: ""
+    background_image: ''
+    paragraphs:
+      - text: "Certification-driven learning for network participants — free for everyone on the ONDC Academy YouTube channel."
+    buttons: []
+  - _template: resource_library
+    screen_label: "ONDC Academy content"
+    category: academy
+    hub_url: /resources.html
+    intro: "<p>ONDC Academy helps network participants build the operational excellence and e-commerce readiness to succeed in digital commerce. Start with the introductory videos in your language, then continue on the Academy.</p>"
+    notice: ''
+    show_videos: true
+    collapsible: false
+    buttons:
+      - label: Visit ONDC Academy →
+        url: https://www.ondc.academy/#/
+        style: primary
+        new_tab: true
+    labels:
+      breadcrumb: Breadcrumb
+      hub: Resources
+      nav: Knowledge base navigation
+      browse: Browse the Knowledge Base
+      nav_head: Knowledge Base
+      home: Resources Home
+      count_noun: resources
+      videos: Videos
+      filter_placeholder: Filter documents on this page
+      empty: No matching documents on this page.
+      date_chip: Date
+      ref_chip: "Notification No."
+  - _template: closing_cta
+    variant: band
+    screen_label: CTA
+    anchor_id: ''
+    heading_id: academy-cta-title
+    heading: ONDC Participant Portal
+    heading_accent: ''
+    heading_suffix: ''
+    body: Begin and efficiently manage your journey on ONDC Network.
+    buttons:
+      - label: Sign up →
+        url: https://portal.ondc.org/
+        style: solid
+        new_tab: true
+---

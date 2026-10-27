@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}">
+    <link rel="icon" href="/images/ondc-favicon.png" type="image/png">
+    <!-- Shared chrome: tokens, reset, container, navbar, sector rail and footer.
+       Always loaded, on every page, so a new page can never lose its chrome.
+       Must come BEFORE fx.css, which layers the site finish on top. -->
+    <link rel="stylesheet" href="/css/ondc/category-chrome.css">
+    {% assign page_styles = styles | default: default_styles %}{% for sheet in page_styles %}  <link rel="stylesheet" href="/css/ondc/{{ sheet }}.css">
+    {% endfor %}{% if preload_image %}  <link rel="preload" as="image" href="{{ preload_image }}" fetchpriority="high">
+    {% endif %}  <link
+      rel="preload"
+      href="/fonts/space-grotesk-latin-600-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous">
+    <link
+      rel="preload"
+      href="/fonts/space-grotesk-latin-700-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous">
+    <!-- Styles for the section types editors can add from the CMS. -->
+    <link rel="stylesheet" href="/css/ondc/blocks.css">
+    <!-- CMS layer: editor-mode overrides + small bridges. Keep LAST. -->
+    <link rel="stylesheet" href="/css/ondc/cms.css">
+    <script>
+    /* Inside the CloudCannon editor frame, switch to the flat editing layout before anything paints.
+       (js/ondc-home.js undoes this if the page turns out to be a plain preview.) */
+    try {
+      if (window.self !== window.top) {
+        var ao = window.location.ancestorOrigins, fromCC = false;
+        if (ao && ao.length) { for (var i = 0; i < ao.length; i++) if (/cloudcannon/i.test(ao[i])) fromCC = true; }
+        else fromCC = /cloudcannon/i.test(document.referrer || '');
+        if (fromCC) document.documentElement.classList.add('is-editing');
+      }
+    } catch (e) {}
+  </script>
+  </head>
+  <body{% if body_class %} class="{{ body_class }}"{% endif %}>
+    {% if show_progress %}
+      <div class="scroll-progress">
+        <span id="progBar"></span>
+      </div>
+    {% endif %}{% include "chrome/header.liquid" %}
+    <{{ wrapper_tag | default: "div" }}{% if wrapper_id %} id="{{ wrapper_id }}"{% endif %}{% if wrapper_class %} class="{{ wrapper_class }}"{% endif %}>
+    {% bookshop_include "page" sections: sections %}
+    </{{ wrapper_tag | default: "div" }}>
+    {% if show_sector_rail %}{% include "chrome/sector-rail.liquid" %}
+    {% endif %}{% include "chrome/footer.liquid" %}
+    {% assign page_scripts = scripts | default: default_scripts %}{% for script in page_scripts %}  <script src="{{ script }}" defer></script>
+    {% endfor %}</body>
+</html>

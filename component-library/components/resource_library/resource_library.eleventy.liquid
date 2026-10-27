@@ -1,0 +1,274 @@
+{%- comment -%}
+  One area of the knowledge base — the body of every Resources sub-page.
+  ==========================================================================
+  Pick the area in "Which part of the library" and this section draws its
+  breadcrumbs, the sidebar tree, its documents and (where the area has them)
+  its sub-area cards and video grid. Nineteen pages, one section type.
+
+  EVERYTHING IS RENDERED AT BUILD TIME from src/_data/resources.json.
+  js/ondc/resources.js only sets `hidden` and writes text; it never creates a
+  node, because Bookshop replaces this section's DOM while an editor types.
+
+  Liquid has no recursion, so the three levels the knowledge base actually has
+  (Governance → Guidance → Guidance on Tax) are written out. A fourth level
+  would need another nested loop in two places here — flagged so it is found
+  rather than puzzled over.
+
+  Section anchors are `sec-1`, `sec-2` … by position rather than slugified from
+  the heading: Liquid has no regex, and an Eleventy `slugify` filter would not
+  exist in Bookshop's browser re-render, so the sidebar's contents list would
+  break in the editor. Nothing outside the page links to these anchors.
+{%- endcomment -%}
+{%- assign cat = resources.areas | where: "id", category | first -%}
+{%- comment -%}
+  Walk up to the two ancestors the breadcrumb needs.
+
+  The guards are not decoration. Liquid's `where` falls back to plain
+  truthy-filtering when the value it is handed is UNDEFINED, so a lookup for a
+  parent that does not exist does not return nothing — it returns EVERY area,
+  and `| first` then hands back whichever happens to sit first in the file.
+  That is how a typo in this very line put "Governance and Policy" into the
+  breadcrumb of every page on the site, silently, instead of erroring. Ask
+  whether there IS a parent before looking one up.
+{%- endcomment -%}
+{%- assign up1 = false -%}
+{%- assign up2 = false -%}
+{%- if cat.parent_area != blank -%}
+  {%- assign up1 = resources.areas | where: "id", cat.parent_area | first -%}
+  {%- if up1 and up1.parent_area != blank -%}
+    {%- assign up2 = resources.areas | where: "id", up1.parent_area | first -%}
+  {%- endif -%}
+{%- endif -%}
+{%- assign kids = resources.areas | where: "parent_area", category -%}
+
+<nav class="crumbs" aria-label="{{ labels.breadcrumb | default: "Breadcrumb" }}" data-screen-label="{{ labels.breadcrumb | default: "Breadcrumbs" }}">
+  <div class="container">
+    <a href="{{ hub_url | default: "/resources.html" }}">{{ labels.hub | default: "Resources" }}</a>
+    {%- if up2 -%}<span class="sep">/</span><a href="{{ up2.page }}">{{ up2.title }}</a>{%- endif -%}
+    {%- if up1 -%}<span class="sep">/</span><a href="{{ up1.page }}">{{ up1.title }}</a>{%- endif -%}
+    <span class="sep">/</span><span aria-current="page">{{ cat.title }}</span>
+  </div>
+</nav>
+
+<section class="res-section" data-res-library data-screen-label="{{ screen_label | default: "Knowledge base content" }}">
+  <div class="container">
+    <div class="res-shell">
+
+      <aside class="res-nav" aria-label="{{ labels.nav | default: "Knowledge base navigation" }}">
+        <details class="res-nav-details" open data-res-nav-details>
+          <summary>{{ labels.browse | default: "Browse the Knowledge Base" }}</summary>
+          <div>
+            <div class="res-nav-head">{{ labels.nav_head | default: "Knowledge Base" }}</div>
+            <ul>
+              <li><a href="{{ hub_url | default: "/resources.html" }}">{{ labels.home | default: "Resources Home" }}</a></li>
+              {% for root in resources.areas %}
+                {%- if root.parent_area == blank and root.external != true -%}
+                  <li>
+                    <a href="{{ root.page }}"{% if root.id == category %} aria-current="page"{% endif %}>{{ root.title }}</a>
+                    {%- if root.id == category and root.doc_groups.size > 2 -%}
+                      <ul class="res-nav-toc">{% for sec in root.doc_groups %}<li><a href="#sec-{{ forloop.index }}">{{ sec.title }}</a></li>{% endfor %}</ul>
+                    {%- endif -%}
+                    {%- assign branch = resources.areas | where: "parent_area", root.id -%}
+                    {%- if branch.size > 0 -%}
+                      <ul>
+                        {% for child in branch %}
+                          <li>
+                            <a href="{{ child.page }}"{% if child.id == category %} aria-current="page"{% endif %}>{{ child.title }}</a>
+                            {%- if child.id == category and child.doc_groups.size > 2 -%}
+                              <ul class="res-nav-toc">{% for sec in child.doc_groups %}<li><a href="#sec-{{ forloop.index }}">{{ sec.title }}</a></li>{% endfor %}</ul>
+                            {%- endif -%}
+                            {%- assign twigs = resources.areas | where: "parent_area", child.id -%}
+                            {%- if twigs.size > 0 -%}
+                              <ul>
+                                {% for twig in twigs %}
+                                  <li><a href="{{ twig.page }}"{% if twig.id == category %} aria-current="page"{% endif %}>{{ twig.title }}</a>
+                                    {%- if twig.id == category and twig.doc_groups.size > 2 -%}
+                                      <ul class="res-nav-toc">{% for sec in twig.doc_groups %}<li><a href="#sec-{{ forloop.index }}">{{ sec.title }}</a></li>{% endfor %}</ul>
+                                    {%- endif -%}
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            {%- endif -%}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {%- endif -%}
+                  </li>
+                {%- endif -%}
+              {% endfor %}
+            </ul>
+          </div>
+        </details>
+      </aside>
+
+      <div class="res-main">
+        {% if intro %}
+          <div class="res-intro reveal">{{ intro }}</div>
+        {% endif %}
+
+        {%- comment -%}
+          A standing caution about the documents themselves, above the filter
+          where it is read before anything is downloaded. Two areas use it:
+          Marketing ("must not be modified") and Investor Corner ("some of
+          these are password-protected"). Empty everywhere else.
+        {%- endcomment -%}
+        {% if notice != blank %}
+          <div class="res-note reveal d1">{{ notice }}</div>
+        {% endif %}
+
+        {%- comment -%}
+          Sub-area cards, on the two pages that have sub-areas. Drawn from the
+          data, so a new sub-area appears without touching this page.
+        {%- endcomment -%}
+        {% if kids.size > 0 %}
+          <div class="res-children res-grid reveal d1">
+            {% for kid in kids %}
+              {%- assign total = 0 -%}
+              {%- for sec in kid.doc_groups -%}{%- assign total = total | plus: sec.documents.size -%}{%- endfor -%}
+              {%- for twig in resources.areas -%}{%- if twig.parent_area == kid.id -%}
+                {%- for sec in twig.doc_groups -%}{%- assign total = total | plus: sec.documents.size -%}{%- endfor -%}
+              {%- endif -%}{%- endfor -%}
+              <a class="res-card" href="{{ kid.page }}">
+                <span class="res-card-ico">{%- case kid.icon -%}
+                        {%- when "bell" -%}{%- assign d = '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>' -%}
+                        {%- when "check-square" -%}{%- assign d = '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>' -%}
+                        {%- when "compass" -%}{%- assign d = '<circle cx="12" cy="12" r="10"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/>' -%}
+                        {%- when "eye" -%}{%- assign d = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>' -%}
+                        {%- when "percent" -%}{%- assign d = '<path d="M19 5L5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>' -%}
+                        {%- when "file-text" -%}{%- assign d = '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>' -%}
+                        {%- else -%}{%- assign d = '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>' -%}
+                      {%- endcase -%}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ d }}</svg></span>
+                <h3>{{ kid.title }}</h3>
+                <p>{{ kid.summary }}</p>
+                <span class="res-card-foot"><span class="res-card-count">{{ total }} {{ labels.count_noun | default: "resources" }}</span><span class="res-card-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span></span>
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {%- comment -%}
+          Video grid, on the pages whose area carries video items. The poster
+          comes straight from YouTube; a video whose poster 404s drops the
+          image and shows the plate, which is what the original does too.
+        {%- endcomment -%}
+        {% if show_videos %}
+          <div class="res-grid reveal d1" data-screen-label="{{ labels.videos | default: "Videos" }}">
+            {% for sec in cat.doc_groups %}{% for item in sec.documents %}{% if item.doc_type == "video" %}
+              {%- assign ytid = "" -%}
+              {%- if item.href contains "youtu.be/" -%}{%- assign ytid = item.href | split: "youtu.be/" | last | split: "?" | first | split: "/" | first -%}
+              {%- elsif item.href contains "v=" -%}{%- assign ytid = item.href | split: "v=" | last | split: "&" | first -%}
+              {%- elsif item.href contains "/embed/" -%}{%- assign ytid = item.href | split: "/embed/" | last | split: "?" | first -%}
+              {%- elsif item.href contains "/live/" -%}{%- assign ytid = item.href | split: "/live/" | last | split: "?" | first -%}
+              {%- endif -%}
+              <a class="res-video" href="{{ item.href }}" target="_blank" rel="noopener">
+                <span class="res-video-thumb">{% if ytid != "" %}<img src="https://img.youtube.com/vi/{{ ytid }}/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()">{% endif %}<span class="res-video-play"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg></span></span></span>
+                <span class="res-video-body"><h3>{{ item.title }}</h3>{% if item.lang %}<span class="res-chip is-lang">{{ item.lang }}</span>{% endif %}</span>
+              </a>
+            {% endif %}{% endfor %}{% endfor %}
+          </div>
+        {% endif %}
+
+        {% if buttons.size > 0 %}
+          <div class="hero-actions reveal d2" style="margin:28px 0 44px">
+            {% for button in buttons %}<a class="btn {% if button.style == "secondary" %}btn-light{% else %}btn-primary{% endif %}" href="{{ button.url }}"{% if button.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ button.label }}</a>{% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="res-toolbar reveal d1">
+          <span class="res-count" data-res-filter-count></span>
+          <div class="rfp-search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input type="search" data-res-filter placeholder="{{ labels.filter_placeholder | default: "Filter documents on this page" }}" aria-label="{{ labels.filter_placeholder | default: "Filter documents on this page" }}" autocomplete="off">
+          </div>
+        </div>
+
+        {%- comment -%}
+          A group is either a plain heading with its documents under it, or —
+          on a page long enough that the headings are what you scan, which is
+          what "Fold each group" turns on — a <details> that opens one group
+          at a time. Both shapes hold the SAME documents, captured once below,
+          so the rows are written in one place rather than two that drift.
+
+          Stacked cards would repeat the area name on every one of them, so a
+          folded list carries that eyebrow once, above the stack.
+        {%- endcomment -%}
+        <div>
+          {%- if collapsible -%}<div class="res-seclist-head"><span class="lbl">{{ cat.title }}</span></div>{%- endif -%}
+          {% for sec in cat.doc_groups %}
+            {%- capture group_body -%}
+              {% if sec.prose %}<div class="res-sec-prose">{{ sec.prose }}</div>{% endif %}
+              {% if sec.documents.size > 0 %}
+                <div class="res-doclist">
+                  {% for item in sec.documents %}
+                    {%- assign internal = false -%}{%- if item.doc_type == "page" -%}{%- assign internal = true -%}{%- endif -%}
+                    {%- case item.doc_type -%}
+                      {%- when "pdf" -%}{%- assign chip = "PDF" -%}{%- assign ico = "file-text" -%}{%- assign go = "download" -%}
+                      {%- when "zip" -%}{%- assign chip = "ZIP" -%}{%- assign ico = "archive" -%}{%- assign go = "download" -%}
+                      {%- when "doc" -%}{%- assign chip = "DOC" -%}{%- assign ico = "file-text" -%}{%- assign go = "download" -%}
+                      {%- when "xlsx" -%}{%- assign chip = "XLSX" -%}{%- assign ico = "grid" -%}{%- assign go = "download" -%}
+                      {%- when "video" -%}{%- assign chip = "Video" -%}{%- assign ico = "play" -%}{%- assign go = "external" -%}
+                      {%- when "page" -%}{%- assign chip = "" -%}{%- assign ico = "book-open" -%}{%- assign go = "arrow" -%}
+                      {%- else -%}{%- assign chip = "Link" -%}{%- assign ico = "external" -%}{%- assign go = "external" -%}
+                    {%- endcase -%}
+                    {%- comment -%}
+                      Two switches the area carries in the data file:
+
+                      `hide_type_chip` — an area whose documents are all the
+                      same file type drops the type chip, because a "PDF" badge
+                      on every row of the page says nothing and the room is
+                      better spent on the date.
+
+                      `label_chips` — an area whose rows carry both an issue
+                      date and a notification number names each chip, because
+                      two bare dates side by side read as a puzzle. The words
+                      themselves are in "Wording around the documents".
+                    {%- endcomment -%}
+                    {%- capture meta -%}{% if item.lang %}<span class="res-chip is-lang">{{ item.lang }}</span>{% endif %}{% if chip != "" and internal == false %}{% unless cat.hide_type_chip %}<span class="res-chip">{{ chip }}</span>{% endunless %}{% endif %}{% if item.updated %}{% if cat.label_chips %}<span class="res-chip is-meta"><span class="res-chip-k">{{ labels.date_chip }}</span><b>{{ item.updated }}</b></span>{% else %}<span class="res-chip">{{ item.updated }}</span>{% endif %}{% endif %}{% if item.doc_ref %}<span class="res-chip is-meta"><span class="res-chip-k">{{ labels.ref_chip }}</span><b>{{ item.doc_ref }}</b></span>{% endif %}{% if item.doc_note %}<span class="res-row-note">{{ item.doc_note }}</span>{% endif %}{%- endcapture -%}
+                    {%- capture body -%}<span class="res-row-ico">{%- case ico -%}
+                        {%- when "file-text" -%}{%- assign d = '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>' -%}
+                        {%- when "archive" -%}{%- assign d = '<path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/>' -%}
+                        {%- when "grid" -%}{%- assign d = '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>' -%}
+                        {%- when "play" -%}{%- assign d = '<circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z"/>' -%}
+                        {%- when "book-open" -%}{%- assign d = '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>' -%}
+                        {%- else -%}{%- assign d = '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/>' -%}
+                      {%- endcase -%}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ d }}</svg></span><span class="res-row-body"><span class="res-row-title">{{ item.title }}</span>{% if meta != blank %}<span class="res-row-meta">{{ meta }}</span>{% endif %}</span>{%- endcapture -%}
+                    {% if item.href == blank %}
+                      <span class="res-row is-static" data-res-row>{{ body }}</span>
+                    {% else %}
+                      <a class="res-row" data-res-row href="{{ item.href }}"{% unless internal %} target="_blank" rel="noopener"{% endunless %}>{{ body }}<span class="res-row-go">{%- case go -%}
+                        {%- when "download" -%}{%- assign d = '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>' -%}
+                        {%- when "external" -%}{%- assign d = '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/>' -%}
+                        {%- else -%}{%- assign d = '<path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>' -%}
+                      {%- endcase -%}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ d }}</svg></span></a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {%- endcapture -%}
+            {% if collapsible %}
+              {%- comment -%}
+                A <summary> takes phrasing content, so the group note is a
+                <span> here where the plain shape below uses a <div>.
+              {%- endcomment -%}
+              <details class="res-sec is-collapsible" id="sec-{{ forloop.index }}" data-res-sec>
+                <summary class="res-sec-head"><h2>{{ sec.title }}</h2>{% if sec.group_note %}<span class="res-sec-note">{{ sec.group_note }}</span>{% endif %}<span class="res-sec-tools">{% if sec.documents.size > 0 %}<span class="res-sec-n">{{ sec.documents.size }}</span>{% endif %}<svg class="res-sec-chev" width="18" height="11" viewBox="0 0 18 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.6 1.6L9 9l7.4-7.4"/></svg></span></summary>
+                <div class="res-sec-body">{{ group_body }}</div>
+              </details>
+            {% else %}
+              <div class="res-sec" id="sec-{{ forloop.index }}" data-res-sec>
+                <div class="res-sec-head">
+                  <span class="lbl">{{ cat.title }}</span>
+                  <h2>{{ sec.title }}</h2>
+                  {% if sec.group_note %}<div class="res-sec-note">{{ sec.group_note }}</div>{% endif %}
+                </div>
+                {{ group_body }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="res-empty" data-res-filter-empty hidden>{{ labels.empty | default: "No matching documents on this page." }}</div>
+      </div>
+
+    </div>
+  </div>
+</section>

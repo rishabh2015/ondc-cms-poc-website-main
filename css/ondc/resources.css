@@ -1,0 +1,937 @@
+/* ============================================================
+   RESOURCES — shared components for pages/resources*.html
+   Linked AFTER legal.css; consumes its tokens, adds no globals.
+   ============================================================ */
+
+/* ---------- Breadcrumbs ---------- */
+.crumbs {
+  background: var(--cream-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.crumbs .container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.crumbs a,
+.crumbs span {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.crumbs a:hover {
+  color: var(--blue);
+}
+
+.crumbs .sep {
+  color: var(--border);
+  font-weight: 400;
+  user-select: none;
+}
+
+.crumbs [aria-current="page"] {
+  color: var(--ink);
+}
+
+/* ---------- Shell: sidebar + main ---------- */
+.res-section {
+  padding: 56px 0 88px;
+  background: var(--cream);
+}
+
+.res-shell {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+/* ---------- Sidebar section tree ---------- */
+.res-nav {
+  position: sticky;
+  top: 100px;
+  max-height: calc(100vh - 124px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding-right: 4px;
+}
+
+.res-nav-head {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+
+.res-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.res-nav ul ul {
+  margin-left: 12px;
+  border-left: 1px solid var(--border);
+}
+
+.res-nav a {
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 7px 10px;
+  border-left: 2px solid transparent;
+  border-radius: 0 7px 7px 0;
+  transition: color .15s, background .15s, border-color .15s;
+}
+
+.res-nav a:hover {
+  color: var(--blue);
+  background: var(--cream-2);
+}
+
+.res-nav a[aria-current="page"] {
+  color: var(--blue);
+  font-weight: 700;
+  border-left-color: var(--blue);
+  background: var(--blue-tint);
+}
+
+.res-nav a:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: -2px;
+}
+
+/* current page's in-page anchors, nested under the active item */
+.res-nav .res-nav-toc a {
+  font-size: 12.5px;
+  padding: 5px 10px;
+  color: var(--text-muted);
+  border-left: none;
+  background: none;
+  font-weight: 500;
+}
+
+.res-nav .res-nav-toc a:hover {
+  color: var(--blue);
+}
+
+/* mobile disclosure wrapper */
+.res-nav-details {
+  display: contents;
+}
+
+.res-nav-details > summary {
+  display: none;
+}
+
+/* ---------- Hub: floating search ---------- */
+.res-searchbar {
+  position: relative;
+  z-index: 5;
+  margin-top: -30px;
+}
+
+.res-search {
+  position: relative;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  height: 62px;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.res-search:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(23, 105, 167, .12), var(--shadow-lg);
+}
+
+.res-search svg {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.res-search input {
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  border: none;
+  background: none;
+  height: 100%;
+}
+
+.res-search input:focus {
+  outline: none;
+}
+
+.res-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.res-kbd {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: var(--cream-2);
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* search results panel */
+.res-results {
+  margin-top: 14px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.res-results[hidden] {
+  display: none;
+}
+
+.res-results-head {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 14px 18px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.res-results .res-row {
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+}
+
+.res-results .res-row:last-child {
+  border-bottom: none;
+}
+
+.res-results .res-empty {
+  padding: 36px 18px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ---------- Hub: category cards ---------- */
+.res-hub {
+  padding: 56px 0 88px;
+  background: var(--cream);
+}
+
+.res-hub-intro {
+  max-width: 720px;
+  margin-bottom: 40px;
+}
+
+.res-hub-intro h2 {
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin: 14px 0;
+}
+
+.res-hub-intro p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+.res-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.res-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 26px 24px 22px;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.res-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue);
+}
+
+.res-card:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.res-card-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: var(--blue-tint);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.res-card h3 {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -.01em;
+  line-height: 1.3;
+}
+
+.res-card p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.res-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.res-card-count {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.res-card-arrow {
+  color: var(--blue);
+  transition: transform .18s ease;
+}
+
+.res-card:hover .res-card-arrow {
+  transform: translateX(4px);
+}
+
+/* ---------- Doc lists ---------- */
+.res-main > .res-intro {
+  max-width: 760px;
+  color: var(--text-body);
+  font-size: 15.5px;
+  line-height: 1.85;
+  margin-bottom: 40px;
+}
+
+.res-main > .res-intro p {
+  margin-bottom: 16px;
+}
+
+.res-main > .res-intro p:last-child {
+  margin-bottom: 0;
+}
+
+.res-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.res-toolbar .rfp-search {
+  flex: 0 1 320px;
+}
+
+.res-count {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.res-sec {
+  margin-bottom: 44px;
+  scroll-margin-top: 96px;
+}
+
+.res-sec:last-child {
+  margin-bottom: 0;
+}
+
+.res-sec-head {
+  margin-bottom: 6px;
+}
+
+.res-sec h2 {
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-weight: 700;
+  line-height: 1.28;
+  color: var(--ink);
+  letter-spacing: -.01em;
+  margin: 6px 0 4px;
+}
+
+.res-sec-note {
+  display: block;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+/* ---- collapsible sections ----
+   The heading is the control. <details> cannot transition its own height, so
+   the open/close travel is animated in resources.js; everything here is the
+   resting appearance plus the chevron turn. */
+.res-sec.is-collapsible {
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--cream);
+  overflow: hidden;
+}
+
+.res-sec.is-collapsible > summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 16px;
+  margin-bottom: 0;
+  padding: 16px 18px;
+  cursor: pointer;
+  list-style: none;
+  transition: background .15s;
+}
+
+.res-sec.is-collapsible > summary::-webkit-details-marker {
+  display: none;
+}
+
+.res-sec.is-collapsible > summary:hover {
+  background: var(--cream-2);
+}
+
+.res-sec.is-collapsible > summary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -3px;
+}
+
+/* the category eyebrow, carried once above the stack of cards */
+.res-seclist-head {
+  margin-bottom: 14px;
+}
+
+.res-sec.is-collapsible > summary > h2,
+.res-sec.is-collapsible > summary > .res-sec-note {
+  grid-column: 1;
+}
+
+.res-sec.is-collapsible > summary > h2 {
+  margin: 0;
+}
+
+.res-sec.is-collapsible > summary:hover > h2 {
+  color: var(--blue);
+}
+
+.res-sec-tools {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* how many documents are folded away under this heading */
+.res-sec-n {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.res-sec-chev {
+  display: block;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform .3s cubic-bezier(.22, .61, .36, 1), color .15s;
+}
+
+.res-sec.is-collapsible[open] > summary .res-sec-chev {
+  transform: rotate(180deg);
+}
+
+.res-sec.is-collapsible > summary:hover .res-sec-chev {
+  color: var(--blue);
+}
+
+.res-sec-body {
+  overflow: hidden;
+}
+
+/* the section is already a bordered card — the list inside should not draw a
+   second one, just a rule under the heading */
+.res-sec.is-collapsible .res-sec-body > .res-doclist {
+  margin-top: 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+}
+
+.res-sec.is-collapsible .res-sec-body > .res-doclist .res-row:last-child {
+  border-bottom: 0;
+}
+
+.res-sec.is-collapsible .res-sec-body > .res-sec-prose {
+  padding: 0 18px 14px;
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .res-sec-chev {
+    transition: none;
+  }
+}
+
+.res-sec-prose {
+  max-width: 760px;
+  color: var(--text-body);
+  font-size: 14.5px;
+  line-height: 1.8;
+  margin: 10px 0 14px;
+}
+
+.res-sec-prose p {
+  margin-bottom: 12px;
+}
+
+.res-sec-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.res-steps {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+  counter-reset: res-step;
+}
+
+.res-steps li {
+  position: relative;
+  counter-increment: res-step;
+  padding-left: 34px;
+  margin-bottom: 10px;
+}
+
+.res-steps li::before {
+  content: counter(res-step);
+  position: absolute;
+  left: 0;
+  top: .16em;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--blue-tint);
+  color: var(--blue);
+  font-size: 11.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.res-steps li:last-child {
+  margin-bottom: 0;
+}
+
+.res-doclist {
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--cream);
+  overflow: hidden;
+}
+
+.res-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+
+.res-row:last-child {
+  border-bottom: none;
+}
+
+.res-row:hover {
+  background: var(--cream-2);
+}
+
+.res-row.is-static {
+  opacity: .62;
+}
+
+.res-row.is-static:hover {
+  background: none;
+}
+
+.res-row:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: -2px;
+}
+
+.res-row-ico {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--blue-tint);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.res-row-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.res-row-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.res-row:hover .res-row-title {
+  color: var(--blue);
+}
+
+.res-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.res-row-note {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.res-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+
+/* a chip that names its own value — "Date 14/07/2026". Sentence case, because
+   the label is read as words, not as the all-caps tag the plain chip is. */
+.res-chip.is-meta {
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.res-chip.is-meta b {
+  font-weight: 700;
+  color: var(--text-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.res-chip.is-lang {
+  color: var(--blue);
+  background: var(--blue-tint);
+  border-color: transparent;
+}
+
+.res-chip.is-cat {
+  color: var(--blue);
+  background: var(--blue-tint);
+  border-color: transparent;
+}
+
+.res-row-go {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: color .15s, transform .18s ease;
+}
+
+.res-row:hover .res-row-go {
+  color: var(--blue);
+  transform: translateX(3px);
+}
+
+.res-empty {
+  padding: 44px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ---------- Child-category cards (parent pages) ---------- */
+.res-children {
+  margin-bottom: 44px;
+}
+
+/* ---------- Video cards (Academy) ---------- */
+.res-video {
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.res-video:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue);
+}
+
+.res-video:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.res-video-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--navy);
+  overflow: hidden;
+}
+
+.res-video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .3s ease;
+}
+
+.res-video:hover .res-video-thumb img {
+  transform: scale(1.04);
+}
+
+.res-video-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.res-video-play span {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(0, 29, 51, .72);
+  border: 1.5px solid rgba(255, 255, 255, .5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: background .18s, transform .18s;
+}
+
+.res-video:hover .res-video-play span {
+  background: var(--cyan);
+  transform: scale(1.08);
+}
+
+.res-video-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 18px;
+}
+
+.res-video-body h3 {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+/* ---------- External-link banner rows (tech resources apps) ---------- */
+.res-note {
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--cyan);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin: 0 0 28px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-body);
+  max-width: 760px;
+}
+
+.res-note strong {
+  color: var(--ink);
+}
+
+.res-note a {
+  color: var(--blue);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px) {
+  .res-shell {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .res-nav {
+    position: static;
+    max-height: none;
+    padding-right: 0;
+    margin-bottom: 24px;
+  }
+
+  .res-nav-details {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--cream-2);
+  }
+
+  .res-nav-details > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    padding: 13px 16px;
+  }
+
+  .res-nav-details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .res-nav-details > summary::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--text-muted);
+    border-bottom: 2px solid var(--text-muted);
+    transform: rotate(45deg);
+    transition: transform .18s;
+  }
+
+  .res-nav-details[open] > summary::after {
+    transform: rotate(-135deg);
+  }
+
+  .res-nav-details > div {
+    padding: 4px 10px 14px;
+  }
+
+  .res-nav-head {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .res-search {
+    height: 54px;
+    padding: 0 14px;
+  }
+
+  .res-search input {
+    font-size: 15px;
+  }
+
+  .res-kbd {
+    display: none;
+  }
+
+  .res-row {
+    padding: 13px 14px;
+    gap: 11px;
+  }
+
+  .res-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .res-toolbar .rfp-search {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .res-card,
+  .res-card-arrow,
+  .res-video,
+  .res-video-thumb img,
+  .res-video-play span,
+  .res-row-go {
+    transition: none;
+  }
+}

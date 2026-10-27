@@ -1,0 +1,20 @@
+<section class="hero-source" aria-label="Hero copy (editor)">
+  <div class="container">
+    <p class="hero-source-note">{{ note }}</p>
+    <div data-key="hero-story">
+      {% for beat in beats %}
+        <p>{{ beat.line1 }}{% if beat.line2 %}<br />{{ beat.line2 }}{% endif %}</p>
+      {% endfor %}
+      <p>{{ impact_line1 }}<br />{{ impact_line2 }}</p>
+      <p>{{ sub_line }}</p>
+      <p>{{ wordmark }}</p>
+      <p>{{ title }}</p>
+      <p>{{ tagline }}</p>
+      {% for button in buttons %}
+        <p>
+          <a href="{{ button.url }}">{{ button.label }}</a>
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+</section>

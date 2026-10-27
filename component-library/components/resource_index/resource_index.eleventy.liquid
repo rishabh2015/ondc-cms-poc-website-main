@@ -1,0 +1,42 @@
+{%- comment -%}
+  The Knowledge Base index on the Resources hub — one card per top-level area.
+  ==========================================================================
+  The cards are NOT fields on this section. They are the categories marked
+  "Show on the hub" in the Resources library data file, so adding an area to
+  the knowledge base puts a card here by itself and nobody has to remember to
+  update two places.
+
+  The count on each card is worked out at build time, here, rather than stored
+  in the data: a stored count goes stale the moment an editor adds a document,
+  and a figure that disagrees with the page it links to is worse than no
+  figure. The knowledge base is three levels deep (Governance → Guidance →
+  Guidance on Tax), so the sum is written out to three levels. A fourth would
+  need another loop — which is the honest cost of Liquid having no recursion,
+  and is flagged here so it is found rather than puzzled over.
+{%- endcomment -%}
+{%- assign hid = heading_id | default: "library-index-title" -%}
+<section class="bk-library-index"{% if anchor_id %} id="{{ anchor_id }}"{% endif %} aria-labelledby="{{ hid }}" data-screen-label="{{ screen_label | default: "Knowledge base index" }}">
+  <div class="bk-library-index-head bk-rv">
+    <h2 id="{{ hid }}">{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h2>
+    {% if intro %}<p>{{ intro }}</p>{% endif %}
+  </div>
+  <div class="bk-library-grid">
+    {%- assign cards = resources.areas | where: "hub", true -%}
+    {% for cat in cards %}
+      {%- assign total = 0 -%}
+      {%- for sec in cat.doc_groups -%}{%- assign total = total | plus: sec.documents.size -%}{%- endfor -%}
+      {%- for kid in resources.areas -%}{%- if kid.parent_area == cat.id -%}
+        {%- for sec in kid.doc_groups -%}{%- assign total = total | plus: sec.documents.size -%}{%- endfor -%}
+        {%- for grandkid in resources.areas -%}{%- if grandkid.parent_area == kid.id -%}
+          {%- for sec in grandkid.doc_groups -%}{%- assign total = total | plus: sec.documents.size -%}{%- endfor -%}
+        {%- endif -%}{%- endfor -%}
+      {%- endif -%}{%- endfor -%}
+      {%- assign delay = forloop.index0 | modulo: 4 | plus: 1 -%}
+      <a class="bk-library-entry reveal d{{ delay }}" href="{{ cat.page }}"{% if cat.external %} target="_blank" rel="noopener"{% endif %}>
+        <span><h3>{{ cat.title }}</h3><p>{{ cat.summary }}</p></span>
+        <span class="bk-library-entry-count">{% if cat.external %}{{ external_label | default: "External" }}{% else %}{{ total }} {{ count_noun | default: "resources" }}{% endif %}</span>
+        <span class="bk-library-entry-go">{{ open_label | default: "Open" }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</section>

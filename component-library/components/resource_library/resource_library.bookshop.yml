@@ -1,0 +1,191 @@
+spec:
+  structures: [sections]
+  label: Knowledge base area
+  description: >-
+    The body of a Resources sub-page — breadcrumbs, the sidebar tree, the
+    documents in one area of the library, and where the area has them, its
+    sub-area cards and video grid. Pick the area below; everything else follows
+    from the Resources library data file.
+  icon: menu_book
+
+blueprint:
+  screen_label: Knowledge base content
+  category: policies
+  hub_url: /resources.html
+  intro: ''
+  notice: ''
+  show_videos: false
+  collapsible: false
+  buttons: []
+  labels:
+    breadcrumb: Breadcrumb
+    hub: Resources
+    nav: Knowledge base navigation
+    browse: Browse the Knowledge Base
+    nav_head: Knowledge Base
+    home: Resources Home
+    count_noun: resources
+    videos: Videos
+    filter_placeholder: Filter documents on this page
+    empty: No matching documents on this page.
+    date_chip: Date
+    ref_chip: Notification No.
+
+# WHERE THE DOCUMENTS COME FROM
+# src/_data/resources.json, edited in the CMS under "Resources library". It is
+# listed in cloudcannon.config.yml under `data_config`, which is what lets
+# CloudCannon edit it AND what makes it reach Bookshop's live rendering, so the
+# page still draws while editing.
+#
+# Deleting a document there removes it from this page, from the sidebar counts
+# and from the hub search, because all three are rendered from that one file at
+# build time. Sub-area cards and the sidebar tree are built from the `parent`
+# field on each area, so moving an area under another one re-files it
+# everywhere at once.
+
+# Configured HERE, in the component file. `_inputs` at the top of
+# cloudcannon.config.yml does not reach a Bookshop component's fields — see
+# ADDING_PAGES.md, rule 5.
+_inputs:
+  screen_label:
+    type: text
+    label: Section name for screen readers
+  category:
+    type: text
+    label: Which part of the library
+    comment: >-
+      The id of the area this page shows, exactly as it is written in the
+      Resources library — for example "policies" or "guidance-tax". Open
+      "Resources library" in the sidebar to see the ids.
+    options:
+      pattern: '^[a-z][a-z0-9-]*$'
+      pattern_message: Lower-case letters, numbers and dashes, starting with a letter.
+  hub_url:
+    type: text
+    label: Address of the Resources home page
+    comment: Where the breadcrumbs and the sidebar's first link point. Change only if the hub moves.
+  intro:
+    type: html
+    label: Intro paragraph
+    comment: The paragraph above the documents. Leave empty to drop it.
+    options:
+      bold: true
+      italic: true
+      link: true
+      bulletedlist: true
+      numberedlist: true
+      removeformat: true
+      undo: true
+      redo: true
+  notice:
+    type: html
+    label: Notice above the documents
+    comment: >-
+      A boxed caution shown between the intro and the filter — "Use as
+      published" on Marketing, the password warning on Investor Corner. Leave
+      empty for no box.
+    options:
+      bold: true
+      italic: true
+      link: true
+      removeformat: true
+      undo: true
+      redo: true
+  show_videos:
+    type: checkbox
+    label: Show a video grid above the documents
+    comment: >-
+      Tick on an area whose documents include videos — the ONDC Academy page.
+      The videos are the items of type "Video" in that area.
+  collapsible:
+    type: checkbox
+    label: Fold each group of documents
+    comment: >-
+      Tick on an area with so many documents that the group headings are what
+      you scan rather than the rows — Disclosures, with a hundred of them. Each
+      group becomes a bar you click to open, one at a time, and carries the
+      number of documents it holds. Filtering opens every group that has a
+      match and puts them back as they were when the box is cleared.
+  buttons:
+    type: array
+    label: Buttons above the documents
+    comment: Used by the Academy page for its "Visit ONDC Academy" link. Leave empty for none.
+    options:
+      structures:
+        values:
+          - label: Button
+            icon: smart_button
+            value:
+              label: Button text
+              url: ''
+              style: primary
+              new_tab: true
+            _inputs:
+              label:
+                type: text
+                label: Button text
+              url:
+                type: text
+                label: Link address
+              style:
+                type: select
+                label: Button style
+                options:
+                  values:
+                    - value: primary
+                      label: Solid
+                    - value: secondary
+                      label: Outline
+              new_tab:
+                type: checkbox
+                label: Open in a new tab
+  labels:
+    type: object
+    label: Wording around the documents
+    comment: >-
+      The sidebar heading, the breadcrumb, the filter hint and the messages.
+      These rarely need changing.
+    options:
+      preview:
+        text:
+          - Sidebar, breadcrumb and filter wording
+  breadcrumb:
+    type: text
+    label: Name of the breadcrumb trail, for screen readers
+  hub:
+    type: text
+    label: First crumb in the trail
+  nav:
+    type: text
+    label: Name of the sidebar, for screen readers
+  browse:
+    type: text
+    label: Sidebar heading on a phone
+    comment: The line you tap to open the sidebar on a small screen.
+  nav_head:
+    type: text
+    label: Sidebar heading
+  home:
+    type: text
+    label: First link in the sidebar
+  count_noun:
+    type: text
+    label: Word after the number on a sub-area card
+  videos:
+    type: text
+    label: Name of the video grid, for screen readers
+  filter_placeholder:
+    type: text
+    label: Grey hint in the filter box
+  empty:
+    type: text
+    label: Message when the filter finds nothing
+  date_chip:
+    type: text
+    label: Word before the date on a row
+    comment: >-
+      Shown only on areas whose documents carry a reference number as well as a
+      date — Notifications. Elsewhere the date stands on its own.
+  ref_chip:
+    type: text
+    label: Word before the reference number on a row
