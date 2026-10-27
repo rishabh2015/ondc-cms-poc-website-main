@@ -54,8 +54,9 @@
     {% endif %}{% include "chrome/footer.liquid" %}
     {% assign page_scripts = scripts | default: default_scripts %}{% for script in page_scripts %}  <script src="{{ script }}" defer></script>
     {% endfor %}  <script>
-    /* Inside the Tina editor's preview frame only: click-to-edit. */
-    if (window.self !== window.top) {
+    /* Inside the Tina editor's preview frame only: click-to-edit and live
+       preview. Not in the live preview's own redrawn copy of the page. */
+    if (window.self !== window.top && !window.__TINA_LIVE_FRAME__) {
       var tp = document.createElement('script'); tp.type = 'module'; tp.src = '/js/ondc/tina-preview.js';
       document.body.appendChild(tp);
     }

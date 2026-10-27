@@ -17,6 +17,7 @@
  * its JavaScript formats the same instant in Asia/Kolkata. */
 process.env.TZ = process.env.TZ || 'Asia/Kolkata';
 
+const path = require("path");
 const pluginBookshop = require("@bookshop/eleventy-bookshop");
 
 module.exports = function (eleventyConfig) {
@@ -45,26 +46,15 @@ module.exports = function (eleventyConfig) {
     // The TinaCMS editor, built into ./admin by `tinacms build` / `tinacms dev`.
     admin: "admin",
     // Click-to-edit in the Tina preview frame (js/ondc/tina-preview.js).
-    "node_modules/@tinacms/bridge/dist/index.js": "js/vendor/tina-bridge.js"
+    "node_modules/@tinacms/bridge/dist/index.js": "js/vendor/tina-bridge.js",
+    // The same liquidjs Eleventy renders with, for the live preview.
+    [path.relative(__dirname, require.resolve("liquidjs/dist/liquid.browser.min.js", { paths: [path.dirname(require.resolve("@11ty/eleventy/package.json"))] }))]: "js/vendor/liquid.browser.min.js"
   });
 
-  // "a\nb" -> "a<br>b"  (used for labels that wrap onto two lines)
-  eleventyConfig.addFilter("nl2br", function (value) {
-    if (value === undefined || value === null) return "";
-    return String(value)
-      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-      .replace(/\r\n|\r|\n/g, "<br/>");
-  });
-
-  // youtube / vimeo url -> embeddable player url
-  eleventyConfig.addFilter("embedUrl", function (value) {
-    var u = String(value || "").trim();
-    var m = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/);
-    if (m) return "https://www.youtube.com/embed/" + m[1];
-    m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-    if (m) return "https://player.vimeo.com/video/" + m[1];
-    return u;
-  });
+  // The site's own Liquid filters (nl2br, embedUrl). They live in
+  // js/ondc/tina-render.js so the Tina live preview draws with the same code.
+  const { filters } = require("./js/ondc/tina-render.js");
+  for (const [name, fn] of Object.entries(filters)) eleventyConfig.addFilter(name, fn);
 
   return {
     dir: { input: "src", includes: "_includes", data: "_data", output: "_site" },

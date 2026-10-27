@@ -10,7 +10,8 @@
     "build:site": "eleventy",
     "start": "eleventy --serve",
     "tina:schema": "node scripts/tina-schema.js",
-    "browser": "bookshop-browser"
+    "browser": "bookshop-browser",
+    "tina:check-preview": "node scripts/tina-preview-check.js"
   },
   "devDependencies": {
     "@11ty/eleventy": "2.0.1",
