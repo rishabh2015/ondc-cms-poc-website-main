@@ -2,17 +2,17 @@
   <div class="container">
     <div class="block-inner{% if full_width %} is-wide{% endif %}">
       {% if eyebrow %}
-        <div class="block-eyebrow">{{ eyebrow }}</div>
+        <div class="block-eyebrow" data-tina-at="eyebrow">{{ eyebrow }}</div>
       {% endif %}
       {% if heading %}
-        <h2 class="block-h2">{{ heading }}</h2>
+        <h2 class="block-h2" data-tina-at="heading">{{ heading }}</h2>
       {% endif %}
-      <div class="block-body">{{ body }}</div>
+      <div class="block-body" data-tina-at="body">{{ body }}</div>
       {% if buttons.size > 0 %}
         <div class="block-actions">
           {% for button in buttons %}<a
               class="btn {% if button.style == "secondary" %}btn-light{% else %}btn-primary{% endif %}"
-              href="{{ button.url }}">{{ button.label }}</a>{% endfor %}
+              href="{{ button.url }}" data-tina-at="buttons.{{ forloop.index0 }}">{{ button.label }}</a>{% endfor %}
         </div>
       {% endif %}
     </div>

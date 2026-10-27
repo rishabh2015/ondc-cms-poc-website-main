@@ -43,7 +43,9 @@ module.exports = function (eleventyConfig) {
     fonts: "fonts",
     files: "files",
     // The TinaCMS editor, built into ./admin by `tinacms build` / `tinacms dev`.
-    admin: "admin"
+    admin: "admin",
+    // Click-to-edit in the Tina preview frame (js/ondc/tina-preview.js).
+    "node_modules/@tinacms/bridge/dist/index.js": "js/vendor/tina-bridge.js"
   });
 
   // "a\nb" -> "a<br>b"  (used for labels that wrap onto two lines)

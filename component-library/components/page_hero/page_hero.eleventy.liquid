@@ -17,9 +17,9 @@
   {%- endcomment -%}
   <div class="bk-hero-body">
     {% if eyebrow %}
-      <div class="bk-eyebrow{% unless intro %} bk-rv{% endunless %}"{% if intro %} data-bk-intro{% endif %}>{{ eyebrow }}</div>
+      <div class="bk-eyebrow{% unless intro %} bk-rv{% endunless %}"{% if intro %} data-bk-intro{% endif %} data-tina-at="eyebrow">{{ eyebrow }}</div>
     {% endif %}
-    <h1 class="bk-soon-word{% unless intro %} bk-rv{% endunless %}"{% if heading_id %} id="{{ heading_id }}"{% endif %} aria-label="{{ heading }}"{% if intro %} data-bk-intro{% endif %}>{%- assign soon_words = heading | split: " " -%}{%- for soon_word in soon_words -%}{%- unless forloop.first %} {% endunless -%}{%- assign soon_letters = soon_word | split: "" -%}{%- for soon_letter in soon_letters -%}<span aria-hidden="true">{{ soon_letter }}</span>{%- endfor -%}{%- endfor -%}</h1>
+    <h1 class="bk-soon-word{% unless intro %} bk-rv{% endunless %}"{% if heading_id %} id="{{ heading_id }}"{% endif %} aria-label="{{ heading }}"{% if intro %} data-bk-intro{% endif %} data-tina-at="heading">{%- assign soon_words = heading | split: " " -%}{%- for soon_word in soon_words -%}{%- unless forloop.first %} {% endunless -%}{%- assign soon_letters = soon_word | split: "" -%}{%- for soon_letter in soon_letters -%}<span aria-hidden="true">{{ soon_letter }}</span>{%- endfor -%}{%- endfor -%}</h1>
     {% if status_label %}
       <p class="bk-hold-status bk-soon-status{% unless intro %} bk-rv{% endunless %}"{% if intro %} data-bk-intro{% endif %}>
         <svg class="bk-hold-node" width="180" height="20" viewBox="0 0 180 20" aria-hidden="true">
@@ -30,16 +30,16 @@
       </p>
     {% endif %}
     {% for para in paragraphs %}
-      <p class="bk-hero-sub{% unless intro %} bk-rv bk-rv-d1{% endunless %}"{% if intro %} data-bk-intro{% endif %}>{{ para.text }}</p>
+      <p class="bk-hero-sub{% unless intro %} bk-rv bk-rv-d1{% endunless %}"{% if intro %} data-bk-intro{% endif %} data-tina-at="paragraphs.{{ forloop.index0 }}.text">{{ para.text }}</p>
     {% endfor %}
   </div>
 </section>
 {% elsif variant == "compact" %}<section class="hero hero-compact"{% if heading_id %} aria-labelledby="{{ heading_id }}"{% endif %} data-screen-label="{{ screen_label | default: "Hero" }}">
     <div class="hero-inner">
       <div class="container">
-        {% if eyebrow %}<div class="hero-tag reveal in"><span class="dot"></span>{{ eyebrow }}</div>{% endif %}
-        <h1 class="hero-h1 reveal d1 in"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}{% if heading_accent %} <span>{{ heading_accent }}</span>{% endif %}{{ heading_suffix }}</h1>
-        {% for para in paragraphs %}<p class="hero-sub reveal d2 in">{{ para.text }}</p>{% endfor %}
+        {% if eyebrow %}<div class="hero-tag reveal in" data-tina-at="eyebrow"><span class="dot"></span>{{ eyebrow }}</div>{% endif %}
+        <h1 class="hero-h1 reveal d1 in"{% if heading_id %} id="{{ heading_id }}"{% endif %} data-tina-at="heading">{{ heading }}{% if heading_accent %} <span>{{ heading_accent }}</span>{% endif %}{{ heading_suffix }}</h1>
+        {% for para in paragraphs %}<p class="hero-sub reveal d2 in" data-tina-at="paragraphs.{{ forloop.index0 }}.text">{{ para.text }}</p>{% endfor %}
       </div>
     </div>
   </section>
@@ -52,11 +52,11 @@
   {% endif %}
   <div class="bk-hero-body">
     {% if eyebrow %}
-      <div class="bk-eyebrow{% unless intro %} bk-rv{% endunless %}"{% if intro %} data-bk-intro{% endif %}>{{ eyebrow }}</div>
+      <div class="bk-eyebrow{% unless intro %} bk-rv{% endunless %}"{% if intro %} data-bk-intro{% endif %} data-tina-at="eyebrow">{{ eyebrow }}</div>
     {% endif %}
-    <h1{% if heading_id %} id="{{ heading_id }}"{% endif %}{% unless intro %} class="bk-rv"{% endunless %}{% if intro %} data-bk-intro{% endif %}>{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h1>
+    <h1{% if heading_id %} id="{{ heading_id }}"{% endif %}{% unless intro %} class="bk-rv"{% endunless %}{% if intro %} data-bk-intro{% endif %} data-tina-at="heading">{{ heading }}{% if heading_accent %} <em>{{ heading_accent }}</em>{% endif %}{{ heading_suffix }}</h1>
     {% for para in paragraphs %}
-      <p class="bk-hero-sub{% unless intro %} bk-rv bk-rv-d1{% endunless %}"{% if intro %} data-bk-intro{% endif %}>{{ para.text }}</p>
+      <p class="bk-hero-sub{% unless intro %} bk-rv bk-rv-d1{% endunless %}"{% if intro %} data-bk-intro{% endif %} data-tina-at="paragraphs.{{ forloop.index0 }}.text">{{ para.text }}</p>
     {% endfor %}
   </div>
   {% if buttons.size > 0 %}
@@ -64,7 +64,7 @@
       {% for button in buttons %}        <a
             class="bk-btn {% if button.style == "solid" %}bk-btn-solid{% else %}bk-btn-ghost{% endif %}"
             href="{{ button.url }}"{% if button.new_tab %} target="_blank"
-            rel="noopener"{% endif %}>{{ button.label }}</a>
+            rel="noopener"{% endif %} data-tina-at="buttons.{{ forloop.index0 }}">{{ button.label }}</a>
         {% endfor %}
     </div>
   {% endif %}

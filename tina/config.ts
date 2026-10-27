@@ -84,6 +84,10 @@ const pages: Collection = {
   path: 'src/pages',
   format: 'md',
   ui: {
+    /* Opens the page beside its form, where clicking a section (or a marked
+       field inside one) jumps to it. See js/ondc/tina-preview.js. Every page
+       is served at /<file name>.html. */
+    router: ({ document }) => `/${document._sys.filename}.html`,
     filename: {
       slugify: (values: any) =>
         String(values?.title || 'new-page').toLowerCase().trim()

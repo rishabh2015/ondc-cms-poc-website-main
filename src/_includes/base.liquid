@@ -41,7 +41,7 @@
     } catch (e) {}
   </script>
   </head>
-  <body{% if body_class %} class="{{ body_class }}"{% endif %}>
+  <body{% if body_class %} class="{{ body_class }}"{% endif %} data-tina-document="{{ page.inputPath | split: "/" | last }}">
     {% if show_progress %}
       <div class="scroll-progress">
         <span id="progBar"></span>
@@ -53,5 +53,12 @@
     {% if show_sector_rail %}{% include "chrome/sector-rail.liquid" %}
     {% endif %}{% include "chrome/footer.liquid" %}
     {% assign page_scripts = scripts | default: default_scripts %}{% for script in page_scripts %}  <script src="{{ script }}" defer></script>
-    {% endfor %}</body>
+    {% endfor %}  <script>
+    /* Inside the Tina editor's preview frame only: click-to-edit. */
+    if (window.self !== window.top) {
+      var tp = document.createElement('script'); tp.type = 'module'; tp.src = '/js/ondc/tina-preview.js';
+      document.body.appendChild(tp);
+    }
+  </script>
+  </body>
 </html>

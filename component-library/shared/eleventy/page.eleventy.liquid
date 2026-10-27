@@ -2,7 +2,9 @@
   Each section's `_template` (written by TinaCMS) names the component that
   draws it; `_bookshop_name` is the older CloudCannon spelling, kept as a
   fallback. The editable-* wrappers are inert outside CloudCannon and stay so
-  the markup, and every CSS selector over it, is unchanged.
+  the markup, and every CSS selector over it, is unchanged. `data-tina-path`
+  is what lets a click on a section in the Tina preview open its fields (see
+  js/ondc/tina-preview.js).
 {%- endcomment -%}
 <div
   class="page-sections"
@@ -12,7 +14,7 @@
   data-component-key="_bookshop_name">
   {% for block in sections %}
     {%- assign component = block._template | default: block._bookshop_name -%}
-    <editable-array-item data-component="{{component}}" data-id="{{component}}">
+    <editable-array-item data-component="{{component}}" data-id="{{component}}" data-tina-path="sections.{{ forloop.index0 }}">
       {% bookshop "{{component}}" bind: block %}
     </editable-array-item>
   {% endfor %}
