@@ -67,9 +67,9 @@
       <div class="bk-np-filter-group">
         <div class="bk-eyebrow">{{ labels.category_heading | default: "Category" }}</div>
         <div data-np-tree>
-          {% assign parents = np_categories.categories | where: "parent", "" %}
+          {% assign parents = np_categories | where: "parent", "" %}
           {% for parent in parents %}
-            {% assign children = np_categories.categories | where: "parent", parent.name %}
+            {% assign children = np_categories | where: "parent", parent.name %}
             {% assign kids_id = "npKids-" | append: forloop.index %}
             <div class="bk-np-cat" data-cat="{{ parent.name | escape }}" data-np-branch hidden>
               <div class="bk-np-cat-row">
@@ -173,7 +173,7 @@
 
       <div class="bk-np-filterbar">
         <div class="bk-np-rolebar" data-np-rolebar role="group" aria-label="{{ labels.roles | default: "Filter by role" }}">
-          {% for role in np_roles.roles %}
+          {% for role in np_roles %}
             <button
               type="button"
               class="bk-np-role"
@@ -195,10 +195,10 @@
         break the no-new-nodes rule this whole section is built on.
       {%- endcomment -%}
       <div class="bk-np-chips" data-np-chips hidden aria-label="{{ labels.active_filters | default: "Active filters" }}">
-        {% for role in np_roles.roles %}
+        {% for role in np_roles %}
           <button type="button" class="bk-np-chip" data-np-chip="role" data-value="{{ role.role_value | escape }}" hidden>{{ role.role_label }}<span aria-hidden="true">&#10005;</span><span class="bk-sr-only"> — {{ labels.remove_filter | default: "remove this filter" }}</span></button>
         {% endfor %}
-        {% for cat in np_categories.categories %}
+        {% for cat in np_categories %}
           <button type="button" class="bk-np-chip" data-np-chip="{% if cat.parent == "" %}cat{% else %}sub{% endif %}" data-value="{{ cat.name | escape }}" hidden>{{ cat.name }}<span aria-hidden="true">&#10005;</span><span class="bk-sr-only"> — {{ labels.remove_filter | default: "remove this filter" }}</span></button>
         {% endfor %}
         <button type="button" class="bk-np-chip-clear" data-np-clear hidden>{{ labels.clear_all | default: "Clear all" }}</button>
@@ -271,7 +271,7 @@
                     {%- if p.roles.size == 0 -%}<span class="bk-np-none" aria-hidden="true">&#8212;</span><span class="bk-sr-only">{{ labels.not_recorded | default: "Not recorded" }}</span>
                     {%- else -%}
                       {%- for r in p.roles -%}
-                        {%- assign rk = np_roles.roles | where: "role_value", r | first -%}
+                        {%- assign rk = np_roles | where: "role_value", r | first -%}
                         {%- if rk -%}<abbr class="bk-np-key" title="{{ rk.role_full | escape }}">{{ rk.role_key }}</abbr>
                         {%- else -%}<span class="bk-np-key">{{ r }}</span>
                         {%- endif -%}{%- unless forloop.last %} {% endunless -%}

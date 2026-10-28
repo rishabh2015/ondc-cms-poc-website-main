@@ -10,7 +10,7 @@
        Always loaded, on every page, so a new page can never lose its chrome.
        Must come BEFORE fx.css, which layers the site finish on top. -->
     <link rel="stylesheet" href="/css/ondc/category-chrome.css">
-    {% assign page_styles = styles | default: default_styles %}{% for sheet in page_styles %}  <link rel="stylesheet" href="/css/ondc/{{ sheet }}.css">
+    {% for sheet in styles %}  <link rel="stylesheet" href="/css/ondc/{{ sheet }}.css">
     {% endfor %}{% if preload_image %}  <link rel="preload" as="image" href="{{ preload_image }}" fetchpriority="high">
     {% endif %}  <link
       rel="preload"
@@ -41,7 +41,7 @@
     } catch (e) {}
   </script>
   </head>
-  <body{% if body_class %} class="{{ body_class }}"{% endif %} data-tina-document="{{ page.inputPath | split: "/" | last }}">
+  <body{% if body_class %} class="{{ body_class }}"{% endif %}>
     {% if show_progress %}
       <div class="scroll-progress">
         <span id="progBar"></span>
@@ -52,14 +52,6 @@
     </{{ wrapper_tag | default: "div" }}>
     {% if show_sector_rail %}{% include "chrome/sector-rail.liquid" %}
     {% endif %}{% include "chrome/footer.liquid" %}
-    {% assign page_scripts = scripts | default: default_scripts %}{% for script in page_scripts %}  <script src="{{ script }}" defer></script>
-    {% endfor %}  <script>
-    /* Inside the Tina editor's preview frame only: click-to-edit and live
-       preview. Not in the live preview's own redrawn copy of the page. */
-    if (window.self !== window.top && !window.__TINA_LIVE_FRAME__) {
-      var tp = document.createElement('script'); tp.type = 'module'; tp.src = '/js/ondc/tina-preview.js';
-      document.body.appendChild(tp);
-    }
-  </script>
-  </body>
+    {% for script in scripts %}  <script src="{{ script }}" defer></script>
+    {% endfor %}</body>
 </html>

@@ -312,8 +312,8 @@ write('network_participants.json', {
    object rather than written as a bare array so the CMS has a key to hang the
    "Ecosystem Participants" label and the add/delete controls on. */
 write('ecosystem_participants.json', { participants: ecosystem.slice().sort(byName) });
-write('np_categories.json', { categories });
-write('np_roles.json', { roles: ROLES });
+write('np_categories.json', categories);
+write('np_roles.json', ROLES);
 
 /* ── logo report ─────────────────────────────────────────────────────────── */
 const dest = path.join(ROOT, 'images/np-logos');

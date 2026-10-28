@@ -1,228 +1,226 @@
-{
-  "categories": [
-    {
-      "name": "Retail",
-      "parent": ""
-    },
-    {
-      "name": "Grocery",
-      "parent": "Retail"
-    },
-    {
-      "name": "Food & Beverage",
-      "parent": "Retail"
-    },
-    {
-      "name": "Fashion",
-      "parent": "Retail"
-    },
-    {
-      "name": "Beauty & Personal Care",
-      "parent": "Retail"
-    },
-    {
-      "name": "Electronics",
-      "parent": "Retail"
-    },
-    {
-      "name": "Appliances",
-      "parent": "Retail"
-    },
-    {
-      "name": "Home & Decor",
-      "parent": "Retail"
-    },
-    {
-      "name": "Health & Wellness",
-      "parent": "Retail"
-    },
-    {
-      "name": "Autoparts & Components",
-      "parent": "Retail"
-    },
-    {
-      "name": "Hardware and Industrial",
-      "parent": "Retail"
-    },
-    {
-      "name": "Building & Construction Supplies",
-      "parent": "Retail"
-    },
-    {
-      "name": "Chemicals",
-      "parent": "Retail"
-    },
-    {
-      "name": "eB2B",
-      "parent": "Retail"
-    },
-    {
-      "name": "Inventory Less",
-      "parent": "Retail"
-    },
-    {
-      "name": "Gift card",
-      "parent": "Retail"
-    },
-    {
-      "name": "Credit",
-      "parent": ""
-    },
-    {
-      "name": "Business loan",
-      "parent": "Credit"
-    },
-    {
-      "name": "Personal Loan",
-      "parent": "Credit"
-    },
-    {
-      "name": "Credit Cards",
-      "parent": "Credit"
-    },
-    {
-      "name": "Gold Loan",
-      "parent": "Credit"
-    },
-    {
-      "name": "Insurance",
-      "parent": ""
-    },
-    {
-      "name": "Health Insurance",
-      "parent": "Insurance"
-    },
-    {
-      "name": "Marine Insurance",
-      "parent": "Insurance"
-    },
-    {
-      "name": "Motor Insurance",
-      "parent": "Insurance"
-    },
-    {
-      "name": "Micro Transit Insurance",
-      "parent": "Insurance"
-    },
-    {
-      "name": "Unreserved Ticket Booking",
-      "parent": ""
-    },
-    {
-      "name": "Cabs/Auto",
-      "parent": "Unreserved Ticket Booking"
-    },
-    {
-      "name": "Metro",
-      "parent": "Unreserved Ticket Booking"
-    },
-    {
-      "name": "Bus",
-      "parent": "Unreserved Ticket Booking"
-    },
-    {
-      "name": "Reserved Ticket Booking",
-      "parent": ""
-    },
-    {
-      "name": "Flights",
-      "parent": "Reserved Ticket Booking"
-    },
-    {
-      "name": "Accommodation Booking",
-      "parent": ""
-    },
-    {
-      "name": "Experiences",
-      "parent": ""
-    },
-    {
-      "name": "Culture & Heritage",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Specialty Events",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Sporting & Outdoor",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Concert",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Food & Dining",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Comedy",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Dance",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Literary Events",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Museum",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Restaurants",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Tours & Sightseeing",
-      "parent": "Experiences"
-    },
-    {
-      "name": "Investments",
-      "parent": ""
-    },
-    {
-      "name": "Mutual Funds",
-      "parent": "Investments"
-    },
-    {
-      "name": "Logistics",
-      "parent": ""
-    },
-    {
-      "name": "Other",
-      "parent": ""
-    },
-    {
-      "name": "Agriculture",
-      "parent": "Other"
-    },
-    {
-      "name": "Equipment Hiring",
-      "parent": "Other"
-    },
-    {
-      "name": "Work Opportunities (ONEST)",
-      "parent": "Other"
-    },
-    {
-      "name": "Learning Experiences (ONEST)",
-      "parent": "Other"
-    },
-    {
-      "name": "Infra Services",
-      "parent": "Other"
-    },
-    {
-      "name": "Appliance Repair Services",
-      "parent": "Other"
-    },
-    {
-      "name": "Personal Care Services",
-      "parent": "Other"
-    }
-  ]
-}
+[
+  {
+    "name": "Retail",
+    "parent": ""
+  },
+  {
+    "name": "Grocery",
+    "parent": "Retail"
+  },
+  {
+    "name": "Food & Beverage",
+    "parent": "Retail"
+  },
+  {
+    "name": "Fashion",
+    "parent": "Retail"
+  },
+  {
+    "name": "Beauty & Personal Care",
+    "parent": "Retail"
+  },
+  {
+    "name": "Electronics",
+    "parent": "Retail"
+  },
+  {
+    "name": "Appliances",
+    "parent": "Retail"
+  },
+  {
+    "name": "Home & Decor",
+    "parent": "Retail"
+  },
+  {
+    "name": "Health & Wellness",
+    "parent": "Retail"
+  },
+  {
+    "name": "Autoparts & Components",
+    "parent": "Retail"
+  },
+  {
+    "name": "Hardware and Industrial",
+    "parent": "Retail"
+  },
+  {
+    "name": "Building & Construction Supplies",
+    "parent": "Retail"
+  },
+  {
+    "name": "Chemicals",
+    "parent": "Retail"
+  },
+  {
+    "name": "eB2B",
+    "parent": "Retail"
+  },
+  {
+    "name": "Inventory Less",
+    "parent": "Retail"
+  },
+  {
+    "name": "Gift card",
+    "parent": "Retail"
+  },
+  {
+    "name": "Credit",
+    "parent": ""
+  },
+  {
+    "name": "Business loan",
+    "parent": "Credit"
+  },
+  {
+    "name": "Personal Loan",
+    "parent": "Credit"
+  },
+  {
+    "name": "Credit Cards",
+    "parent": "Credit"
+  },
+  {
+    "name": "Gold Loan",
+    "parent": "Credit"
+  },
+  {
+    "name": "Insurance",
+    "parent": ""
+  },
+  {
+    "name": "Health Insurance",
+    "parent": "Insurance"
+  },
+  {
+    "name": "Marine Insurance",
+    "parent": "Insurance"
+  },
+  {
+    "name": "Motor Insurance",
+    "parent": "Insurance"
+  },
+  {
+    "name": "Micro Transit Insurance",
+    "parent": "Insurance"
+  },
+  {
+    "name": "Unreserved Ticket Booking",
+    "parent": ""
+  },
+  {
+    "name": "Cabs/Auto",
+    "parent": "Unreserved Ticket Booking"
+  },
+  {
+    "name": "Metro",
+    "parent": "Unreserved Ticket Booking"
+  },
+  {
+    "name": "Bus",
+    "parent": "Unreserved Ticket Booking"
+  },
+  {
+    "name": "Reserved Ticket Booking",
+    "parent": ""
+  },
+  {
+    "name": "Flights",
+    "parent": "Reserved Ticket Booking"
+  },
+  {
+    "name": "Accommodation Booking",
+    "parent": ""
+  },
+  {
+    "name": "Experiences",
+    "parent": ""
+  },
+  {
+    "name": "Culture & Heritage",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Specialty Events",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Sporting & Outdoor",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Concert",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Food & Dining",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Comedy",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Dance",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Literary Events",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Museum",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Restaurants",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Tours & Sightseeing",
+    "parent": "Experiences"
+  },
+  {
+    "name": "Investments",
+    "parent": ""
+  },
+  {
+    "name": "Mutual Funds",
+    "parent": "Investments"
+  },
+  {
+    "name": "Logistics",
+    "parent": ""
+  },
+  {
+    "name": "Other",
+    "parent": ""
+  },
+  {
+    "name": "Agriculture",
+    "parent": "Other"
+  },
+  {
+    "name": "Equipment Hiring",
+    "parent": "Other"
+  },
+  {
+    "name": "Work Opportunities (ONEST)",
+    "parent": "Other"
+  },
+  {
+    "name": "Learning Experiences (ONEST)",
+    "parent": "Other"
+  },
+  {
+    "name": "Infra Services",
+    "parent": "Other"
+  },
+  {
+    "name": "Appliance Repair Services",
+    "parent": "Other"
+  },
+  {
+    "name": "Personal Care Services",
+    "parent": "Other"
+  }
+]

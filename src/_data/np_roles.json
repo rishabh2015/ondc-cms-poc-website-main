@@ -1,40 +1,38 @@
-{
-  "roles": [
-    {
-      "role_value": "Buyer NP",
-      "role_key": "BNP",
-      "role_label": "Buyer NP",
-      "role_full": "Buyer Network Participant"
-    },
-    {
-      "role_value": "Seller NP",
-      "role_key": "SNP",
-      "role_label": "Seller NP",
-      "role_full": "Seller Network Participant"
-    },
-    {
-      "role_value": "Technology Service Provider (TSP)-Buyer",
-      "role_key": "TSP-B",
-      "role_label": "Buyer side",
-      "role_full": "Technology Service Provider, buyer side"
-    },
-    {
-      "role_value": "Technology Service Provider (TSP)-Seller",
-      "role_key": "TSP-S",
-      "role_label": "Seller side",
-      "role_full": "Technology Service Provider, seller side"
-    },
-    {
-      "role_value": "Technology Service Provider (TSP)-RSF",
-      "role_key": "TSP-RSF",
-      "role_label": "Reconciliation & Settlement",
-      "role_full": "Technology Service Provider, Reconciliation and Settlement Framework"
-    },
-    {
-      "role_value": "Technology Service Provider (TSP)-IGM",
-      "role_key": "TSP-IGM",
-      "role_label": "Issue & Grievance Management",
-      "role_full": "Technology Service Provider, Issue and Grievance Management"
-    }
-  ]
-}
+[
+  {
+    "role_value": "Buyer NP",
+    "role_key": "BNP",
+    "role_label": "Buyer NP",
+    "role_full": "Buyer Network Participant"
+  },
+  {
+    "role_value": "Seller NP",
+    "role_key": "SNP",
+    "role_label": "Seller NP",
+    "role_full": "Seller Network Participant"
+  },
+  {
+    "role_value": "Technology Service Provider (TSP)-Buyer",
+    "role_key": "TSP-B",
+    "role_label": "Buyer side",
+    "role_full": "Technology Service Provider, buyer side"
+  },
+  {
+    "role_value": "Technology Service Provider (TSP)-Seller",
+    "role_key": "TSP-S",
+    "role_label": "Seller side",
+    "role_full": "Technology Service Provider, seller side"
+  },
+  {
+    "role_value": "Technology Service Provider (TSP)-RSF",
+    "role_key": "TSP-RSF",
+    "role_label": "Reconciliation & Settlement",
+    "role_full": "Technology Service Provider, Reconciliation and Settlement Framework"
+  },
+  {
+    "role_value": "Technology Service Provider (TSP)-IGM",
+    "role_key": "TSP-IGM",
+    "role_label": "Issue & Grievance Management",
+    "role_full": "Technology Service Provider, Issue and Grievance Management"
+  }
+]
